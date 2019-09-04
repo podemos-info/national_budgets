@@ -5,4 +5,8 @@
 #
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.first)
-User.create!(email: 'admin@example.com', password: 'password', password_confirmation: 'password') if Rails.env.development?
+if Rails.env.development? 
+  User.create!(email: 'admin@example.com', password: 'password', password_confirmation: 'password') unless User.find_by(email:'admin@example.com')
+  Budget.create!(title: 'PRESUPUESTOS GENERALES DEL ESTADO 2018', date: '2019/04/09', user_id: 1) unless Budget.find_by(title:'PRESUPUESTOS GENERALES DEL ESTADO 2018')
+  Budget.create!(title: 'PRESUPUESTOS GENERALES DEL ESTADO 2019', date: '2019/01/16', user_id: 1) unless Budget.find_by(title:'PRESUPUESTOS GENERALES DEL ESTADO 2019')
+end
