@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_09_04_080117) do
+ActiveRecord::Schema.define(version: 2019_09_04_215519) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -29,12 +29,59 @@ ActiveRecord::Schema.define(version: 2019_09_04_080117) do
     t.index ["resource_type", "resource_id"], name: "index_active_admin_comments_on_resource_type_and_resource_id"
   end
 
+  create_table "articles", force: :cascade do |t|
+    t.integer "ref"
+    t.string "title"
+    t.bigint "chapter_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["chapter_id"], name: "index_articles_on_chapter_id"
+  end
+
   create_table "budgets", force: :cascade do |t|
     t.string "title", null: false
     t.date "date", null: false
     t.bigint "user_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+  end
+
+  create_table "chapters", force: :cascade do |t|
+    t.integer "ref"
+    t.string "title"
+    t.bigint "budget_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["budget_id"], name: "index_chapters_on_budget_id"
+  end
+
+  create_table "concepts", force: :cascade do |t|
+    t.integer "ref"
+    t.string "title"
+    t.bigint "article_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["article_id"], name: "index_concepts_on_article_id"
+  end
+
+  create_table "organisms", force: :cascade do |t|
+    t.integer "ref"
+    t.string "title"
+    t.bigint "section_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["section_id"], name: "index_organisms_on_section_id"
+  end
+
+  create_table "programs", force: :cascade do |t|
+    t.string "ref", null: false
+    t.string "title", null: false
+    t.bigint "section_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.bigint "organism_id"
+    t.index ["organism_id"], name: "index_programs_on_organism_id"
+    t.index ["section_id"], name: "index_programs_on_section_id"
   end
 
   create_table "sections", force: :cascade do |t|
@@ -56,6 +103,15 @@ ActiveRecord::Schema.define(version: 2019_09_04_080117) do
     t.index ["section_id"], name: "index_services_on_section_id"
   end
 
+  create_table "subconcepts", force: :cascade do |t|
+    t.integer "ref"
+    t.string "title"
+    t.bigint "concept_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["concept_id"], name: "index_subconcepts_on_concept_id"
+  end
+
   create_table "users", force: :cascade do |t|
     t.string "email", default: "", null: false
     t.string "encrypted_password", default: "", null: false
@@ -68,7 +124,14 @@ ActiveRecord::Schema.define(version: 2019_09_04_080117) do
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
+  add_foreign_key "articles", "chapters"
   add_foreign_key "budgets", "users"
+  add_foreign_key "chapters", "budgets"
+  add_foreign_key "concepts", "articles"
+  add_foreign_key "organisms", "sections"
+  add_foreign_key "programs", "organisms"
+  add_foreign_key "programs", "sections"
   add_foreign_key "sections", "budgets"
   add_foreign_key "services", "sections"
+  add_foreign_key "subconcepts", "concepts"
 end

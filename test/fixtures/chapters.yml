@@ -1,0 +1,11 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  ref: 
+  title: MyString
+  budget: one
+
+two:
+  ref: 
+  title: MyString
+  budget: two
