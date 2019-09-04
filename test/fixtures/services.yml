@@ -1,0 +1,13 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  ref: 
+  title: 
+  budget: one
+  section: one
+
+two:
+  ref: 
+  title: 
+  budget: two
+  section: two

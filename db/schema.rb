@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_09_04_065026) do
+ActiveRecord::Schema.define(version: 2019_09_04_080117) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -47,6 +47,17 @@ ActiveRecord::Schema.define(version: 2019_09_04_065026) do
     t.index ["budget_id"], name: "index_sections_on_budget_id"
   end
 
+  create_table "services", force: :cascade do |t|
+    t.integer "ref", null: false
+    t.string "title", null: false
+    t.bigint "budget_id", null: false
+    t.bigint "section_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["budget_id"], name: "index_services_on_budget_id"
+    t.index ["section_id"], name: "index_services_on_section_id"
+  end
+
   create_table "users", force: :cascade do |t|
     t.string "email", default: "", null: false
     t.string "encrypted_password", default: "", null: false
@@ -61,4 +72,6 @@ ActiveRecord::Schema.define(version: 2019_09_04_065026) do
 
   add_foreign_key "budgets", "users"
   add_foreign_key "sections", "budgets"
+  add_foreign_key "services", "budgets"
+  add_foreign_key "services", "sections"
 end
