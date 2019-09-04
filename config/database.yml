@@ -22,15 +22,15 @@ default: &default
   pool: 5
 
 credentials: &credentials
-  host: <%= ENV['NATIONAL_BUDGETS_DATABASE_HOST'] %>
-  username: <%= ENV['NATIONAL_BUDGETS_DATABASE_USERNAME'] %>
-  password: <%= ENV['NATIONAL_BUDGETS_DATABASE_PASSWORD'] %>
-  port: <%= ENV['NATIONAL_BUDGETS_DATABASE_PORT'] %>
+  host: <%= ENV['DATABASE_HOST'] %>
+  username: <%= ENV['DATABASE_USERNAME'] %>
+  password: <%= ENV['DATABASE_PASSWORD'] %>
+  port: <%= ENV['DATABASE_PORT'] %>
 
 development:
   <<: *default
   <<: *credentials
-  database: <%= ENV['NATIONAL_BUDGETS_DATABASE_NAME'] %>
+  database: <%= ENV.fetch("DATABASE_NAME") { "national_budgets_development" } %>
 
   # The specified database role being used to connect to postgres.
   # To create additional roles in postgres see `$ createuser --help`.
@@ -65,11 +65,7 @@ development:
 test:
   <<: *default
   <<: *credentials
-  database: <%= ENV['NATIONAL_BUDGETS_DATABASE_NAME'] %>
-
-staging:
-  <<: *default
-  url: <%= ENV['NATIONAL_BUDGETS_DATABASE_URL'] %>
+  database: <%= ENV.fetch("DATABASE_NAME") { "national_budgets_test" } %>
 
 # As with config/secrets.yml, you never want to store sensitive information,
 # like your database password, in your source code. If your source code is
@@ -92,4 +88,4 @@ staging:
 #
 production:
   <<: *default
-  url: <%= ENV['NATIONAL_BUDGETS_DATABASE_URL'] %>
+  url: <%= ENV['DATABASE_URL'] %>

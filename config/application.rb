@@ -17,9 +17,3 @@ module NationalBudgets
     # the framework and any gems in your application.
   end
 end
-
-Bundler.require(*Rails.groups)
-
-Dotenv::Railtie.load
-
-HOSTNAME = ENV['HOSTNAME']
