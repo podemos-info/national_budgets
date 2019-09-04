@@ -35,7 +35,6 @@ ActiveRecord::Schema.define(version: 2019_09_04_080117) do
     t.bigint "user_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["user_id"], name: "index_budgets_on_user_id"
   end
 
   create_table "sections", force: :cascade do |t|
@@ -54,7 +53,6 @@ ActiveRecord::Schema.define(version: 2019_09_04_080117) do
     t.bigint "section_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["budget_id"], name: "index_services_on_budget_id"
     t.index ["section_id"], name: "index_services_on_section_id"
   end
 
@@ -72,6 +70,5 @@ ActiveRecord::Schema.define(version: 2019_09_04_080117) do
 
   add_foreign_key "budgets", "users"
   add_foreign_key "sections", "budgets"
-  add_foreign_key "services", "budgets"
   add_foreign_key "services", "sections"
 end
