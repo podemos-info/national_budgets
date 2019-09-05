@@ -30,9 +30,9 @@ ActiveRecord::Schema.define(version: 2019_09_04_215519) do
   end
 
   create_table "articles", force: :cascade do |t|
-    t.integer "ref"
-    t.string "title"
-    t.bigint "chapter_id"
+    t.integer "ref", null: false
+    t.string "title", null: false
+    t.bigint "chapter_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["chapter_id"], name: "index_articles_on_chapter_id"
@@ -47,9 +47,9 @@ ActiveRecord::Schema.define(version: 2019_09_04_215519) do
   end
 
   create_table "chapters", force: :cascade do |t|
-    t.integer "ref"
-    t.string "title"
-    t.bigint "budget_id"
+    t.integer "ref", null: false
+    t.string "title", null: false
+    t.bigint "budget_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["budget_id"], name: "index_chapters_on_budget_id"
@@ -57,7 +57,7 @@ ActiveRecord::Schema.define(version: 2019_09_04_215519) do
 
   create_table "concepts", force: :cascade do |t|
     t.integer "ref"
-    t.string "title"
+    t.string "title", null: false
     t.bigint "article_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -65,9 +65,9 @@ ActiveRecord::Schema.define(version: 2019_09_04_215519) do
   end
 
   create_table "organisms", force: :cascade do |t|
-    t.integer "ref"
-    t.string "title"
-    t.bigint "section_id"
+    t.integer "ref", null: false
+    t.string "title", null: false
+    t.bigint "section_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["section_id"], name: "index_organisms_on_section_id"
@@ -76,18 +76,18 @@ ActiveRecord::Schema.define(version: 2019_09_04_215519) do
   create_table "programs", force: :cascade do |t|
     t.string "ref", null: false
     t.string "title", null: false
-    t.bigint "section_id", null: false
+    t.bigint "section_id"
+    t.bigint "organism_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.bigint "organism_id"
-    t.index ["organism_id"], name: "index_programs_on_organism_id"
     t.index ["section_id"], name: "index_programs_on_section_id"
+    t.index ["organism_id"], name: "index_programs_on_organism_id"
   end
 
   create_table "sections", force: :cascade do |t|
     t.integer "ref", null: false
     t.string "title", null: false
-    t.bigint "budget_id"
+    t.bigint "budget_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["budget_id"], name: "index_sections_on_budget_id"
@@ -96,7 +96,6 @@ ActiveRecord::Schema.define(version: 2019_09_04_215519) do
   create_table "services", force: :cascade do |t|
     t.integer "ref", null: false
     t.string "title", null: false
-    t.bigint "budget_id", null: false
     t.bigint "section_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -105,7 +104,7 @@ ActiveRecord::Schema.define(version: 2019_09_04_215519) do
 
   create_table "subconcepts", force: :cascade do |t|
     t.integer "ref"
-    t.string "title"
+    t.string "title", null: false
     t.bigint "concept_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
