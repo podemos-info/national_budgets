@@ -68,6 +68,7 @@ ActiveRecord::Schema.define(version: 2019_09_04_215519) do
     t.integer "ref", null: false
     t.string "title", null: false
     t.bigint "section_id", null: false
+    t.bigint "section_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["section_id"], name: "index_organisms_on_section_id"
@@ -78,10 +79,11 @@ ActiveRecord::Schema.define(version: 2019_09_04_215519) do
     t.string "title", null: false
     t.bigint "section_id"
     t.bigint "organism_id"
+    t.boolean "is_new", default: false, null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["section_id"], name: "index_programs_on_section_id"
     t.index ["organism_id"], name: "index_programs_on_organism_id"
+    t.index ["section_id"], name: "index_programs_on_section_id"
   end
 
   create_table "sections", force: :cascade do |t|

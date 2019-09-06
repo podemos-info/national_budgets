@@ -1,0 +1,29 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Number:</strong>
+  <%= @amendment.number %>
+</p>
+
+<p>
+  <strong>Type:</strong>
+  <%= @amendment.type %>
+</p>
+
+<p>
+  <strong>Explanation:</strong>
+  <%= @amendment.explanation %>
+</p>
+
+<p>
+  <strong>User:</strong>
+  <%= @amendment.user %>
+</p>
+
+<p>
+  <strong>Budget:</strong>
+  <%= @amendment.budget %>
+</p>
+
+<%= link_to 'Edit', edit_amendment_path(@amendment) %> |
+<%= link_to 'Back', amendments_path %>

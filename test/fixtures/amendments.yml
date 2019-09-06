@@ -1,0 +1,15 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  number: MyString
+  type: 
+  explanation: MyText
+  user: one
+  budget: one
+
+two:
+  number: MyString
+  type: 
+  explanation: MyText
+  user: two
+  budget: two
