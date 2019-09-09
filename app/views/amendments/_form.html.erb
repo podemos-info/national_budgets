@@ -18,7 +18,7 @@
 
   <div class="field">
     <%= form.label :type %>
-    <%= form.text_field :type %>
+    <%= f.collection_radio_buttons :author_id, Amendments.descendants, :to_s, :name_with_initial %>
   </div>
 
   <div class="field">
