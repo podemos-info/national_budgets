@@ -1,0 +1,19 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  amendment: one
+  type: 
+  section: one
+  title: MyString
+  text: MyText
+  justification: MyText
+  number: MyString
+
+two:
+  amendment: two
+  type: 
+  section: two
+  title: MyString
+  text: MyText
+  justification: MyText
+  number: MyString

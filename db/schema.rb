@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_09_04_215519) do
+ActiveRecord::Schema.define(version: 2019_09_09_071150) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -29,6 +29,19 @@ ActiveRecord::Schema.define(version: 2019_09_04_215519) do
     t.index ["resource_type", "resource_id"], name: "index_active_admin_comments_on_resource_type_and_resource_id"
   end
 
+  create_table "amendments", force: :cascade do |t|
+    t.string "number"
+    t.string "type"
+    t.text "explanation"
+    t.bigint "user_id"
+    t.bigint "budget_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.integer "status", null: false
+    t.index ["budget_id"], name: "index_amendments_on_budget_id"
+    t.index ["user_id"], name: "index_amendments_on_user_id"
+  end
+
   create_table "articles", force: :cascade do |t|
     t.integer "ref", null: false
     t.string "title", null: false
@@ -36,6 +49,20 @@ ActiveRecord::Schema.define(version: 2019_09_04_215519) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["chapter_id"], name: "index_articles_on_chapter_id"
+  end
+
+  create_table "articulateds", force: :cascade do |t|
+    t.bigint "amendment_id", null: false
+    t.string "type", null: false
+    t.bigint "section_id", null: false
+    t.string "title", null: false
+    t.text "text", null: false
+    t.text "justification", null: false
+    t.string "number"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["amendment_id"], name: "index_articulateds_on_amendment_id"
+    t.index ["section_id"], name: "index_articulateds_on_section_id"
   end
 
   create_table "budgets", force: :cascade do |t|
@@ -64,6 +91,31 @@ ActiveRecord::Schema.define(version: 2019_09_04_215519) do
     t.index ["article_id"], name: "index_concepts_on_article_id"
   end
 
+  create_table "modifications", force: :cascade do |t|
+    t.bigint "amendment_id"
+    t.string "type"
+    t.bigint "section_id"
+    t.bigint "service_id"
+    t.bigint "program_id"
+    t.bigint "chapter_id"
+    t.bigint "article_id"
+    t.bigint "concept_id"
+    t.bigint "subconcept_id"
+    t.string "project"
+    t.boolean "project_new"
+    t.decimal "amount", precision: 12, scale: 2
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["amendment_id"], name: "index_modifications_on_amendment_id"
+    t.index ["article_id"], name: "index_modifications_on_article_id"
+    t.index ["chapter_id"], name: "index_modifications_on_chapter_id"
+    t.index ["concept_id"], name: "index_modifications_on_concept_id"
+    t.index ["program_id"], name: "index_modifications_on_program_id"
+    t.index ["section_id"], name: "index_modifications_on_section_id"
+    t.index ["service_id"], name: "index_modifications_on_service_id"
+    t.index ["subconcept_id"], name: "index_modifications_on_subconcept_id"
+  end
+
   create_table "organisms", force: :cascade do |t|
     t.integer "ref", null: false
     t.string "title", null: false
@@ -80,8 +132,8 @@ ActiveRecord::Schema.define(version: 2019_09_04_215519) do
     t.bigint "organism_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["section_id"], name: "index_programs_on_section_id"
     t.index ["organism_id"], name: "index_programs_on_organism_id"
+    t.index ["section_id"], name: "index_programs_on_section_id"
   end
 
   create_table "sections", force: :cascade do |t|
@@ -123,10 +175,22 @@ ActiveRecord::Schema.define(version: 2019_09_04_215519) do
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
+  add_foreign_key "amendments", "budgets"
+  add_foreign_key "amendments", "users"
   add_foreign_key "articles", "chapters"
+  add_foreign_key "articulateds", "amendments"
+  add_foreign_key "articulateds", "sections"
   add_foreign_key "budgets", "users"
   add_foreign_key "chapters", "budgets"
   add_foreign_key "concepts", "articles"
+  add_foreign_key "modifications", "amendments"
+  add_foreign_key "modifications", "articles"
+  add_foreign_key "modifications", "chapters"
+  add_foreign_key "modifications", "concepts"
+  add_foreign_key "modifications", "programs"
+  add_foreign_key "modifications", "sections"
+  add_foreign_key "modifications", "services"
+  add_foreign_key "modifications", "subconcepts"
   add_foreign_key "organisms", "sections"
   add_foreign_key "programs", "organisms"
   add_foreign_key "programs", "sections"
