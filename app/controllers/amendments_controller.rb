@@ -1,6 +1,5 @@
 class AmendmentsController < ApplicationController
   before_action :set_amendment, only: [:show, :edit, :update, :destroy]
-  helper_method :amendment
 
   # GET /amendments
   # GET /amendments.json
@@ -62,9 +61,7 @@ class AmendmentsController < ApplicationController
     end
   end
 
-
     private
-    attr_reader :amendment
 
     def set_amendment
       @amendment = Amendment.find(params[:id])
