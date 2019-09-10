@@ -8,8 +8,8 @@
 if Rails.env.development? 
   User.create!(email: 'admin@example.com', password: 'password', password_confirmation: 'password')
 
-  Budget.find_or_create_by!(title: 'PRESUPUESTOS GENERALES DEL ESTADO 2018', date: '2019/04/09', user_id: 1)
-  Budget.find_or_create_by!(title: 'PRESUPUESTOS GENERALES DEL ESTADO 2019', date: '2019/01/16', user_id: 1)
+  Budget.find_or_create_by!(title: 'PGE2018', date: '2019/04/09', user_id: 1)
+  Budget.find_or_create_by!(title: 'PGE2019', date: '2019/01/16', user_id: 1)
 
   Section.find_or_create_by!(ref: 1, title: 'CASA DE SU MAJESTAD EL REY', budget_id: 1)
   Section.find_or_create_by!(ref: 2, title: 'CORTES GENERALES', budget_id: 1)
