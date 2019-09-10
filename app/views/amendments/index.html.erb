@@ -18,10 +18,10 @@
     <% @amendments.each do |amendment| %>
       <tr>
         <td><%= amendment.number %></td>
-        <td><%= amendment.type %></td>
+        <td><%= amendment.type_name %></td>
         <td><%= amendment.explanation %></td>
-        <td><%= amendment.user %></td>
-        <td><%= amendment.budget %></td>
+        <td><%= amendment.user.email %></td>
+        <td><%= amendment.budget.title %></td>
         <td><%= link_to 'Show', amendment %></td>
         <td><%= link_to 'Edit', edit_amendment_path(amendment) %></td>
         <td><%= link_to 'Destroy', amendment, method: :delete, data: { confirm: 'Are you sure?' } %></td>

@@ -7,7 +7,7 @@
 
 <p>
   <strong>Type:</strong>
-  <%= @amendment.type %>
+  <%= @amendment.type_name %>
 </p>
 
 <p>
@@ -17,12 +17,12 @@
 
 <p>
   <strong>User:</strong>
-  <%= @amendment.user %>
+  <%= @amendment.user.email %>
 </p>
 
 <p>
   <strong>Budget:</strong>
-  <%= @amendment.budget %>
+  <%= @amendment.budget.title %>
 </p>
 
 <%= link_to 'Edit', edit_amendment_path(@amendment) %> |
