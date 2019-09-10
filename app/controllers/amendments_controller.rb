@@ -24,7 +24,7 @@ class AmendmentsController < ApplicationController
   # POST /amendments
   # POST /amendments.json
   def create
-    @amendment = Amendment.new(amendment_params)
+    @amendment = current_user.amendment.new(amendment_params)
 
     respond_to do |format|
       if @amendment.save
