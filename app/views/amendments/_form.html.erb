@@ -18,7 +18,7 @@
 
   <div class="field">
     <%= form.label :type %>
-    <%= form.text_field :type %>
+    <%= form.collection_radio_buttons :type, Amendment.descendants.map{|a| [a.to_s, a.new.type_name]}, :first, :last %>
   </div>
 
   <div class="field">
