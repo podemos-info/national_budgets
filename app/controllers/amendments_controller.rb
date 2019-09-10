@@ -25,6 +25,7 @@ class AmendmentsController < ApplicationController
   # POST /amendments.json
   def create
     @amendment = current_user.amendment.new(amendment_params)
+    @amendment.budget_id = current_budget.id
 
     respond_to do |format|
       if @amendment.save
@@ -68,6 +69,6 @@ class AmendmentsController < ApplicationController
     end
 
     def amendment_params
-      params.require(:amendment).permit(:number, :type, :explanation, :user_id, :budget_id)
+      params.require(:amendment).permit(:number, :type, :explanation, :user_id)
     end
 end
