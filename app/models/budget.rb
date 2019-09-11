@@ -1,4 +1,5 @@
 class Budget < ApplicationRecord
-  has_many :section
-  has_many :service, through: :section
+  has_many :amendments
+  has_many :sections
+  has_many :services, through: :sections
 end

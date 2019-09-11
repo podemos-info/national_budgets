@@ -1,6 +1,6 @@
 class Section < ApplicationRecord
   belongs_to :budget
-  has_many :service
-  has_many :program
-  has_many :organism
+  has_many :services
+  has_many :programs
+  has_many :organisms
 end
