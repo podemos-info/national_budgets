@@ -29,7 +29,7 @@ class AmendmentsController < ApplicationController
 
     respond_to do |format|
       if @amendment.save
-        format.html { redirect_to @amendment, notice: 'Amendment was successfully created.' }
+        format.html { redirect_to amendment_path(@amendment), notice: 'Amendment was successfully created.' }
         format.json { render action: 'show', status: :created, location: @amendment }
       else
         format.html { render action: 'new' }
@@ -43,7 +43,7 @@ class AmendmentsController < ApplicationController
   def update
     respond_to do |format|
       if @amendment.update(amendment_params)
-        format.html { redirect_to @amendment, notice: 'Amendment was successfully updated.' }
+        format.html { redirect_to amendment_path(@amendment), notice: 'Amendment was successfully updated.' }
         format.json { head :no_content }
       else
         format.html { render action: 'edit' }
@@ -52,8 +52,8 @@ class AmendmentsController < ApplicationController
     end
   end
 
-  # DELETE /products/1
-  # DELETE /products/1.json
+  # DELETE /amendments/1
+  # DELETE /amendments/1.json
   def destroy
     @amendment.destroy
     respond_to do |format|

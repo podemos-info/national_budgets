@@ -60,6 +60,6 @@ Rails.application.configure do
   config.file_watcher = ActiveSupport::EventedFileUpdateChecker
 
   ActiveSupport::Reloader.to_prepare do
-    Dir['app/models/amendments/*.rb'].each {|file| require_dependency file}
+    Dir['app/models/*/*.rb'].each {|file| require_dependency file}
   end
 end
