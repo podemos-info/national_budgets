@@ -25,5 +25,13 @@
   <%= @amendment.budget.title %>
 </p>
 
+<% if @amendment.type == 'Amendments::ArticulatedAmendment' %>
+  <div id="articulated_detail">
+    <h2>Articulado</h2>
+    <%= @amendment.to_json %>
+    <%= link_to 'New Articulated', new_amendment_articulated_path(@amendment) %>
+  </div>
+<% end %>
+
 <%= link_to 'Edit', edit_amendment_path(@amendment) %> |
 <%= link_to 'Back', amendments_path %>

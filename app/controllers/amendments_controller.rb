@@ -52,8 +52,8 @@ class AmendmentsController < ApplicationController
     end
   end
 
-  # DELETE /products/1
-  # DELETE /products/1.json
+  # DELETE /amendments/1
+  # DELETE /amendments/1.json
   def destroy
     @amendment.destroy
     respond_to do |format|

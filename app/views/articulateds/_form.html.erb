@@ -1,0 +1,66 @@
+<%= form_with(model: [amendment, articulated], local: true) do |form| %>
+  <% if articulated.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(articulated.errors.count, "error") %> prohibited this articulated from being saved:</h2>
+
+      <ul>
+      <% articulated.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field" id="type">
+    <%= form.label :type %>
+    <%= form.collection_radio_buttons :type, Articulated.descendants.map{|a| [a.to_s, a.new.type_name]}, :first, :last %>
+  </div>
+  
+  <div class="field">
+    <%= form.label :section_id %>
+    <%= form.collection_select :type, current_budget.sections.all, :id, :full_title %>
+  </div>
+  
+  <div class="field">
+    <%= form.label :title %>
+    <%= form.text_field :title %>
+  </div>
+  
+  <div class="field">
+    <%= form.label :text %>
+    <%= form.text_area :text %>
+  </div>
+
+  <div class="field">
+    <%= form.label :justification %>
+    <%= form.text_area :justification %>
+  </div>
+
+  <div class="field" id="number">
+    <%= form.label :number %>
+    <%= form.text_field :number %>
+  </div>
+
+  <div class="actions">
+    <%= form.submit %>
+  </div>
+<% end %>
+
+<script type="text/javascript">
+  $(function () {
+    $("#type input").change(function () {
+        var type = $(this).val();
+        if (type == "Articulateds::StandardArticulated") {
+          $("#number label").show();
+          $("#number input").show();
+        } else {
+          $("#number label").hide();
+          $("#number input").hide();
+        }
+    });
+  });
+  $( document ).ready(function() {
+      $("#type input").change();
+  });
+  
+</script>
