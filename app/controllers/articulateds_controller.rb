@@ -58,7 +58,7 @@ class ArticulatedsController < ApplicationController
   def destroy
     @articulated.destroy
     respond_to do |format|
-      format.html { redirect_to amendment_url(@amendment) }
+      format.html { redirect_to amendment_path(@amendment) }
       format.json { head :no_content }
     end
   end
