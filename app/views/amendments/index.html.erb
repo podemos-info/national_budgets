@@ -22,9 +22,9 @@
         <td><%= amendment.explanation %></td>
         <td><%= amendment.user.email %></td>
         <td><%= amendment.budget.title %></td>
-        <td><%= link_to 'Show', amendment %></td>
+        <td><%= link_to 'Show', amendment_path(amendment) %></td>
         <td><%= link_to 'Edit', edit_amendment_path(amendment) %></td>
-        <td><%= link_to 'Destroy', amendment, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <td><%= link_to 'Destroy', amendment_path(amendment), method: :delete, data: { confirm: 'Are you sure?' } %></td>
       </tr>
     <% end %>
   </tbody>

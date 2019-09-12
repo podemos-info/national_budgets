@@ -25,13 +25,38 @@
   <%= @amendment.budget.title %>
 </p>
 
-<% if @amendment.type == 'Amendments::ArticulatedAmendment' %>
-  <div id="articulated_detail">
-    <h2>Articulado</h2>
-    <%= @amendment.to_json %>
-    <%= link_to 'New Articulated', new_amendment_articulated_path(@amendment) %>
-  </div>
-<% end %>
+<% if @amendment.allow_articulateds? %>
+  <h2>Articulado</h2>
+  
+  <% if @amendment.articulated %>
+    <table id="articulated_detail">
+      <thead>
+        <tr>
+          <th>Articulated type</th>
+          <th>Section ref</th>
+          <th>Title</th>
+          <th colspan="2"></th>
+        </tr>
+      </thead>
 
+      <tbody>
+        <% articulated = @amendment.articulated %>
+        <tr>
+          <td><%= articulated.type_name %></td>
+          <td><%= articulated.section.ref %></td>
+          <td><%= articulated.title %></td>
+          <td><%= link_to 'Edit', edit_amendment_articulated_path(@amendment, articulated) %></td>
+          <td><%= link_to 'Destroy', amendment_articulated_path(@amendment, articulated), method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        </tr>
+      </tbody>
+    </table>
+  <% end %>
+
+  <% unless @amendment.articulated %>
+    <%= link_to 'Add Articulated', new_amendment_articulated_path(@amendment) %>
+  <% end %>
+
+<% end %>
+<hr>
 <%= link_to 'Edit', edit_amendment_path(@amendment) %> |
 <%= link_to 'Back', amendments_path %>

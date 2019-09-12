@@ -1,11 +1,9 @@
 module Amendments
   class ArticulatedAmendment < Amendment
-    def self.model_name
-      Amendment.model_name
-    end
+    has_one :articulated, foreign_key: "amendment_id"
 
-    def type_name
-      'Al articulado'
+    def allow_articulateds?
+      true
     end
   end
 end

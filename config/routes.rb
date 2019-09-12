@@ -1,8 +1,7 @@
 Rails.application.routes.draw do
   authenticate :user do
-    resources :amendments
     resources :amendments do
-      resources :articulateds, controller: 'articulateds'
+      resources :articulateds
     end
   end
   devise_for :users, ActiveAdmin::Devise.config

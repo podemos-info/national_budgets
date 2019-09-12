@@ -25,15 +25,12 @@ class ArticulatedsController < ApplicationController
   # POST /amendments/:amendment_id/articulateds
   # POST /amendments/:amendment_id/articulateds.json
   def create
-    #puts '€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€'
     @amendment = Amendment.find(params[:amendment_id])
-    #puts @amendment.articulated
-    #puts '********',@amendment
-    @articulated = @amendment.articulateds.new(articulated_params)
+    @articulated = @amendment.create_articulated(articulated_params)
 
     respond_to do |format|
       if @articulated.save
-        format.html { redirect_to @articulated, notice: 'Articulated was successfully created.' }
+        format.html { redirect_to amendment_path(@amendment), notice: 'Articulated was successfully created.' }
         format.json { render action: 'show', status: :created, location: @articulated }
       else
         format.html { render action: 'new' }
@@ -46,8 +43,8 @@ class ArticulatedsController < ApplicationController
   # PATCH/PUT /amendments/:amendment_id/articulateds/1.json
   def update
     respond_to do |format|
-      if @articulated.update(articulated_params)
-        format.html { redirect_to @articulated, notice: 'Articulated was successfully updated.' }
+      if @articulated.update_attributes(articulated_params)
+        format.html { redirect_to amendment_path(@amendment), notice: 'Articulated was successfully updated.' }
         format.json { head :no_content }
       else
         format.html { render action: 'edit' }
@@ -61,7 +58,7 @@ class ArticulatedsController < ApplicationController
   def destroy
     @articulated.destroy
     respond_to do |format|
-      format.html { redirect_to articulateds_url }
+      format.html { redirect_to amendment_url(@amendment) }
       format.json { head :no_content }
     end
   end
@@ -73,7 +70,6 @@ class ArticulatedsController < ApplicationController
     end
 
     def set_amendment
-      puts '-----',params[:amendment_id],'-----'
       @amendment = Amendment.find(params[:amendment_id])
     end
 
