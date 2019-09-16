@@ -59,6 +59,8 @@ Rails.application.configure do
   # routes, locales, etc. This feature depends on the listen gem.
   config.file_watcher = ActiveSupport::EventedFileUpdateChecker
 
+  config.hosts.clear
+
   ActiveSupport::Reloader.to_prepare do
     Dir['app/models/*/*.rb'].each {|file| require_dependency file}
   end
