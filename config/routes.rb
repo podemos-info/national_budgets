@@ -1,8 +1,8 @@
 Rails.application.routes.draw do
   authenticate :user do
     resources :amendments do
-      resources :articulateds
-      resources :modifications
+      resources :articulateds, :except => [:show]
+      resources :modifications, :except => [:show]
     end
   end
   devise_for :users, ActiveAdmin::Devise.config

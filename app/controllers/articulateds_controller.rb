@@ -1,16 +1,11 @@
 class ArticulatedsController < ApplicationController
-  before_action :set_articulated, only: [:show, :edit, :update, :destroy]
+  before_action :set_articulated, only: [:edit, :update, :destroy]
   before_action :set_amendment
 
   # GET /amendments/:amendment_id/articulateds
   # GET /amendments/:amendment_id/articulateds.json
   def index
     @articulateds = @amendment.articulated.all
-  end
-
-  # GET /amendments/:amendment_id/articulateds/1
-  # GET /amendments/:amendment_id/articulateds/1.json
-  def show
   end
 
   # GET /amendments/:amendment_id/articulateds/new

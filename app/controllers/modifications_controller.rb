@@ -1,16 +1,11 @@
 class ModificationsController < ApplicationController
-  before_action :set_modification, only: [:show, :edit, :update, :destroy]
+  before_action :set_modification, only: [:edit, :update, :destroy]
   before_action :set_amendment
 
   # GET /amendments/:amendment_id/modifications
   # GET /amendments/:amendment_id/modifications.json
   def index
     @modifications = @modification.modification.all
-  end
-
-  # GET /amendments/:amendment_id/modifications/1
-  # GET /amendments/:amendment_id/modifications/1.json
-  def show
   end
 
   # GET /amendments/:amendment_id/modifications/new
