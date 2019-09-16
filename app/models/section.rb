@@ -4,7 +4,5 @@ class Section < ApplicationRecord
   has_many :programs
   has_many :organisms
 
-  def full_title
-    ref.to_s.rjust(2, '0') + '. ' + title
-  end
+  include HasFullTitle
 end
