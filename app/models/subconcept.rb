@@ -1,5 +1,5 @@
 class Subconcept < ApplicationRecord
-  belongs_to :concept
-
   include HasFullTitle
+
+  belongs_to :concept
 end

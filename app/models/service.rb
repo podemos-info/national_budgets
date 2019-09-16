@@ -1,5 +1,5 @@
 class Service < ApplicationRecord
-  belongs_to :section
-
   include HasFullTitle
+
+  belongs_to :section
 end
