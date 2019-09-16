@@ -2,6 +2,10 @@ class Amendment < ApplicationRecord
   belongs_to :user
   belongs_to :budget
 
+  def allow_modifications?
+    false
+  end
+
   def allow_articulateds?
     false
   end

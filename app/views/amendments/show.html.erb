@@ -57,6 +57,39 @@
   <% end %>
 
 <% end %>
+
+<% if @amendment.allow_modifications? %>
+  <h2>Modificaciones de alta/baja</h2>
+  
+  <% if @amendment.modifications.size %>
+    <table id="articulated_detail">
+      <thead>
+        <tr>
+          <th>Modification type</th>
+          <th>Section ref</th>
+          <th>Title</th>
+          <th>Amount</th>
+          <th colspan="2"></th>
+        </tr>
+      </thead>
+
+      <tbody>
+        <% @amendment.modifications.each do |modification| %>
+          <tr>
+            <td><%= modification.type_name %></td>
+            <td><%= modification.section.ref %></td>
+            <td><%= modification.amount %></td>
+            <td><%= link_to 'Edit', edit_amendment_modification_path(@amendment, modification) %></td>
+            <td><%= link_to 'Destroy', amendment_modification_path(@amendment, modification), method: :delete, data: { confirm: 'Are you sure?' } %></td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  <% end %>
+
+  <%= link_to 'Add modification', new_amendment_modification_path(@amendment) %>
+
+<% end %>
 <hr>
 <%= link_to 'Edit', edit_amendment_path(@amendment) %> |
 <%= link_to 'Back', amendments_path %>
