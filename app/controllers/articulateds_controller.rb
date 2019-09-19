@@ -1,15 +1,13 @@
 class ArticulatedsController < ApplicationController
-  before_action :articulated, only: [:edit, :update, :destroy]
   helper_method :amendment, :articulated
 
   # GET /amendments/:amendment_id/articulateds
   def index
-    articulateds = amendment.articulated.all
   end
 
   # GET /amendments/:amendment_id/articulateds/new
   def new
-    articulated = amendment.build_articulated
+    @articulated = amendment.build_articulated
   end
 
   # GET /amendments/:amendment_id/articulateds/:id/edit
@@ -18,11 +16,10 @@ class ArticulatedsController < ApplicationController
 
   # POST /amendments/:amendment_id/articulateds
   def create
-    @amendment = Amendment.find(params[:amendment_id])
-    @articulated = @amendment.create_articulated(articulated_params)
+    @articulated = amendment.create_articulated(articulated_params)
 
-    if @articulated.save
-      redirect_to amendment_path(@amendment), notice: 'Articulated was successfully created.'
+    if articulated.save
+      redirect_to amendment_path(amendment), notice: 'Articulated was successfully created.'
     else
       render action: 'new'
     end
@@ -30,8 +27,8 @@ class ArticulatedsController < ApplicationController
 
   # PATCH/PUT /amendments/:amendment_id/articulateds/1
   def update
-    if @articulated.update_attributes(articulated_params)
-      redirect_to amendment_path(@amendment), notice: 'Articulated was successfully updated.'
+    if articulated.update_attributes(articulated_params)
+      redirect_to amendment_path(amendment), notice: 'Articulated was successfully updated.'
     else
       render action: 'edit'
     end
@@ -40,7 +37,7 @@ class ArticulatedsController < ApplicationController
   # DELETE /amendments/:amendment_id/articulateds/1
   def destroy
     articulated.destroy
-    redirect_to amendment_path(@amendment), notice: 'Articulated was successfully deleted.'
+    redirect_to amendment_path(amendment), notice: 'Articulated was successfully deleted.'
   end
 
     private
@@ -53,11 +50,7 @@ class ArticulatedsController < ApplicationController
       @articulated ||= amendment.articulated
     end
 
-    def articulated=(articulated)
-      @articulated = articulated
-    end
-
     def amendment
-      @amendment ||= current_budget.amendments.find(params[:amendment_id]) if params[:amendment_id]
+      @amendment ||= current_budget.amendments.find(params[:amendment_id])
     end
 end
