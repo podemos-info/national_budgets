@@ -1,0 +1,48 @@
+<div>
+  <% if chapter %>
+    <%= browse_title(chapter, browse_chapter_amendment_path(chapter_id: chapter)) %>  
+  <% else %>
+    <% current_budget.chapters.each do |chapter| %>
+      <%= browse_link(chapter, browse_chapter_amendment_path(chapter_id: chapter)) %>
+    <% end %>
+  <% end %>
+
+  <% if article %>
+    <%= browse_title(article, browse_chapter_amendment_path(chapter_id: chapter, article_id: article)) %>
+  <% elsif chapter %>
+    <hr>
+    <% chapter.articles.each do |article| %>
+      <%= browse_link(article, browse_chapter_amendment_path(chapter_id: chapter, article_id: article)) %>
+    <% end %>
+  <% end %>
+
+  <% if concept %>
+    <%= browse_title(concept, browse_chapter_amendment_path(chapter_id: chapter, article_id: article, concept_id: concept)) %>
+  <% elsif article %>
+    <hr>
+    <% article.concepts.each do |concept| %>
+      <%= browse_link(concept, browse_chapter_amendment_path(chapter_id: chapter, article_id: article, concept_id: concept)) %>
+    <% end %>
+  <% end %>
+
+  <% if subconcept %>
+    <%= browse_title(subconcept, browse_chapter_amendment_path(chapter_id: chapter, article_id: article, concept_id: concept, subconcept_id: subconcept)) %>
+  <% elsif concept %>
+    <hr>
+    <% concept.subconcepts.each do |subconcept| %>
+      <%= browse_link(subconcept, browse_chapter_amendment_path(chapter_id: chapter, article_id: article, concept_id: concept, subconcept_id: subconcept)) %>
+    <% end %>
+  <% end %>
+
+  <% if chapter %>
+    <hr>
+    <%= link_to 'Reset', :browse_chapter_amendment, class: 'btn btn-primary' %>
+  <% end %>
+</div>
+
+<%= hidden_field(:modification, :chapter_id, value: chapter.id) if chapter %>
+<%= hidden_field(:modification, :article_id, value: article.id) if article %>
+<%= hidden_field(:modification, :concept_id, value: concept.id) if concept %>
+<%= hidden_field(:modification, :subconcept_id, value: subconcept.id) if subconcept %>
+
+<%= javascript_include_tag 'pseudoiframe-inner' %>

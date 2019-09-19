@@ -1,0 +1,38 @@
+<div>
+  <% if section %>
+    <%= browse_title(section, browse_section_amendment_path(section_id: section)) %>
+  <% else %>
+    <% current_budget.sections.each do |section| %>
+      <%= browse_link(section, browse_section_amendment_path(section_id: section)) %>
+    <% end %>
+  <% end %>
+
+  <% if service %>
+    <%= browse_title(service, browse_section_amendment_path(section_id: section, service_id: service)) %>
+  <% elsif section %>
+      <hr>
+      <% section.services.each do |service| %>
+        <%= browse_link(service, browse_section_amendment_path(section_id: section, service_id: service)) %>
+      <% end %>
+  <% end %>
+
+  <% if program %>
+    <%= browse_title(program, browse_section_amendment_path(section_id: section, service_id: service, program_id: program)) %>
+  <% elsif section && service %>
+      <hr>
+      <% section.programs.each do |program| %>
+        <%= browse_link(program, browse_section_amendment_path(section_id: section, service_id: service, program_id: program)) %>
+      <% end %>
+  <% end %>
+
+  <% if section %>
+    <hr>
+    <%= link_to 'Reset', :browse_section_amendment, class: 'btn btn-primary' %>
+  <% end %>
+</div>
+
+<%= hidden_field(:modification, :section_id, value: section.id) if section %>
+<%= hidden_field(:modification, :service_id, value: service.id) if service %>
+<%= hidden_field(:modification, :program_id, value: program.id) if program %>
+
+<%= javascript_include_tag 'pseudoiframe-inner' %>

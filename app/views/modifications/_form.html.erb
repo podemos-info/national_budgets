@@ -16,49 +16,21 @@
     <%= form.collection_radio_buttons :type, Modification.descendants.map{|a| [a.to_s, a.new.type_name]}, :first, :last %>
   </div>
 
-  <div class="field">
-    <%= form.label :section_id %>
-    <%= form.collection_select :section_id, current_budget.sections.all, :id, :full_title %>
+  <div class="row">
+    <div class="pseudoiframe col-12 col-sm-6" src="<%= browse_section_amendment_path(id: amendment, section_id: modification.section_id, service_id: modification.service_id, program_id: modification.program_id)%>"></div>
+    <div class="pseudoiframe col-12 col-sm-6" src="<%= browse_chapter_amendment_path(id: modification.amendment, chapter_id: modification.chapter_id, article_id: modification.article_id, concept_id: modification.concept_id, subconcept_id: modification.subconcept_id)%>"></div>
   </div>
 
-  <div class="field">
-    <%= form.label :service_id %>
-    <%= form.collection_select :service_id, current_budget.services.all, :id, :full_title %>
-  </div>
+  <div class="row">
+    <div class="col-12 col-sm-6 field d-flex">
+      <%= form.label :project %>
+      <%= form.text_field :project, style: 'flex-grow: 1; margin-left: 4px;' %>
+    </div>
 
-  <div class="field">
-    <%= form.label :program_id %>
-    <%= form.collection_select :program_id, current_budget.programs.all, :id, :full_title %>
-  </div>
-
-  <div class="field">
-    <%= form.label :chapter_id %>
-    <%= form.collection_select :chapter_id, current_budget.chapters.all, :id, :full_title %>
-  </div>
-
-  <div class="field">
-    <%= form.label :article_id %>
-    <%= form.collection_select :article_id, current_budget.articles.all, :id, :full_title %>
-  </div>
-
-  <div class="field">
-    <%= form.label :concept_id %>
-    <%= form.collection_select :concept_id, current_budget.concepts.all, :id, :full_title %>
-  </div>
-
-  <div class="field">
-    <%= form.label :subconcept_id %>
-    <%= form.collection_select :subconcept_id, current_budget.subconcepts.all, :id, :full_title %>
-  </div>
-
-  <div class="field">
-    <%= form.label :project %>
-    <%= form.text_area :project %>
-  </div>
-
-  <div class="field">
-    <%= form.label :project_new %>
-    <%= form.check_box :project_new %>
+    <div class="col-12 col-sm-6 field">
+      <%= form.label :project_new %>
+      <%= form.check_box :project_new %>
+    </div>
   </div>
 
   <div class="field">
@@ -70,3 +42,6 @@
     <%= form.submit %>
   </div>
 <% end %>
+
+<%= javascript_include_tag 'pseudoiframe-outer' %>
+<%= stylesheet_link_tag    'pseudoiframe' %>
