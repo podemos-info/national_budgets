@@ -1,5 +1,4 @@
 class ModificationsController < ApplicationController
-  before_action :modification, only: [:edit, :update, :destroy]
   attr_reader :section_id, :service_id, :program_id, 
               :chapter_id, :article_id, :concept_id, :subconcept_id
   helper_method :amendment, :modification, :modifications,
@@ -23,8 +22,8 @@ class ModificationsController < ApplicationController
   def create
     @modification = amendment.modifications.new(modification_params)
 
-    if @modification.save
-      redirect_to amendment_path(@amendment), notice: 'Modification was successfully created.'
+    if modification.save
+      redirect_to amendment_path(amendment), notice: 'Modification was successfully created.'
     else
       render action: 'new'
     end
@@ -32,8 +31,8 @@ class ModificationsController < ApplicationController
 
   # PATCH/PUT /amendments/:amendment_id/modifications/:id
   def update
-    if @modification.update_attributes(modification_params)
-      redirect_to amendment_path(@amendment), notice: 'Modification was successfully updated.'
+    if modification.update_attributes(modification_params)
+      redirect_to amendment_path(amendment), notice: 'Modification was successfully updated.'
     else
       render action: 'edit'
     end
@@ -41,8 +40,8 @@ class ModificationsController < ApplicationController
 
   # DELETE /amendments/:amendment_id/modifications/:id
   def destroy
-    @modification.destroy
-    redirect_to amendment_path(@amendment)
+    modification.destroy
+    redirect_to amendment_path(amendment)
   end
 
     private
@@ -65,6 +64,6 @@ class ModificationsController < ApplicationController
     end
 
     def amendment
-      @amendment ||= current_budget.amendments.find(params[:amendment_id]) if params[:amendment_id]
+      @amendment ||= current_budget.amendments.find(params[:amendment_id])
     end
 end

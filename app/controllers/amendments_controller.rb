@@ -24,10 +24,10 @@ class AmendmentsController < ApplicationController
   # POST /amendments
   def create
     @amendment = current_user.amendments.new(amendment_params)
-    @amendment.budget = current_budget
+    amendment.budget = current_budget
 
-    if @amendment.save
-      redirect_to amendment_path(@amendment), notice: 'Amendment was successfully created.'
+    if amendment.save
+      redirect_to amendment_path(amendment), notice: 'Amendment was successfully created.'
     else
       render action: 'new'
     end
@@ -36,7 +36,7 @@ class AmendmentsController < ApplicationController
   # PATCH/PUT /amendments/:id
   def update
     if amendment.update(amendment_params)
-      redirect_to amendment_path(@amendment), notice: 'Amendment was successfully updated.'
+      redirect_to amendment_path(amendment), notice: 'Amendment was successfully updated.'
     else
       render action: 'edit'
     end
