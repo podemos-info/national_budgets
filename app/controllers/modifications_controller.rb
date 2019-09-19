@@ -15,7 +15,7 @@ class ModificationsController < ApplicationController
     @modification = amendment.modifications.new
   end
 
-  # GET /amendments/:amendment_id/modifications/1/edit
+  # GET /amendments/:amendment_id/modifications/:id/edit
   def edit
   end
 
@@ -30,7 +30,7 @@ class ModificationsController < ApplicationController
     end
   end
 
-  # PATCH/PUT /amendments/:amendment_id/modifications/1
+  # PATCH/PUT /amendments/:amendment_id/modifications/:id
   def update
     if @modification.update_attributes(modification_params)
       redirect_to amendment_path(@amendment), notice: 'Modification was successfully updated.'
@@ -39,7 +39,7 @@ class ModificationsController < ApplicationController
     end
   end
 
-  # DELETE /amendments/:amendment_id/modifications/1
+  # DELETE /amendments/:amendment_id/modifications/:id
   def destroy
     @modification.destroy
     redirect_to amendment_path(@amendment)
