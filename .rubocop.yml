@@ -1,15 +1,11 @@
 inherit_from: .rubocop_todo.yml
 
 AllCops:
-  Includes:
+  Include:
     - Rakefile
     - config.ru
-  Excludes:
+  Exclude:
     - db/**
     - config/**
     - script/**
     - vendor/**/* # Circle adds the rubies here
-inherit_gem:
-  rubocop-github:
-    - config/default.yml
-    - config/rails.yml
