@@ -5,7 +5,14 @@ AllCops:
     - Rakefile
     - config.ru
   Exclude:
+    - bin/**
     - db/**
     - config/**
     - script/**
     - vendor/**/* # Circle adds the rubies here
+
+Metrics/LineLength:
+  Max: 140
+
+Documentation:
+  Enabled: false

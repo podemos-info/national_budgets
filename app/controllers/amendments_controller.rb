@@ -1,16 +1,16 @@
+# frozen_string_literal: true
+
 class AmendmentsController < ApplicationController
-  layout false, only: [:browse_section, :browse_chapter]
+  layout false, only: %i[browse_section browse_chapter]
   helper_method :amendment, :amendments,
                 :section, :service, :program,
                 :chapter, :article, :concept, :subconcept
 
   # GET /amendments
-  def index
-  end
+  def index; end
 
   # GET /amendments/:id
-  def show
-  end
+  def show; end
 
   # GET /amendments/new
   def new
@@ -18,8 +18,7 @@ class AmendmentsController < ApplicationController
   end
 
   # GET /amendments/:id/edit
-  def edit
-  end
+  def edit; end
 
   # POST /amendments
   def create
@@ -49,52 +48,50 @@ class AmendmentsController < ApplicationController
   end
 
   # GET /amendments/:id/browse/section(/:section_id(/:service_id(/:program_id)))
-  def browse_section
-  end
+  def browse_section; end
 
   # GET /amendments/:id/browse/chapter(/:chapter_id(/:article_id(/:concept_id(/:subconcept_id))))
-  def browse_chapter
+  def browse_chapter; end
+
+  private
+
+  def amendment_params
+    params.require(:amendment).permit(:number, :type, :explanation, :user_id)
   end
 
-    private
+  def amendment
+    @amendment ||= current_budget.amendments.find(params[:id])
+  end
 
-    def amendment_params
-      params.require(:amendment).permit(:number, :type, :explanation, :user_id)
-    end
+  def amendments
+    @amendments ||= current_budget.amendments
+  end
 
-    def amendment
-      @amendment ||= current_budget.amendments.find(params[:id])
-    end
+  def section
+    @section ||= current_budget.sections.find(params[:section_id]) if params[:section_id]
+  end
 
-    def amendments
-       @amendments ||= current_budget.amendments
-    end
+  def service
+    @service ||= section.services.find(params[:service_id]) if params[:service_id]
+  end
 
-    def section
-      @section ||= current_budget.sections.find(params[:section_id]) if params[:section_id]
-    end
+  def program
+    @program ||= section.programs.find(params[:program_id]) if params[:program_id]
+  end
 
-    def service
-      @service ||= section.services.find(params[:service_id]) if params[:service_id]
-    end
+  def chapter
+    @chapter ||= current_budget.chapters.find(params[:chapter_id]) if params[:chapter_id]
+  end
 
-    def program
-      @program ||= section.programs.find(params[:program_id]) if params[:program_id]
-    end
+  def article
+    @article ||= chapter.articles.find(params[:article_id]) if params[:article_id]
+  end
 
-    def chapter
-      @chapter ||= current_budget.chapters.find(params[:chapter_id]) if params[:chapter_id]
-    end
+  def concept
+    @concept ||= article.concepts.find(params[:concept_id]) if params[:concept_id]
+  end
 
-    def article
-      @article ||= chapter.articles.find(params[:article_id]) if params[:article_id]
-    end
-
-    def concept
-      @concept ||= article.concepts.find(params[:concept_id]) if params[:concept_id]
-    end
-
-    def subconcept
-      @amendment ||= concept.subconcepts.find(params[:subconcept_id]) if params[:subconcept_id]
-    end
+  def subconcept
+    @amendment ||= concept.subconcepts.find(params[:subconcept_id]) if params[:subconcept_id]
+  end
 end

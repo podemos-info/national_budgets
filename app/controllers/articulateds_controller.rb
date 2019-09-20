@@ -1,9 +1,10 @@
+# frozen_string_literal: true
+
 class ArticulatedsController < ApplicationController
   helper_method :amendment, :articulated
 
   # GET /amendments/:amendment_id/articulateds
-  def index
-  end
+  def index; end
 
   # GET /amendments/:amendment_id/articulateds/new
   def new
@@ -11,8 +12,7 @@ class ArticulatedsController < ApplicationController
   end
 
   # GET /amendments/:amendment_id/articulateds/:id/edit
-  def edit
-  end
+  def edit; end
 
   # POST /amendments/:amendment_id/articulateds
   def create
@@ -40,17 +40,17 @@ class ArticulatedsController < ApplicationController
     redirect_to amendment_path(amendment), notice: 'Articulated was successfully deleted.'
   end
 
-    private
+  private
 
-    def articulated_params
-      params.require(:articulated).permit(:type, :section_id, :title, :text, :justification, :number, :number)
-    end
+  def articulated_params
+    params.require(:articulated).permit(:type, :section_id, :title, :text, :justification, :number, :number)
+  end
 
-    def articulated
-      @articulated ||= amendment.articulated
-    end
+  def articulated
+    @articulated ||= amendment.articulated
+  end
 
-    def amendment
-      @amendment ||= current_budget.amendments.find(params[:amendment_id])
-    end
+  def amendment
+    @amendment ||= current_budget.amendments.find(params[:amendment_id])
+  end
 end
