@@ -1,6 +1,6 @@
 <div>
   <% if chapter %>
-    <%= browse_title(chapter, browse_chapter_amendment_path(chapter_id: chapter)) %>  
+    <%= browse_title(chapter, browse_chapter_amendment_path) %>  
   <% else %>
     <% current_budget.chapters.each do |chapter| %>
       <%= browse_link(chapter, browse_chapter_amendment_path(chapter_id: chapter)) %>
@@ -8,7 +8,7 @@
   <% end %>
 
   <% if article %>
-    <%= browse_title(article, browse_chapter_amendment_path(chapter_id: chapter, article_id: article)) %>
+    <%= browse_title(article, browse_chapter_amendment_path(chapter_id: chapter)) %>
   <% elsif chapter %>
     <hr>
     <% chapter.articles.each do |article| %>
@@ -17,7 +17,7 @@
   <% end %>
 
   <% if concept %>
-    <%= browse_title(concept, browse_chapter_amendment_path(chapter_id: chapter, article_id: article, concept_id: concept)) %>
+    <%= browse_title(concept, browse_chapter_amendment_path(chapter_id: chapter, article_id: article)) %>
   <% elsif article %>
     <hr>
     <% article.concepts.each do |concept| %>
@@ -26,17 +26,12 @@
   <% end %>
 
   <% if subconcept %>
-    <%= browse_title(subconcept, browse_chapter_amendment_path(chapter_id: chapter, article_id: article, concept_id: concept, subconcept_id: subconcept)) %>
+    <%= browse_title(subconcept, browse_chapter_amendment_path(chapter_id: chapter, article_id: article, concept_id: concept)) %>
   <% elsif concept %>
     <hr>
     <% concept.subconcepts.each do |subconcept| %>
       <%= browse_link(subconcept, browse_chapter_amendment_path(chapter_id: chapter, article_id: article, concept_id: concept, subconcept_id: subconcept)) %>
     <% end %>
-  <% end %>
-
-  <% if chapter %>
-    <hr>
-    <%= link_to 'Reset', :browse_chapter_amendment, class: 'btn btn-primary' %>
   <% end %>
 </div>
 
