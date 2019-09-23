@@ -11,11 +11,6 @@
     </div>
   <% end %>
 
-  <div class="field" id="type">
-    <%= form.label :type %>
-    <%= form.collection_radio_buttons :type, Modification.descendants.map{|a| [a.to_s, a.new.type_name]}, :first, :last %>
-  </div>
-
   <div class="row">
     <div class="pseudoiframe col-12 col-sm-6" src="<%= browse_section_amendment_path(id: amendment, section_id: modification.section_id, service_id: modification.service_id, program_id: modification.program_id)%>"></div>
     <div class="pseudoiframe col-12 col-sm-6" src="<%= browse_chapter_amendment_path(id: modification.amendment, chapter_id: modification.chapter_id, article_id: modification.article_id, concept_id: modification.concept_id, subconcept_id: modification.subconcept_id)%>"></div>

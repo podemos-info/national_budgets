@@ -47,11 +47,15 @@ class ModificationsController < ApplicationController
   private
 
   def modification_params
-    params.require(:modification).permit(:type, :section_id, :service_id,
+    params.require(:modification).permit(:section_id, :service_id,
                                          :program_id, :chapter_id,
                                          :article_id, :concept_id,
                                          :subconcept_id, :project,
                                          :project_new, :amount)
+  end
+
+  def modification_type
+    amendment.class.to_s.gsub('Amendment', 'Modification')
   end
 
   def modification
