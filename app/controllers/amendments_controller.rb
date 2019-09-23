@@ -1,74 +1,97 @@
+# frozen_string_literal: true
+
 class AmendmentsController < ApplicationController
-  before_action :set_amendment, only: [:show, :edit, :update, :destroy]
+  layout false, only: %i[browse_section browse_chapter]
+  helper_method :amendment, :amendments,
+                :section, :service, :program,
+                :chapter, :article, :concept, :subconcept
 
   # GET /amendments
-  # GET /amendments.json
-  def index
-    @amendments = Amendment.all
-  end
+  def index; end
 
-  # GET /amendments/1
-  # GET /amendments/1.json
-  def show
-  end
+  # GET /amendments/:id
+  def show; end
 
   # GET /amendments/new
   def new
-    @amendment = Amendment.new
+    @amendment = current_budget.amendments.new
   end
 
-  # GET /amendments/1/edit
-  def edit
-  end
+  # GET /amendments/:id/edit
+  def edit; end
 
   # POST /amendments
-  # POST /amendments.json
   def create
     @amendment = current_user.amendments.new(amendment_params)
-    @amendment.budget = current_budget
+    amendment.budget = current_budget
 
-    respond_to do |format|
-      if @amendment.save
-        format.html { redirect_to amendment_path(@amendment), notice: 'Amendment was successfully created.' }
-        format.json { render action: 'show', status: :created, location: @amendment }
-      else
-        format.html { render action: 'new' }
-        format.json { render json: @amendment.errors, status: :unprocessable_entity }
-      end
+    if amendment.save
+      redirect_to amendment_path(amendment), notice: 'Amendment was successfully created.'
+    else
+      render action: 'new'
     end
   end
 
-  # PATCH/PUT /amendments/1
-  # PATCH/PUT /amendments/1.json
+  # PATCH/PUT /amendments/:id
   def update
-    respond_to do |format|
-      if @amendment.update(amendment_params)
-        format.html { redirect_to amendment_path(@amendment), notice: 'Amendment was successfully updated.' }
-        format.json { head :no_content }
-      else
-        format.html { render action: 'edit' }
-        format.json { render json: @amendment.errors, status: :unprocessable_entity }
-      end
+    if amendment.update(amendment_params)
+      redirect_to amendment_path(amendment), notice: 'Amendment was successfully updated.'
+    else
+      render action: 'edit'
     end
   end
 
-  # DELETE /amendments/1
-  # DELETE /amendments/1.json
+  # DELETE /amendments/:id
   def destroy
-    @amendment.destroy
-    respond_to do |format|
-      format.html { redirect_to amendments_url }
-      format.json { head :no_content }
-    end
+    amendment.destroy
+    redirect_to amendments_url, notice: 'Amendment was successfully deleted.'
   end
 
-    private
+  # GET /amendments/:id/browse/section(/:section_id(/:service_id(/:program_id)))
+  def browse_section; end
 
-    def set_amendment
-      @amendment = Amendment.find(params[:id])
-    end
+  # GET /amendments/:id/browse/chapter(/:chapter_id(/:article_id(/:concept_id(/:subconcept_id))))
+  def browse_chapter; end
 
-    def amendment_params
-      params.require(:amendment).permit(:number, :type, :explanation, :user_id)
-    end
+  private
+
+  def amendment_params
+    params.require(:amendment).permit(:number, :type, :explanation, :user_id)
+  end
+
+  def amendment
+    @amendment ||= current_budget.amendments.find(params[:id])
+  end
+
+  def amendments
+    @amendments ||= current_budget.amendments
+  end
+
+  def section
+    @section ||= current_budget.sections.find(params[:section_id]) if params[:section_id]
+  end
+
+  def service
+    @service ||= section.services.find(params[:service_id]) if params[:service_id]
+  end
+
+  def program
+    @program ||= section.programs.find(params[:program_id]) if params[:program_id]
+  end
+
+  def chapter
+    @chapter ||= current_budget.chapters.find(params[:chapter_id]) if params[:chapter_id]
+  end
+
+  def article
+    @article ||= chapter.articles.find(params[:article_id]) if params[:article_id]
+  end
+
+  def concept
+    @concept ||= article.concepts.find(params[:concept_id]) if params[:concept_id]
+  end
+
+  def subconcept
+    @amendment ||= concept.subconcepts.find(params[:subconcept_id]) if params[:subconcept_id]
+  end
 end

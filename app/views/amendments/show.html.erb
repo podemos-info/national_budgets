@@ -2,33 +2,33 @@
 
 <p>
   <strong>Number:</strong>
-  <%= @amendment.number %>
+  <%= amendment.number %>
 </p>
 
 <p>
   <strong>Type:</strong>
-  <%= @amendment.type_name %>
+  <%= amendment.type_name %>
 </p>
 
 <p>
   <strong>Explanation:</strong>
-  <%= @amendment.explanation %>
+  <%= amendment.explanation %>
 </p>
 
 <p>
   <strong>User:</strong>
-  <%= @amendment.user.email %>
+  <%= amendment.user.email %>
 </p>
 
 <p>
   <strong>Budget:</strong>
-  <%= @amendment.budget.title %>
+  <%= amendment.budget.title %>
 </p>
 
-<% if @amendment.allow_articulateds? %>
+<% if amendment.allow_articulateds? %>
   <h2>Articulado</h2>
   
-  <% if @amendment.articulated %>
+  <% if amendment.articulated %>
     <table id="articulated_detail">
       <thead>
         <tr>
@@ -40,28 +40,28 @@
       </thead>
 
       <tbody>
-        <% articulated = @amendment.articulated %>
+        <% articulated = amendment.articulated %>
         <tr>
           <td><%= articulated.type_name %></td>
           <td><%= articulated.section.ref %></td>
           <td><%= articulated.title %></td>
-          <td><%= link_to 'Edit', edit_amendment_articulated_path(@amendment, articulated) %></td>
-          <td><%= link_to 'Destroy', amendment_articulated_path(@amendment, articulated), method: :delete, data: { confirm: 'Are you sure?' } %></td>
+          <td><%= link_to 'Edit', edit_amendment_articulated_path(amendment, articulated) %></td>
+          <td><%= link_to 'Destroy', amendment_articulated_path(amendment, articulated), method: :delete, data: { confirm: 'Are you sure?' } %></td>
         </tr>
       </tbody>
     </table>
   <% end %>
 
-  <% unless @amendment.articulated %>
-    <%= link_to 'Add Articulated', new_amendment_articulated_path(@amendment) %>
+  <% unless amendment.articulated %>
+    <%= link_to 'Add Articulated', new_amendment_articulated_path(amendment) %>
   <% end %>
 
 <% end %>
 
-<% if @amendment.allow_modifications? %>
+<% if amendment.allow_modifications? %>
   <h2>Modificaciones de alta/baja</h2>
   
-  <% if @amendment.modifications.size %>
+  <% if amendment.modifications.size %>
     <table id="articulated_detail">
       <thead>
         <tr>
@@ -74,22 +74,22 @@
       </thead>
 
       <tbody>
-        <% @amendment.modifications.each do |modification| %>
+        <% amendment.modifications.each do |modification| %>
           <tr>
             <td><%= modification.type_name %></td>
             <td><%= modification.section.ref %></td>
             <td><%= modification.amount %></td>
-            <td><%= link_to 'Edit', edit_amendment_modification_path(@amendment, modification) %></td>
-            <td><%= link_to 'Destroy', amendment_modification_path(@amendment, modification), method: :delete, data: { confirm: 'Are you sure?' } %></td>
+            <td><%= link_to 'Edit', edit_amendment_modification_path(amendment, modification) %></td>
+            <td><%= link_to 'Destroy', amendment_modification_path(amendment, modification), method: :delete, data: { confirm: 'Are you sure?' } %></td>
           </tr>
         <% end %>
       </tbody>
     </table>
   <% end %>
 
-  <%= link_to 'Add modification', new_amendment_modification_path(@amendment) %>
+  <%= link_to 'Add modification', new_amendment_modification_path(amendment) %>
 
 <% end %>
 <hr>
-<%= link_to 'Edit', edit_amendment_path(@amendment) %> |
+<%= link_to 'Edit', edit_amendment_path(amendment) %> |
 <%= link_to 'Back', amendments_path %>
