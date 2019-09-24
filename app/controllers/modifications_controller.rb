@@ -1,11 +1,7 @@
 # frozen_string_literal: true
 
 class ModificationsController < ApplicationController
-  attr_reader :section_id, :service_id, :program_id,
-              :chapter_id, :article_id, :concept_id, :subconcept_id
-  helper_method :amendment, :modification, :modifications,
-                :section, :service, :program,
-                :chapter, :article, :concept, :subconcept
+  helper_method :amendment, :modification, :modifications, :fixed_section?
 
   # GET /amendments/:amendment_id/modifications
   def index; end
@@ -54,10 +50,6 @@ class ModificationsController < ApplicationController
                                          :project_new, :amount)
   end
 
-  def modification_type
-    amendment.class.to_s.gsub('Amendment', 'Modification')
-  end
-
   def modification
     @modification ||= amendment.modifications.find(params[:id])
   end
@@ -68,5 +60,9 @@ class ModificationsController < ApplicationController
 
   def amendment
     @amendment ||= current_budget.amendments.find(params[:amendment_id])
+  end
+
+  def fixed_section?
+    @fixed_section ||= modifications.size > 1 || (modifications.size==1 && @modification.new_record?)
   end
 end
