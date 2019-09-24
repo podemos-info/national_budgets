@@ -1,8 +1,8 @@
 # frozen_string_literal: true
 
 module AmendmentsHelper
-  def browse_title(object, reset_path)
-    "#{reset_link(reset_path)} <b>#{object.class}:</b> #{object.full_title}<br>".html_safe
+  def browse_title(object)
+    "<b>#{object.class}:</b> #{object.full_title}<br>".html_safe
   end
 
   def browse_link(object, path)

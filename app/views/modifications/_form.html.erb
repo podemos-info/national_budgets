@@ -12,8 +12,8 @@
   <% end %>
 
   <div class="row">
-    <div class="pseudoiframe col-12 col-sm-6" src="<%= browse_section_amendment_path(id: amendment, section_id: modification.section_id, service_id: modification.service_id, program_id: modification.program_id)%>"></div>
-    <div class="pseudoiframe col-12 col-sm-6" src="<%= browse_chapter_amendment_path(id: modification.amendment, chapter_id: modification.chapter_id, article_id: modification.article_id, concept_id: modification.concept_id, subconcept_id: modification.subconcept_id)%>"></div>
+    <div class="pseudoiframe col-12 col-sm-6" src="<%= browse_section_amendment_path(id: amendment, section_id: modification.section, service_id: modification.service_id, program_id: modification.program_id, locked_section: modification.locked_section?)%>"></div>
+    <div class="pseudoiframe col-12 col-sm-6" src="<%= browse_chapter_amendment_path(id: amendment, chapter_id: modification.chapter_id, article_id: modification.article_id, concept_id: modification.concept_id, subconcept_id: modification.subconcept_id)%>"></div>
   </div>
 
   <div class="row">
