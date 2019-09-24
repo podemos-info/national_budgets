@@ -1,6 +1,7 @@
 <div>
   <% if chapter %>
-    <%= browse_title(chapter, browse_chapter_amendment_path) %>  
+    <%= reset_link(browse_chapter_amendment_path) %>
+    <%= browse_title(chapter) %>  
   <% else %>
     <% current_budget.chapters.each do |chapter| %>
       <%= browse_link(chapter, browse_chapter_amendment_path(chapter_id: chapter)) %>
@@ -8,7 +9,8 @@
   <% end %>
 
   <% if article %>
-    <%= browse_title(article, browse_chapter_amendment_path(chapter_id: chapter)) %>
+    <%= reset_link(browse_chapter_amendment_path(chapter_id: chapter)) %> 
+    <%= browse_title(article) %>
   <% elsif chapter %>
     <hr>
     <% chapter.articles.each do |article| %>
@@ -17,7 +19,8 @@
   <% end %>
 
   <% if concept %>
-    <%= browse_title(concept, browse_chapter_amendment_path(chapter_id: chapter, article_id: article)) %>
+    <%= reset_link(browse_chapter_amendment_path(chapter_id: chapter, article_id: article)) %> 
+    <%= browse_title(concept) %>
   <% elsif article %>
     <hr>
     <% article.concepts.each do |concept| %>
@@ -26,7 +29,8 @@
   <% end %>
 
   <% if subconcept %>
-    <%= browse_title(subconcept, browse_chapter_amendment_path(chapter_id: chapter, article_id: article, concept_id: concept)) %>
+    <%= reset_link(browse_chapter_amendment_path(chapter_id: chapter, article_id: article, concept_id: concept)) %> 
+    <%= browse_title(subconcept) %>
   <% elsif concept %>
     <hr>
     <% concept.subconcepts.each do |subconcept| %>

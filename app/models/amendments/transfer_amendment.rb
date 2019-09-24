@@ -2,10 +2,9 @@
 
 module Amendments
   class TransferAmendment < Amendment
-    has_many :modifications, foreign_key: 'amendment_id', class_name: 'Modifications::TransferModification'
+    include HasModifications
+    include HasModificationSection
 
-    def allow_modifications?
-      true
-    end
+    has_many :modifications, foreign_key: 'amendment_id', class_name: 'Modifications::TransferModification'
   end
 end

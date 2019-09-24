@@ -2,7 +2,7 @@
 
 class AmendmentsController < ApplicationController
   layout false, only: %i[browse_section browse_chapter]
-  helper_method :amendment, :amendments,
+  helper_method :amendment, :amendments, :locked_section?,
                 :section, :service, :program,
                 :chapter, :article, :concept, :subconcept
 
@@ -93,5 +93,9 @@ class AmendmentsController < ApplicationController
 
   def subconcept
     @amendment ||= concept.subconcepts.find(params[:subconcept_id]) if params[:subconcept_id]
+  end
+
+  def locked_section?
+    params['locked_section'] == 'false'
   end
 end
