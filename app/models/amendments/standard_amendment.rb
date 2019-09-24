@@ -2,10 +2,9 @@
 
 module Amendments
   class StandardAmendment < Amendment
-    has_many :modifications, foreign_key: 'amendment_id', class_name: 'Modifications::StandardModification'
+    include HasModifications
+    include HasModificationSection
 
-    def allow_modifications?
-      true
-    end
+    has_many :modifications, foreign_key: 'amendment_id', class_name: 'Modifications::StandardModification'
   end
 end

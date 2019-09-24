@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class ModificationsController < ApplicationController
-  helper_method :amendment, :modification, :modifications, :fixed_section?
+  helper_method :amendment, :modification, :modifications
 
   # GET /amendments/:amendment_id/modifications
   def index; end
@@ -60,9 +60,5 @@ class ModificationsController < ApplicationController
 
   def amendment
     @amendment ||= current_budget.amendments.find(params[:amendment_id])
-  end
-
-  def fixed_section?
-    @fixed_section ||= modifications.size > 1 || (modifications.size==1 && @modification.new_record?)
   end
 end
