@@ -3,7 +3,7 @@
 class Amendment < ApplicationRecord
   belongs_to :user
   belongs_to :budget
-  validate :type_can_not_change, on: :update
+  validate :type_cannot_be_changed, on: :update, if: :locked_type?
 
   def modifications?
     false
@@ -25,8 +25,8 @@ class Amendment < ApplicationRecord
     persisted? && (articulated? || modifications?)
   end
 
-  def type_can_not_change
-    errors.add(:type, 'can not be changed') if type_changed? && locked_type?
+  def type_cannot_be_changed
+    errors.add(:type, 'can not be changed') if type_changed? && type != type_was
   end
 
   def type_name

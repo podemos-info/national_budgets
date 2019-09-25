@@ -6,7 +6,7 @@ module Amendments
     delegate :section, to: :articulated, allow_nil: true
 
     def articulated?
-      !articulated.nil?
+      articulated.present?
     end
 
     def allow_articulated?
