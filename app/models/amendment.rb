@@ -9,6 +9,10 @@ class Amendment < ApplicationRecord
     false
   end
 
+  def modifications?
+    false
+  end
+
   def allow_modifications?
     false
   end
