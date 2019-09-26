@@ -14,7 +14,7 @@ class AmendmentsController < ApplicationController
 
   # GET /amendments/new
   def new
-    @amendment = budget.amendments.new
+    @amendment = amendments.new
   end
 
   # GET /amendments/:id/edit
