@@ -96,6 +96,6 @@ class AmendmentsController < ApplicationController
   end
 
   def locked_section?
-    params['locked_section'] == 'false'
+    params['locked_section'] == 'true'
   end
 end
