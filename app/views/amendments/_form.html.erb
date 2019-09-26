@@ -16,10 +16,12 @@
     <%= form.text_field :number %>
   </div>
 
-  <div class="field">
-    <%= form.label :type %>
-    <%= form.collection_radio_buttons :type, Amendment.descendants.map{|a| [a.to_s, a.new.type_name]}, :first, :last %>
-  </div>
+  <% unless amendment.locked_type? %>
+    <div class="field">
+      <%= form.label :type %>
+      <%= form.collection_radio_buttons :type, Amendment.descendants.map{|a| [a.to_s, a.new.type_name]}, :first, :last %>
+    </div>
+  <% end %>
 
   <div class="field">
     <%= form.label :explanation %>

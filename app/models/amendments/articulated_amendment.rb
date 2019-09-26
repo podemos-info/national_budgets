@@ -5,7 +5,11 @@ module Amendments
     has_one :articulated, foreign_key: 'amendment_id'
     delegate :section, to: :articulated, allow_nil: true
 
-    def allow_articulateds?
+    def articulated?
+      articulated.present?
+    end
+
+    def allow_articulated?
       true
     end
   end
