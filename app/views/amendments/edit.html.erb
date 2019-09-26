@@ -1,6 +1,6 @@
 <h1>Editing Amendment</h1>
 
-<%= render 'form', amendment: amendment %>
+<%= render 'form', budget: nil, amendment: amendment %>
 
 <%= link_to 'Show', amendment_path(amendment) %> |
-<%= link_to 'Back', amendments_path %>
+<%= link_to 'Back', budget_amendments_path(budget) %>

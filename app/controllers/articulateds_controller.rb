@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class ArticulatedsController < ApplicationController
-  helper_method :amendment, :articulated
+  helper_method :budget, :amendment, :articulated
 
   # GET /amendments/:amendment_id/articulateds
   def index; end
@@ -46,11 +46,15 @@ class ArticulatedsController < ApplicationController
     params.require(:articulated).permit(:type, :section_id, :title, :text, :justification, :number, :number)
   end
 
-  def articulated
-    @articulated ||= amendment.articulated
+  def amendment
+    @amendment ||= Amendment.find(params[:amendment_id])
   end
 
-  def amendment
-    @amendment ||= current_budget.amendments.find(params[:amendment_id])
+  def articulated
+    @articulated ||= amendment&.articulated || Articulated.find(params[:id])
+  end
+  
+  def budget
+    @budget ||= amendment.budget
   end
 end

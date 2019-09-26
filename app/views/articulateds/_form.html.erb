@@ -18,7 +18,7 @@
   
   <div class="field">
     <%= form.label :section_id %>
-    <%= form.collection_select :section_id, current_budget.sections.all, :id, :full_title %>
+    <%= form.collection_select :section_id, budget.sections.all, :id, :full_title %>
   </div>
   
   <div class="field">

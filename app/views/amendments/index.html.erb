@@ -1,6 +1,7 @@
 <p id="notice"><%= notice %></p>
 
-<h1>Amendments</h1>
+
+<h1><%= budget.title %> amendments</h1>
 
 <table>
   <thead>
@@ -32,4 +33,4 @@
 
 <br>
 
-<%= link_to 'New Amendment', new_amendment_path %>
+<%= link_to 'New Amendment', new_budget_amendment_path(budget) %>

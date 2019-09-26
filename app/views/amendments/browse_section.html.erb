@@ -5,7 +5,7 @@
     <% end %>
     <%= browse_title(section) %>
   <% else %>
-    <% current_budget.sections.each do |section| %>
+    <% budget.sections.each do |section| %>
       <%= browse_link(section, browse_section_amendment_path(section_id: section, locked_section: locked_section?)) %>
     <% end %>
   <% end %>

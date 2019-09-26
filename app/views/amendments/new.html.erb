@@ -1,5 +1,5 @@
 <h1>New Amendment</h1>
 
-<%= render 'form', amendment: amendment %>
+<%= render 'form', budget: budget, amendment: amendment %>
 
-<%= link_to 'Back', amendments_path %>
+<%= link_to 'Back', budget_amendments_path(budget) %>

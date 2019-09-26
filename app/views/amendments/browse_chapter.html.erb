@@ -3,7 +3,7 @@
     <%= reset_link(browse_chapter_amendment_path) %>
     <%= browse_title(chapter) %>  
   <% else %>
-    <% current_budget.chapters.each do |chapter| %>
+    <% budget.chapters.each do |chapter| %>
       <%= browse_link(chapter, browse_chapter_amendment_path(chapter_id: chapter)) %>
     <% end %>
   <% end %>
