@@ -1,0 +1,24 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Budgets</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Date</th>
+      <th>Title</th>
+      <th>Amendments</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% budgets.each do |budget| %>
+      <tr>
+        <td><%= budget.date %></td>
+        <td><%= budget.title %></td>
+        <td><%= link_to budget.amendments.length, budget_amendments_path(budget) %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+

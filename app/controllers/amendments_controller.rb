@@ -2,8 +2,8 @@
 
 class AmendmentsController < ApplicationController
   layout false, only: %i[browse_section browse_chapter]
-  helper_method :amendment, :amendments, :locked_section?,
-                :section, :service, :program,
+  helper_method :budget, :amendment, :amendments,
+                :section, :service, :program, :locked_section?,
                 :chapter, :article, :concept, :subconcept
 
   # GET /amendments
@@ -14,7 +14,7 @@ class AmendmentsController < ApplicationController
 
   # GET /amendments/new
   def new
-    @amendment = current_budget.amendments.new
+    @amendment = amendments.new
   end
 
   # GET /amendments/:id/edit
@@ -23,7 +23,7 @@ class AmendmentsController < ApplicationController
   # POST /amendments
   def create
     @amendment = current_user.amendments.new(amendment_params)
-    amendment.budget = current_budget
+    amendment.budget = budget
 
     if amendment.save
       redirect_to amendment_path(amendment), notice: 'Amendment was successfully created.'
@@ -59,16 +59,20 @@ class AmendmentsController < ApplicationController
     params.require(:amendment).permit(:number, :type, :explanation, :user_id)
   end
 
+  def budget
+    @budget ||= amendment&.budget || Budget.find(params[:budget_id])
+  end
+
   def amendment
-    @amendment ||= current_budget.amendments.find(params[:id])
+    @amendment ||= params[:id] && Amendment.find(params[:id])
   end
 
   def amendments
-    @amendments ||= current_budget.amendments
+    @amendments ||= budget.amendments
   end
 
   def section
-    @section ||= current_budget.sections.find(params[:section_id]) if params[:section_id]
+    @section ||= budget.sections.find(params[:section_id]) if params[:section_id]
   end
 
   def service
@@ -80,7 +84,7 @@ class AmendmentsController < ApplicationController
   end
 
   def chapter
-    @chapter ||= current_budget.chapters.find(params[:chapter_id]) if params[:chapter_id]
+    @chapter ||= budget.chapters.find(params[:chapter_id]) if params[:chapter_id]
   end
 
   def article
@@ -92,10 +96,10 @@ class AmendmentsController < ApplicationController
   end
 
   def subconcept
-    @amendment ||= concept.subconcepts.find(params[:subconcept_id]) if params[:subconcept_id]
+    @subconcept ||= concept.subconcepts.find(params[:subconcept_id]) if params[:subconcept_id]
   end
 
   def locked_section?
-    params['locked_section'] == 'false'
+    params['locked_section'] == 'true'
   end
 end

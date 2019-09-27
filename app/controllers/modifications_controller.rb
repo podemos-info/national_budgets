@@ -1,14 +1,14 @@
 # frozen_string_literal: true
 
 class ModificationsController < ApplicationController
-  helper_method :amendment, :modification, :modifications
+  helper_method :budget, :amendment, :modification, :modifications
 
   # GET /amendments/:amendment_id/modifications
   def index; end
 
   # GET /amendments/:amendment_id/modifications/new
   def new
-    @modification = amendment.modifications.new
+    @modification = modifications.new
   end
 
   # GET /amendments/:amendment_id/modifications/:id/edit
@@ -51,7 +51,7 @@ class ModificationsController < ApplicationController
   end
 
   def modification
-    @modification ||= amendment.modifications.find(params[:id])
+    @modification ||= modifications.find(params[:id])
   end
 
   def modifications
@@ -59,6 +59,10 @@ class ModificationsController < ApplicationController
   end
 
   def amendment
-    @amendment ||= current_budget.amendments.find(params[:amendment_id])
+    @amendment ||= Amendment.find(params[:amendment_id])
+  end
+
+  def budget
+    @budget ||= amendment.budget
   end
 end
