@@ -136,6 +136,8 @@ GEM
       activesupport (>= 4.1)
     i18n (1.6.0)
       concurrent-ruby (~> 1.0)
+    i18n-debug (1.2.0)
+      i18n (< 2)
     inherited_resources (1.11.0)
       actionpack (>= 5.0, < 6.1)
       has_scope (~> 0.6)
@@ -320,6 +322,7 @@ DEPENDENCIES
   coffee-rails (~> 4.2)
   devise
   dotenv-rails
+  i18n-debug
   jbuilder (~> 2.5)
   jquery-rails
   listen (>= 3.0.5, < 3.2)
