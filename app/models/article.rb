@@ -4,6 +4,6 @@ class Article < ApplicationRecord
   include HasFullTitle
 
   belongs_to :chapter
-  has_many :concepts
+  has_many :concepts, dependent: :destroy
   has_many :subconcepts, through: :concepts
 end
