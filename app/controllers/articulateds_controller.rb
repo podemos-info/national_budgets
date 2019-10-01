@@ -27,7 +27,7 @@ class ArticulatedsController < ApplicationController
 
   # PATCH/PUT /amendments/:amendment_id/articulateds/1
   def update
-    if articulated.update_attributes(articulated_params)
+    if articulated.update(articulated_params)
       redirect_to amendment_path(amendment), notice: t('.notice')
     else
       render action: 'edit'
@@ -53,7 +53,7 @@ class ArticulatedsController < ApplicationController
   def articulated
     @articulated ||= amendment&.articulated || Articulated.find(params[:id])
   end
-  
+
   def budget
     @budget ||= amendment.budget
   end

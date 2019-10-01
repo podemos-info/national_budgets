@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require_relative 'boot'
 
 require 'rails/all'
@@ -15,7 +17,7 @@ module NationalBudgets
     # Application configuration can go into files in config/initializers
     # -- all .rb files in that directory are automatically loaded after loading
     # the framework and any gems in your application.
-    preload_paths = %w(app/models/**/).freeze
+    preload_paths = %w[app/models/**/].freeze
     config.eager_load_paths += Dir[*preload_paths]
   end
 end
