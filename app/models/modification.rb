@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 class Modification < ApplicationRecord
+  include HasType
   belongs_to :amendment
   belongs_to :section
   belongs_to :service
@@ -11,10 +12,6 @@ class Modification < ApplicationRecord
   belongs_to :subconcept, optional: true
   after_initialize :set_section
   validate :section_not_unique
-
-  def type_name
-    self.class.to_s.demodulize.underscore.humanize
-  end
 
   def locked_section?
     @locked_section ||= amendment.modifications.where.not(id: id).count.positive?

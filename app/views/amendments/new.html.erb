@@ -1,5 +1,5 @@
-<h1>New Amendment</h1>
+<h1><%= t('.title') %></h1>
 
 <%= render 'form', budget: budget, amendment: amendment %>
 
-<%= link_to 'Back', budget_amendments_path(budget) %>
+<%= link_to t('helpers.action.back'), budget_amendments_path(budget) %>

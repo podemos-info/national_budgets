@@ -1,20 +1,20 @@
 <p id="notice"><%= notice %></p>
 
-<h1>Budgets</h1>
+<h1><%= t('.title') %></h1>
 
 <table>
   <thead>
     <tr>
-      <th>Date</th>
-      <th>Title</th>
-      <th>Amendments</th>
+      <th><%= Budget.human_attribute_name(:date) %></th>
+      <th><%= Budget.human_attribute_name(:title) %></th>
+      <th><%= Budget.human_attribute_name(:amendments) %></th>
     </tr>
   </thead>
 
   <tbody>
     <% budgets.each do |budget| %>
       <tr>
-        <td><%= budget.date %></td>
+        <td><%= l(budget.date, format: :long) %></td>
         <td><%= budget.title %></td>
         <td><%= link_to budget.amendments.length, budget_amendments_path(budget) %></td>
       </tr>

@@ -1,5 +1,5 @@
-<h1>Edit Articulated</h1>
+<h1><%= t('.title') %></h1>
 
 <%= render 'form', articulated: articulated %>
 
-<%= link_to 'Back', amendment_path(amendment) %>
+<%= link_to t('helpers.action.back'), amendment_path(amendment) %>
