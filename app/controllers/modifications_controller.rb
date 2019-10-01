@@ -19,7 +19,7 @@ class ModificationsController < ApplicationController
     @modification = amendment.modifications.new(modification_params)
 
     if modification.save
-      redirect_to amendment_path(amendment), notice: 'Modification was successfully created.'
+      redirect_to amendment_path(amendment), notice: t('.notice')
     else
       render action: 'new'
     end
@@ -28,7 +28,7 @@ class ModificationsController < ApplicationController
   # PATCH/PUT /amendments/:amendment_id/modifications/:id
   def update
     if modification.update_attributes(modification_params)
-      redirect_to amendment_path(amendment), notice: 'Modification was successfully updated.'
+      redirect_to amendment_path(amendment), notice: t('.notice')
     else
       render action: 'edit'
     end
@@ -37,7 +37,7 @@ class ModificationsController < ApplicationController
   # DELETE /amendments/:amendment_id/modifications/:id
   def destroy
     modification.destroy
-    redirect_to amendment_path(amendment)
+    redirect_to amendment_path(amendment), notice: t('.notice')
   end
 
   private

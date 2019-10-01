@@ -1,16 +1,15 @@
 <p id="notice"><%= notice %></p>
 
-
-<h1><%= budget.title %> amendments</h1>
+<h1><%= t('.title', budget: budget.title) %></h1>
 
 <table>
   <thead>
     <tr>
-      <th>Number</th>
-      <th>Type</th>
-      <th>Explanation</th>
-      <th>User</th>
-      <th>Budget</th>
+      <th><%= Amendment.human_attribute_name(:number) %></th>
+      <th><%= Amendment.human_attribute_name(:type) %></th>
+      <th><%= Amendment.human_attribute_name(:explanation) %></th>
+      <th><%= Amendment.human_attribute_name(:user) %></th>
+      <th><%= Amendment.human_attribute_name(:budget) %></th>
       <th colspan="3"></th>
     </tr>
   </thead>
@@ -23,9 +22,9 @@
         <td><%= amendment.explanation %></td>
         <td><%= amendment.user.email %></td>
         <td><%= amendment.budget.title %></td>
-        <td><%= link_to 'Show', amendment_path(amendment) %></td>
-        <td><%= link_to 'Edit', edit_amendment_path(amendment) %></td>
-        <td><%= link_to 'Destroy', amendment_path(amendment), method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <td><%= link_to t('helpers.action.show'), amendment_path(amendment) %></td>
+        <td><%= link_to t('helpers.action.edit'), edit_amendment_path(amendment) %></td>
+        <td><%= link_to t('helpers.action.destroy'), amendment_path(amendment), method: :delete, data: { confirm: t('helpers.messages.are_you_sure') } %></td>
       </tr>
     <% end %>
   </tbody>
@@ -33,4 +32,4 @@
 
 <br>
 
-<%= link_to 'New Amendment', new_budget_amendment_path(budget) %>
+<%= link_to t('amendments.new.title'), new_budget_amendment_path(budget) %>

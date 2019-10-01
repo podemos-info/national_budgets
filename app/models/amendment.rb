@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 class Amendment < ApplicationRecord
+  include HasType
   belongs_to :user
   belongs_to :budget
   validate :type_cannot_be_changed, on: :update, if: :locked_type?
@@ -31,9 +32,5 @@ class Amendment < ApplicationRecord
 
   def type_cannot_be_changed
     errors.add(:type, 'can not be changed') if type_changed? && type != type_was
-  end
-
-  def type_name
-    self.class.to_s.demodulize.underscore.humanize
   end
 end

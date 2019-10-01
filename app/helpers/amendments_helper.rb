@@ -2,7 +2,7 @@
 
 module AmendmentsHelper
   def browse_title(object)
-    "<b>#{object.class}:</b> #{object.full_title}<br>".html_safe
+    "<b>#{object.class.model_name.human}:</b> #{object.full_title}<br>".html_safe
   end
 
   def browse_link(object, path)

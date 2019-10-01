@@ -1,6 +1,6 @@
-<h1>Editing Amendment</h1>
+<h1><%= t('.title', number: amendment.number) %></h1>
 
 <%= render 'form', budget: nil, amendment: amendment %>
 
-<%= link_to 'Show', amendment_path(amendment) %> |
-<%= link_to 'Back', budget_amendments_path(budget) %>
+<%= link_to t('helpers.action.show'), amendment_path(amendment) %> |
+<%= link_to t('helpers.action.back'), budget_amendments_path(budget) %>

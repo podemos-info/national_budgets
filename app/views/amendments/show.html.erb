@@ -1,40 +1,40 @@
 <p id="notice"><%= notice %></p>
 
 <p>
-  <strong>Number:</strong>
+  <strong><%= Amendment.human_attribute_name(:number) %>:</strong>
   <%= amendment.number %>
 </p>
 
 <p>
-  <strong>Type:</strong>
+  <strong><%= Amendment.human_attribute_name(:type) %>:</strong>
   <%= amendment.type_name %>
 </p>
 
 <p>
-  <strong>Explanation:</strong>
+  <strong><%= Amendment.human_attribute_name(:explanation) %>:</strong>
   <%= amendment.explanation %>
 </p>
 
 <p>
-  <strong>User:</strong>
+  <strong><%= Amendment.human_attribute_name(:user) %>:</strong>
   <%= amendment.user.email %>
 </p>
 
 <p>
-  <strong>Budget:</strong>
+  <strong><%= Amendment.human_attribute_name(:budget) %>:</strong>
   <%= amendment.budget.title %>
 </p>
 
 <% if amendment.allow_articulated? %>
-  <h2>Articulado</h2>
+  <h2><%= Articulated.model_name.human %></h2>
   
   <% if amendment.articulated %>
     <table id="articulated_detail">
       <thead>
         <tr>
-          <th>Articulated type</th>
-          <th>Section ref</th>
-          <th>Title</th>
+          <th><%= Articulated.human_attribute_name(:type) %></th>
+          <th><%= Articulated.human_attribute_name(:section) %></th>
+          <th><%= Articulated.human_attribute_name(:title) %></th>
           <th colspan="2"></th>
         </tr>
       </thead>
@@ -45,30 +45,29 @@
           <td><%= articulated.type_name %></td>
           <td><%= articulated.section.ref %></td>
           <td><%= articulated.title %></td>
-          <td><%= link_to 'Edit', edit_amendment_articulated_path(amendment, articulated) %></td>
-          <td><%= link_to 'Destroy', amendment_articulated_path(amendment, articulated), method: :delete, data: { confirm: 'Are you sure?' } %></td>
+          <td><%= link_to t('helpers.action.edit'), edit_amendment_articulated_path(amendment, articulated) %></td>
+          <td><%= link_to t('helpers.action.destroy'), amendment_articulated_path(amendment, articulated), method: :delete, data: { confirm: t('helpers.messages.are_you_sure') } %></td>
         </tr>
       </tbody>
     </table>
   <% end %>
 
   <% unless amendment.articulated %>
-    <%= link_to 'Add Articulated', new_amendment_articulated_path(amendment) %>
+    <%= link_to t('articulateds.new.title'), new_amendment_articulated_path(amendment) %>
   <% end %>
 
 <% end %>
 
 <% if amendment.allow_modifications? %>
-  <h2>Modificaciones de alta/baja</h2>
+  <h2><%= Modification.model_name.human(count: 2) %></h2>
   
-  <% if amendment.modifications.size %>
+  <% if amendment.modifications.size.positive? %>
     <table id="articulated_detail">
       <thead>
         <tr>
-          <th>Modification type</th>
-          <th>Section ref</th>
-          <th>Title</th>
-          <th>Amount</th>
+          <th><%= Modification.human_attribute_name(:type) %></th>
+          <th><%= Modification.human_attribute_name(:section) %></th>
+          <th><%= Modification.human_attribute_name(:amount) %></th>
           <th colspan="2"></th>
         </tr>
       </thead>
@@ -79,17 +78,18 @@
             <td><%= modification.type_name %></td>
             <td><%= modification.section.ref %></td>
             <td><%= modification.amount %></td>
-            <td><%= link_to 'Edit', edit_amendment_modification_path(amendment, modification) %></td>
-            <td><%= link_to 'Destroy', amendment_modification_path(amendment, modification), method: :delete, data: { confirm: 'Are you sure?' } %></td>
+            <td><%= link_to t('helpers.action.edit'), edit_amendment_modification_path(amendment, modification) %></td>
+            <td><%= link_to t('helpers.action.destroy'), amendment_modification_path(amendment, modification), method: :delete, data: { confirm: t('helpers.messages.are_you_sure') } %></td>
           </tr>
         <% end %>
       </tbody>
     </table>
   <% end %>
 
-  <%= link_to 'Add modification', new_amendment_modification_path(amendment) %>
+  <%= link_to t('modifications.new.title'), new_amendment_modification_path(amendment) %>
 
 <% end %>
 <hr>
-<%= link_to 'Edit', edit_amendment_path(amendment) %> |
-<%= link_to 'Back', budget_amendments_path(budget) %>
+<%= link_to t('helpers.action.edit'), edit_amendment_path(amendment) %> |
+<%= link_to t('helpers.action.destroy'), amendment_path(amendment), method: :delete, data: { confirm: t('helpers.messages.are_you_sure') } %> |
+<%= link_to t('helpers.action.back'), budget_amendments_path(budget) %>

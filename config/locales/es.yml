@@ -1,0 +1,190 @@
+---
+es:
+  site_title: Proyectos PGE
+  budgets:
+    index:
+      title: Proyectos de presupuestos
+  amendments:
+    index:
+      title: Enmiendas en %{budget}
+    new:
+      title: Nueva enmienda
+    edit:
+      title: Editar enmienda %{number}
+    create:
+      notice: La enmienda ha sido creada.
+    update:
+      notice: La enmienda ha sido actualizada.
+    destroy:
+      notice: La enmienda ha sido eliminada.
+  modifications:
+    new:
+      title: Añadir modificación
+    edit:
+      title: Editar modificación
+    create:
+      notice: La modificación ha sido añadida.
+    update:
+      notice: La modificación ha sido actualizada.
+    destroy:
+      notice: La modificación ha sido eliminada.
+  articulateds:
+    new:
+      title: Completar articulado
+    edit:
+      title: Editar articulado
+    create:
+      notice: El articulado ha sido añadido.
+    update:
+      notice: El articulado ha sido actualizado.
+    destroy:
+      notice: El articulado ha sido eliminado.
+  activerecord:
+    models:
+      budget:
+        one: Proyecto de presupuestos
+        other: Proyectos de presupuestos
+      amendment:
+        one: Enmienda
+        other: Enmiendas
+      modification:
+        one: Modificación
+        other: Modificaciones
+      articulated:
+        one: Articulado
+        other: Articulados
+      section:
+        one: Sección
+        other: Secciones
+      service:
+        one: Servicio
+        other: Servicios
+      program:
+        one: Programa
+        other: Programas
+      chapter:
+        one: Capítulo
+        other: Capítulos
+      article:
+        one: Artículo
+        other: Artículos
+      concept:
+        one: Concepto
+        other: Conceptos
+      subconcept:
+        one: Subconcepto
+        other: Subconceptos
+      organism:
+        one: Organismo
+        other: Organismos
+      user:
+        one: Usuario/a
+        other: Usuarios/as
+    attributes:
+      budget:
+        date: Fecha
+        title: Título
+        amendments: Enmiendas
+      amendment:
+        number: Nº de enmienda
+        type: Tipo de enmienda
+        explanation: Exposición de motivos
+        user: Autor
+        budget: Proyecto de presupuestos
+      amendments/articulated_amendment:
+        type: 'Enmienda al articulado'
+      amendments/transfer_amendment:
+        type: 'Enmienda de transferencia'
+      amendments/standard_amendment:
+        type: 'Alta/baja'
+      articulated:
+        type: Tipo de modificación al articulado
+        section: Sección
+        title: Título
+        text: Texto
+        justification: Justificación
+        number: Número
+      articulateds/additional_articulated:
+        type: Disposición adicional
+      articulateds/final_articulated:
+        type: Disposición final
+      articulateds/standard_articulated:
+        type: Articulado
+      modification:
+        number: Nº de enmienda
+        type: Tipo de modificación
+        project: Proyecto
+        project_new: Proyecto nuevo
+        amount: Importe
+        section: Sección
+        service: Servicio
+        program: Programa
+        article: Artículo
+        chapter: Capítulo
+        concept: Concepto
+        subconcept: Suboncepto
+      modifications/standard_modification:
+        type: 'Modificación de enmienda de alta/baja'
+      modifications/transfer_modification:
+        type: 'Modificación de enmienda de transferencia'
+      section:
+        title: Título
+        budget: Proyecto de presupuestos
+      service:
+        title: Título
+        section: Sección
+      program:
+        title: Programa
+        section: Sección
+        organism: Organismo
+      chapter:
+        title: Título
+        budget: Proyecto de presupuestos
+      article:
+        title: Título
+        chapter: Capítulo
+      concept:
+        title: Título
+        article: Artículo
+      subconcept:
+        title: Título
+        concept: Concepto
+      organism:
+        title: Título
+        section: Sección
+      user:
+        email: Correo electrónico
+  helpers:
+    action:
+      show: Ver
+      edit: Editar
+      destroy: Eliminar
+      back: Atrás
+    label:
+      amendment:
+        number: Nº de enmienda
+        type: Tipo de enmienda
+        explanation: Exposición de motivos
+      articulated:
+        section: Sección
+        title: Título
+        text: Texto
+        justification: Justificación
+        number: Número
+        type: Tipo
+      modification:
+        project: Proyecto
+        project_new: Nuevo proyecto
+        amount: Importe
+    submit:
+      amendment:
+        create: Crear enmienda
+        update: Actualizar enmienda
+      modification:
+        create: Añadir modificación
+        update: Actualizar modificación
+      articulated:
+        create: Completar articulado
+        update: Actualizar articulado
+    messages:
+      are_you_sure: "¿Estás seguro?"

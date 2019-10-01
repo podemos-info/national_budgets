@@ -19,7 +19,7 @@ class ArticulatedsController < ApplicationController
     @articulated = amendment.create_articulated(articulated_params)
 
     if articulated.save
-      redirect_to amendment_path(amendment), notice: 'Articulated was successfully created.'
+      redirect_to amendment_path(amendment), notice: t('.notice')
     else
       render action: 'new'
     end
@@ -28,7 +28,7 @@ class ArticulatedsController < ApplicationController
   # PATCH/PUT /amendments/:amendment_id/articulateds/1
   def update
     if articulated.update_attributes(articulated_params)
-      redirect_to amendment_path(amendment), notice: 'Articulated was successfully updated.'
+      redirect_to amendment_path(amendment), notice: t('.notice')
     else
       render action: 'edit'
     end
@@ -37,7 +37,7 @@ class ArticulatedsController < ApplicationController
   # DELETE /amendments/:amendment_id/articulateds/1
   def destroy
     articulated.destroy
-    redirect_to amendment_path(amendment), notice: 'Articulated was successfully deleted.'
+    redirect_to amendment_path(amendment), notice: t('.notice')
   end
 
   private
