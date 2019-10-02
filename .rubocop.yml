@@ -2,14 +2,14 @@ require: rubocop-rails
 
 AllCops:
   Include:
-    - '/**/*.arb'
-    - '/**/*.rb'
-    - '/**/*.gemfile'
-    - '/**/*.gemspec'
-    - '/**/*.rake'
-    - '/**/*.ru'
-    - '/Gemfile'
-    - '/Rakefile'
+    - '**/*.arb'
+    - '**/*.rb'
+    - '**/*.gemfile'
+    - '**/*.gemspec'
+    - '**/*.rake'
+    - '**/*.ru'
+    - '**/Gemfile'
+    - '**/Rakefile'
 
   Exclude:
     - 'db/schema.rb'
@@ -17,8 +17,8 @@ AllCops:
     - 'vendor/**/*'
     - 'bin/*'
 
+Style/Documentation:
+  Enabled: false
+
 Metrics/LineLength:
   Max: 140
-
-Documentation:
-  Enabled: false
