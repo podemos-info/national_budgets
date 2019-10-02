@@ -1,6 +1,10 @@
 # frozen_string_literal: true
 
 module AmendmentsHelper
+  def collection_title(collection)
+    content_tag(:b, 'Elige ' + collection.first.class.model_name.human.downcase) + ':<br>'.html_safe if collection.size.positive?
+  end
+
   def browse_title(object)
     content_tag(:b, object.class.model_name.human) + ": #{object.full_title}" + '<br>'.html_safe
   end
