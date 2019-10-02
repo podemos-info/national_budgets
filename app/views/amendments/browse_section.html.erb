@@ -1,6 +1,6 @@
 <div>
   <% if section %>
-    <% if locked_section? %>
+    <% unless locked_section? %>
       <%= reset_link(browse_section_amendment_path(locked_section: locked_section?)) %>
     <% end %>
     <%= browse_title(section) %>
