@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 Rails.application.routes.draw do
   devise_for :users, ActiveAdmin::Devise.config
   ActiveAdmin.routes(self)
@@ -7,8 +9,10 @@ Rails.application.routes.draw do
         resources :articulateds, except: [:show], shallow: false
         resources :modifications, except: [:show], shallow: false
         member do
-          get 'browse/section(/:section_id(/:service_id(/:program_id)))', to: "amendments#browse_section", as: :browse_section
-          get 'browse/chapter(/:chapter_id(/:article_id(/:concept_id(/:subconcept_id))))', to: "amendments#browse_chapter", as: :browse_chapter
+          get 'browse/section(/:section_id(/:service_id(/:program_id)))',
+              to: 'amendments#browse_section', as: :browse_section
+          get 'browse/chapter(/:chapter_id(/:article_id(/:concept_id(/:subconcept_id))))',
+              to: 'amendments#browse_chapter', as: :browse_chapter
         end
       end
     end

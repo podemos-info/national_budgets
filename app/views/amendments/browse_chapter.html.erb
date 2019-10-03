@@ -3,6 +3,7 @@
     <%= reset_link(browse_chapter_amendment_path) %>
     <%= browse_title(chapter) %>  
   <% else %>
+    <%= collection_title(budget.chapters) %>
     <% budget.chapters.each do |chapter| %>
       <%= browse_link(chapter, browse_chapter_amendment_path(chapter_id: chapter)) %>
     <% end %>
@@ -13,6 +14,7 @@
     <%= browse_title(article) %>
   <% elsif chapter %>
     <hr>
+    <%= collection_title(chapter.articles) %>
     <% chapter.articles.each do |article| %>
       <%= browse_link(article, browse_chapter_amendment_path(chapter_id: chapter, article_id: article)) %>
     <% end %>
@@ -23,6 +25,7 @@
     <%= browse_title(concept) %>
   <% elsif article %>
     <hr>
+    <%= collection_title(article.concepts) %>
     <% article.concepts.each do |concept| %>
       <%= browse_link(concept, browse_chapter_amendment_path(chapter_id: chapter, article_id: article, concept_id: concept)) %>
     <% end %>
@@ -33,6 +36,7 @@
     <%= browse_title(subconcept) %>
   <% elsif concept %>
     <hr>
+    <%= collection_title(concept.subconcepts) %>
     <% concept.subconcepts.each do |subconcept| %>
       <%= browse_link(subconcept, browse_chapter_amendment_path(chapter_id: chapter, article_id: article, concept_id: concept, subconcept_id: subconcept)) %>
     <% end %>

@@ -1,10 +1,11 @@
 <div>
   <% if section %>
-    <% if locked_section? %>
+    <% unless locked_section? %>
       <%= reset_link(browse_section_amendment_path(locked_section: locked_section?)) %>
     <% end %>
     <%= browse_title(section) %>
   <% else %>
+    <%= collection_title(budget.sections) %>
     <% budget.sections.each do |section| %>
       <%= browse_link(section, browse_section_amendment_path(section_id: section, locked_section: locked_section?)) %>
     <% end %>
@@ -15,6 +16,7 @@
     <%= browse_title(service) %>
   <% elsif section %>
       <hr>
+      <%= collection_title(section.services) %>
       <% section.services.each do |service| %>
         <%= browse_link(service, browse_section_amendment_path(section_id: section, service_id: service, locked_section: locked_section?)) %>
       <% end %>
@@ -25,6 +27,7 @@
     <%= browse_title(program) %>
   <% elsif section && service %>
       <hr>
+      <%= collection_title(section.programs) %>
       <% section.programs.each do |program| %>
         <%= browse_link(program, browse_section_amendment_path(section_id: section, service_id: service, program_id: program, locked_section: locked_section?)) %>
       <% end %>

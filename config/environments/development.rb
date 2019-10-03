@@ -60,7 +60,7 @@ Rails.application.configure do
   # config.file_watcher = ActiveSupport::EventedFileUpdateChecker
   config.file_watcher = ActiveSupport::FileUpdateChecker
 
-  I18n::Debug.logger = Logger.new(Rails.root.join("log", "i18n-debug.log"))
+  I18n::Debug.logger = Logger.new(Rails.root.join('log', 'i18n-debug.log'))
 
   config.hosts.clear
 

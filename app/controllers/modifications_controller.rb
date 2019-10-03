@@ -27,7 +27,7 @@ class ModificationsController < ApplicationController
 
   # PATCH/PUT /amendments/:amendment_id/modifications/:id
   def update
-    if modification.update_attributes(modification_params)
+    if modification.update(modification_params)
       redirect_to amendment_path(amendment), notice: t('.notice')
     else
       render action: 'edit'

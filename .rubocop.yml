@@ -1,18 +1,24 @@
-inherit_from: .rubocop_todo.yml
+require: rubocop-rails
 
 AllCops:
   Include:
-    - Rakefile
-    - config.ru
+    - '**/*.arb'
+    - '**/*.rb'
+    - '**/*.gemfile'
+    - '**/*.gemspec'
+    - '**/*.rake'
+    - '**/*.ru'
+    - '**/Gemfile'
+    - '**/Rakefile'
+
   Exclude:
-    - bin/**
-    - db/**
-    - config/**
-    - script/**
-    - vendor/**/* # Circle adds the rubies here
+    - 'db/schema.rb'
+    - 'db/seeds.rb'
+    - 'vendor/**/*'
+    - 'bin/*'
+
+Style/Documentation:
+  Enabled: false
 
 Metrics/LineLength:
   Max: 140
-
-Documentation:
-  Enabled: false
