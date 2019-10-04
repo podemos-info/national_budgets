@@ -127,6 +127,8 @@ GEM
     erubi (1.9.0)
     execjs (2.7.0)
     ffi (1.11.1)
+    font-awesome-rails (4.7.0.5)
+      railties (>= 3.2, < 6.1)
     formtastic (3.1.5)
       actionpack (>= 3.2.13)
     formtastic_i18n (0.6.0)
@@ -330,6 +332,7 @@ DEPENDENCIES
   devise
   devise-i18n
   dotenv-rails
+  font-awesome-rails
   i18n-debug
   jbuilder (~> 2.5)
   jquery-rails
