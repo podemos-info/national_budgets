@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 class AmendmentsController < ApplicationController
+  include HasFlashMessages
   layout false, only: %i[browse_section browse_chapter]
   helper_method :budget, :amendment, :amendments,
                 :section, :service, :program, :locked_section?,
@@ -26,7 +27,7 @@ class AmendmentsController < ApplicationController
     amendment.budget = budget
 
     if amendment.save
-      redirect_to amendment_path(amendment), notice: t('.notice')
+      redirect_to amendment_path(amendment), success: flash_message(:success, :check)
     else
       render action: 'new'
     end
@@ -35,7 +36,7 @@ class AmendmentsController < ApplicationController
   # PATCH/PUT /amendments/:id
   def update
     if amendment.update(amendment_params)
-      redirect_to amendment_path(amendment), notice: t('.notice')
+      redirect_to amendment_path(amendment), success: flash_message(:success, :check)
     else
       render action: 'edit'
     end
@@ -44,7 +45,7 @@ class AmendmentsController < ApplicationController
   # DELETE /amendments/:id
   def destroy
     amendment.destroy
-    redirect_to budget_amendments_path(budget), notice: t('.notice')
+    redirect_to budget_amendments_path(budget), success: flash_message(:success, :check)
   end
 
   # GET /amendments/:id/browse/section(/:section_id(/:service_id(/:program_id)))

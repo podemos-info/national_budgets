@@ -1,0 +1,6 @@
+<% flash.each do |type, message| %>
+  <div class="alert alert-<%= bootstrap_class_for(type) %> mt-4">
+    <button type="button" class="close" data-dismiss="alert">×</button>
+    <strong><%= message.html_safe %></strong>
+  </div>        
+<% end %>

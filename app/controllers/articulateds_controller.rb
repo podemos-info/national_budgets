@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 class ArticulatedsController < ApplicationController
+  include HasFlashMessages
   helper_method :budget, :amendment, :articulated
 
   # GET /amendments/:amendment_id/articulateds
@@ -19,7 +20,7 @@ class ArticulatedsController < ApplicationController
     @articulated = amendment.create_articulated(articulated_params)
 
     if articulated.save
-      redirect_to amendment_path(amendment), notice: t('.notice')
+      redirect_to amendment_path(amendment), success: flash_message(:success, :check)
     else
       render action: 'new'
     end
@@ -28,7 +29,7 @@ class ArticulatedsController < ApplicationController
   # PATCH/PUT /amendments/:amendment_id/articulateds/1
   def update
     if articulated.update(articulated_params)
-      redirect_to amendment_path(amendment), notice: t('.notice')
+      redirect_to amendment_path(amendment), success: flash_message(:success, :check)
     else
       render action: 'edit'
     end
@@ -37,7 +38,7 @@ class ArticulatedsController < ApplicationController
   # DELETE /amendments/:amendment_id/articulateds/1
   def destroy
     articulated.destroy
-    redirect_to amendment_path(amendment), notice: t('.notice')
+    redirect_to amendment_path(amendment), success: flash_message(:success, :check)
   end
 
   private

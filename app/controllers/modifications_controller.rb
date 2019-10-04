@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 class ModificationsController < ApplicationController
+  include HasFlashMessages
   helper_method :budget, :amendment, :modification, :modifications
 
   # GET /amendments/:amendment_id/modifications
@@ -19,7 +20,7 @@ class ModificationsController < ApplicationController
     @modification = amendment.modifications.new(modification_params)
 
     if modification.save
-      redirect_to amendment_path(amendment), notice: t('.notice')
+      redirect_to amendment_path(amendment), success: flash_message(:success, :check)
     else
       render action: 'new'
     end
@@ -28,7 +29,7 @@ class ModificationsController < ApplicationController
   # PATCH/PUT /amendments/:amendment_id/modifications/:id
   def update
     if modification.update(modification_params)
-      redirect_to amendment_path(amendment), notice: t('.notice')
+      redirect_to amendment_path(amendment), success: flash_message(:success, :check)
     else
       render action: 'edit'
     end
@@ -37,7 +38,7 @@ class ModificationsController < ApplicationController
   # DELETE /amendments/:amendment_id/modifications/:id
   def destroy
     modification.destroy
-    redirect_to amendment_path(amendment), notice: t('.notice')
+    redirect_to amendment_path(amendment), success: flash_message(:success, :check)
   end
 
   private
