@@ -11,7 +11,7 @@
 <% if amendment.allow_articulated? %>
   <h2><%= Articulated.model_name.human %></h2>
   <hr>
-  <%= amendment_section_link(amendment) %>
+  <%= amendment_section_label(amendment) %>
   <hr>
   <% if amendment.articulated? %>
     <table class="w-100">
@@ -50,7 +50,7 @@
 <% if amendment.allow_modifications? %>
   <h2><%= Modification.model_name.human(count: 0) %></h2>
   <hr>
-  <%= amendment_section_link(amendment) %>
+  <%= amendment_section_label(amendment) %>
   <hr>
   <% if amendment.modifications? %>
     <table class="w-100">
