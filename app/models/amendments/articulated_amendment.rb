@@ -12,5 +12,9 @@ module Amendments
     def allow_articulated?
       true
     end
+
+    def section
+      @section ||= articulated.section if articulated?
+    end
   end
 end
