@@ -1,8 +1,7 @@
-<%= form_with(model: [amendment.becomes(Amendment), modification.becomes(Modification)], local: true) do |form| %>
+<%= bootstrap_form_for([amendment.becomes(Amendment), modification.becomes(Modification)], layout: :horizontal, label_col: "col-sm-3 text-md-right", control_col: "col-sm-7") do |f| %>
   <% if modification.errors.any? %>
     <div id="error_explanation">
       <h2><%= pluralize(modification.errors.count, "error") %> prohibited this modification from being saved:</h2>
-
       <ul>
       <% modification.errors.full_messages.each do |message| %>
         <li><%= message %></li>
@@ -11,30 +10,18 @@
     </div>
   <% end %>
 
-  <div class="row">
+  <div class="row px-3">
     <div class="pseudoiframe col-12 col-sm-6" src="<%= browse_section_amendment_path(id: amendment, section_id: modification.section, service_id: modification.service_id, program_id: modification.program_id, locked_section: modification.locked_section?)%>"></div>
     <div class="pseudoiframe col-12 col-sm-6" src="<%= browse_chapter_amendment_path(id: amendment, chapter_id: modification.chapter_id, article_id: modification.article_id, concept_id: modification.concept_id, subconcept_id: modification.subconcept_id)%>"></div>
   </div>
 
-  <div class="row">
-    <div class="col-12 col-sm-6 field d-flex">
-      <%= form.label :project %>
-      <%= form.text_field :project, style: 'flex-grow: 1; margin-left: 4px;' %>
-    </div>
-
-    <div class="col-12 col-sm-6 field">
-      <%= form.label :project_new %>
-      <%= form.check_box :project_new %>
-    </div>
-  </div>
-
-  <div class="field">
-    <%= form.label :amount %>
-    <%= form.text_field :amount %>
-  </div>
+  <%= f.text_field :project %>
+  <%= f.check_box :project_new, custom: :switch, class: 'text-center', wrapper_class: 'col-9 offset-3 text-left mb-3' %>
+  <%= f.text_field :amount, type: :number, step: '0.01' %>
 
   <div class="actions">
-    <%= form.submit %>
+    <%= f.submit class: 'btn btn-sm btn-success' %>
+    <%= link_to t('helpers.action.back'), amendment_path(amendment), class: 'btn btn-sm btn-danger' %>
   </div>
 <% end %>
 

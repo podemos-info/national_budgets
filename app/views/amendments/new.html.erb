@@ -1,5 +1,4 @@
-<h1><%= t('.title') %></h1>
+<h1 class="page-title"><%= fa_icon "list-alt", text: t('.title', budget: budget.title, count: 1) %></h1>
 
 <%= render 'form', budget: budget, amendment: amendment %>
 
-<%= link_to t('helpers.action.back'), budget_amendments_path(budget) %>

@@ -14,3 +14,71 @@
 
 // Custom bootstrap variables must be set or imported *before* bootstrap.
 @import "bootstrap";
+@import "rails_bootstrap_forms";
+@import "font-awesome";
+
+$component-active-bg: #d4edda;
+$component-active-bg-hover: lighten(#000, 93.5%);
+$component-active-color: var(--success);
+
+h1 { font-size: 1.4rem; font-weight: 700; }
+h2 { font-size: 1.2rem; font-weight: 600; }
+
+a {
+  outline: none;
+  &.card-block {
+    display: inline-block;
+    .card {
+      transition: ease all .3s;
+      .card-body { font-size: .95rem; }
+      table { font-size: .9rem; }
+    }
+    &.bg-active {
+      color: $component-active-color;
+      .card {
+        background-color: $component-active-bg;
+      }
+    }
+    &:hover, &:active, &:focus {
+      text-decoration: none;
+      .card {
+        filter: brightness(90%) contrast(110%);
+      }
+    }
+  }
+}
+
+a, .alert {
+  i.fa {
+    padding-right: 5px;
+  }
+}
+
+h1.page-title {
+  margin-top: 20px;
+  margin-bottom: 30px;
+  padding-bottom: 10px;
+  border-bottom-color: rgba(0, 0, 0, 0.1);
+  border-bottom-style: solid;
+  border-bottom-width: 1px;
+}
+
+div.actions {
+  margin-top: 20px;
+  padding-top: 20px;
+  border-top-color: rgba(0, 0, 0, 0.1);
+  border-top-style: solid;
+  border-top-width: 1px;
+}
+
+.form-group {
+  label:first-child {
+    font-weight: bold;
+  }
+}
+
+.card-footer, .card-header {
+  padding: 0.5rem 0.75rem;
+}
+
+.card-header { background-color: #eee; }

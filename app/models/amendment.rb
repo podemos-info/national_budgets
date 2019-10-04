@@ -29,4 +29,10 @@ class Amendment < ApplicationRecord
   def type_cannot_be_changed
     errors.add(:type, 'can not be changed') if type_changed? && type != type_was
   end
+
+  def section; end
+
+  def section?
+    section.present?
+  end
 end

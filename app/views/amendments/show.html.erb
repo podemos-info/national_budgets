@@ -1,40 +1,26 @@
-<p id="notice"><%= notice %></p>
-
-<p>
-  <strong><%= Amendment.human_attribute_name(:number) %>:</strong>
-  <%= amendment.number %>
-</p>
-
-<p>
-  <strong><%= Amendment.human_attribute_name(:type) %>:</strong>
-  <%= amendment.type_name %>
-</p>
+<div class="row">
+  <h1 class="col-8 page-title"><%= fa_icon "list-alt", text: t('.title', budget: budget.title, amendment: amendment.number) %></h1>
+  <h1 class="col-4 page-title text-right"><%= amendment.type_name %></h1>
+</div>
 
 <p>
   <strong><%= Amendment.human_attribute_name(:explanation) %>:</strong>
-  <%= amendment.explanation %>
-</p>
-
-<p>
-  <strong><%= Amendment.human_attribute_name(:user) %>:</strong>
-  <%= amendment.user.email %>
-</p>
-
-<p>
-  <strong><%= Amendment.human_attribute_name(:budget) %>:</strong>
-  <%= amendment.budget.title %>
+  <br><%= amendment.explanation %>
 </p>
 
 <% if amendment.allow_articulated? %>
   <h2><%= Articulated.model_name.human %></h2>
-  
-  <% if amendment.articulated %>
-    <table id="articulated_detail">
+  <hr>
+  <%= amendment_section_label(amendment) %>
+  <hr>
+  <% if amendment.articulated? %>
+    <table class="w-100">
       <thead>
         <tr>
           <th><%= Articulated.human_attribute_name(:type) %></th>
           <th><%= Articulated.human_attribute_name(:section) %></th>
           <th><%= Articulated.human_attribute_name(:title) %></th>
+          <th><%= Articulated.human_attribute_name(:number) %></th>
           <th colspan="2"></th>
         </tr>
       </thead>
@@ -45,51 +31,78 @@
           <td><%= articulated.type_name %></td>
           <td><%= articulated.section.ref %></td>
           <td><%= articulated.title %></td>
-          <td><%= link_to t('helpers.action.edit'), edit_amendment_articulated_path(amendment, articulated) %></td>
-          <td><%= link_to t('helpers.action.destroy'), amendment_articulated_path(amendment, articulated), method: :delete, data: { confirm: t('helpers.messages.are_you_sure') } %></td>
+          <td><%= articulated.number %></td>
+          <td align="right">
+            <%= link_to t('helpers.action.edit'), edit_amendment_articulated_path(amendment, articulated), class: 'btn btn-sm btn-outline-warning' %>
+            <%= link_to t('helpers.action.destroy'), amendment_articulated_path(amendment, articulated), method: :delete, data: { confirm: t('helpers.messages.are_you_sure') }, class: 'btn btn-sm btn-outline-danger' %>
+          </td>
         </tr>
       </tbody>
     </table>
   <% end %>
 
   <% unless amendment.articulated %>
-    <%= link_to t('articulateds.new.title'), new_amendment_articulated_path(amendment) %>
+    <%= link_to t('helpers.submit.articulated.create'), new_amendment_articulated_path(amendment), class: 'btn btn-sm btn-outline-success' %>
   <% end %>
 
 <% end %>
 
 <% if amendment.allow_modifications? %>
-  <h2><%= Modification.model_name.human(count: 2) %></h2>
-  
-  <% if amendment.modifications.size.positive? %>
-    <table id="articulated_detail">
+  <h2><%= Modification.model_name.human(count: 0) %></h2>
+  <hr>
+  <%= amendment_section_label(amendment) %>
+  <hr>
+  <% if amendment.modifications? %>
+    <table class="w-100">
       <thead>
         <tr>
-          <th><%= Modification.human_attribute_name(:type) %></th>
-          <th><%= Modification.human_attribute_name(:section) %></th>
-          <th><%= Modification.human_attribute_name(:amount) %></th>
-          <th colspan="2"></th>
+          <th><%= Modification.human_attribute_name(:service) %></th>
+          <th><%= Modification.human_attribute_name(:program) %></th>
+          <th><%= Modification.human_attribute_name(:chapter) %></th>
+          <th><%= Modification.human_attribute_name(:article) %></th>
+          <th><%= Modification.human_attribute_name(:concept) %></th>
+          <th><%= Modification.human_attribute_name(:subconcept) %></th>
+          <th><%= Modification.human_attribute_name(:project) %></th>
+          <th style="text-align: right;"><%= Modification.human_attribute_name(:amount) %></th>
+          <th></th>
         </tr>
       </thead>
 
       <tbody>
         <% amendment.modifications.each do |modification| %>
           <tr>
-            <td><%= modification.type_name %></td>
-            <td><%= modification.section.ref %></td>
-            <td><%= modification.amount %></td>
-            <td><%= link_to t('helpers.action.edit'), edit_amendment_modification_path(amendment, modification) %></td>
-            <td><%= link_to t('helpers.action.destroy'), amendment_modification_path(amendment, modification), method: :delete, data: { confirm: t('helpers.messages.are_you_sure') } %></td>
+            <td title="<%= modification.service&.full_title %>"><%= modification.service&.ref %></td>
+            <td title="<%= modification.program&.full_title %>"><%= modification.program&.ref %></td>
+            <td title="<%= modification.chapter&.full_title %>"><%= modification.chapter&.ref %></td>
+            <td title="<%= modification.article&.full_title %>"><%= modification.article&.ref %></td>
+            <td title="<%= modification.concept&.full_title %>"><%= modification.concept&.ref %></td>
+            <td title="<%= modification.subconcept&.full_title %>"><%= modification.subconcept&.ref %></td>
+            <td><%= modification.project %></td>
+            <td style="text-align: right;"><%= number_to_currency modification.amount %></td>
+            <td align="right">
+              <%= link_to t('helpers.action.edit'), edit_amendment_modification_path(amendment, modification), class: 'btn btn-sm btn-outline-warning' %>
+              <%= link_to t('helpers.action.destroy'), amendment_modification_path(amendment, modification), method: :delete, data: { confirm: t('helpers.messages.are_you_sure') }, class: 'btn btn-sm btn-outline-danger' %>
+            </td>
           </tr>
         <% end %>
+      <tr style="border-top: 1px solid #eee;">
+        <td colspan="8" style="text-align: right;"><b class="text-secondary"><%= t('helpers.label.amendment.total_amount') %>:</b> <%= number_to_currency amendment.modifications.sum(:amount) %></td>
+      </tr>
       </tbody>
     </table>
   <% end %>
 
-  <%= link_to t('modifications.new.title'), new_amendment_modification_path(amendment) %>
+  <%= link_to t('helpers.submit.modification.create'), new_amendment_modification_path(amendment), class: 'btn btn-sm btn-outline-success' %>
 
 <% end %>
-<hr>
-<%= link_to t('helpers.action.edit'), edit_amendment_path(amendment) %> |
-<%= link_to t('helpers.action.destroy'), amendment_path(amendment), method: :delete, data: { confirm: t('helpers.messages.are_you_sure') } %> |
-<%= link_to t('helpers.action.back'), budget_amendments_path(budget) %>
+
+<div class="actions row">
+  <div class="col-12 col-md-6">
+    <%= link_to t('helpers.action.edit'), edit_amendment_path(amendment), class: 'btn btn-sm btn-warning' %>
+    <%= link_to t('helpers.action.destroy'), amendment_path(amendment), method: :delete, data: { confirm: t('helpers.messages.are_you_sure') }, class: 'btn btn-sm btn-danger' %>
+    <%= link_to t('helpers.views.list_model', model: Amendment.model_name.human(count: 0).downcase), budget_amendments_path(budget), class: 'btn btn-sm btn-primary' %>
+  </div>
+  <div class="col-12 col-md-6 text-right">
+    <p><%= t 'helpers.views.by_author', author: amendment.user.email %></p>
+  </div>
+</div>

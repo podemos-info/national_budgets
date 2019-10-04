@@ -1,24 +1,15 @@
-<p id="notice"><%= notice %></p>
+<h1 class="page-title"><%= fa_icon " product-hunt", text: t('.title') %></h1>
 
-<h1><%= t('.title') %></h1>
-
-<table>
-  <thead>
-    <tr>
-      <th><%= Budget.human_attribute_name(:date) %></th>
-      <th><%= Budget.human_attribute_name(:title) %></th>
-      <th><%= Budget.human_attribute_name(:amendments) %></th>
-    </tr>
-  </thead>
-
-  <tbody>
-    <% budgets.each do |budget| %>
-      <tr>
-        <td><%= l(budget.date, format: :long) %></td>
-        <td><%= budget.title %></td>
-        <td><%= link_to budget.amendments.length, budget_amendments_path(budget) %></td>
-      </tr>
-    <% end %>
-  </tbody>
-</table>
-
+<div class="row">
+<% budgets.each_with_index do |budget, i| %>
+  <a class="card-block py-2 col-12 <%= i.zero?? 'bg-active' : 'col-md-6' %>" href="<%= budget_amendments_path(budget) %>" style="flex-grow: 2;">
+    <div class="card">
+      <div class="card-body">
+        <span><%= l(budget.date) %></span>
+        <h2 class="card-title"><%= budget.title %></h2>
+        <p class="card-text"><%= t('helpers.views.count_model', count: budget.amendments.length, model: budget.amendments.model_name.human(count: budget.amendments.length).downcase) %></p>
+      </div>
+    </div>
+  </a>
+<% end %>
+</div>
