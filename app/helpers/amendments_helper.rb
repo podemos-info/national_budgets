@@ -2,7 +2,9 @@
 
 module AmendmentsHelper
   def collection_title(collection)
-    content_tag(:b, 'Elige ' + collection.first.class.model_name.human.downcase) + ':<br>'.html_safe if collection.size.positive?
+    return t('helpers.views.empty_collection', model: collection.model_name.human(count: 0).downcase) unless collection.size.positive?
+
+    content_tag(:b, t('helpers.views.choose_model', model: collection.model_name.human.downcase)) + ':<br>'.html_safe
   end
 
   def browse_title(object)
@@ -14,6 +16,10 @@ module AmendmentsHelper
   end
 
   def reset_link(path)
-    link_to('&#x2716;'.html_safe, path, class: 'text-danger', style: 'text-decoration: none')
+    link_to(fa_icon('times-circle'), path, class: 'text-danger', style: 'text-decoration: none')
+  end
+
+  def amendment_section_link(amendment)
+    '<b>'.html_safe + Section.model_name.human + ':</b> '.html_safe + amendment.section&.full_title if amendment.section?
   end
 end
