@@ -13,6 +13,6 @@ class BudgetsController < ApplicationController
   end
 
   def budgets
-    @budgets ||= Budget.all
+    @budgets ||= Budget.order(date: :desc)
   end
 end
