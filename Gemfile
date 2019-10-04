@@ -11,6 +11,7 @@ gem 'dotenv-rails', require: 'dotenv/rails-now'
 gem 'activeadmin'
 gem 'bootsnap', '>= 1.1.0', require: false
 gem 'bootstrap', '~> 4.3.1'
+gem "bootstrap_form", "~> 4.0"
 gem 'coffee-rails', '~> 4.2'
 gem 'devise'
 gem 'devise-i18n'
