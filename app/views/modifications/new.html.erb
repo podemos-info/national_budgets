@@ -1,5 +1,4 @@
-<h1><%= t('.title') %></h1>
+<h1 class="page-title"><%= t('.title', budget: budget.title, amendment: amendment.number) %></h1>
 
 <%= render 'form', amendment: amendment, modification: modification %>
 
-<%= link_to t('helpers.action.back'), amendment_path(amendment) %>

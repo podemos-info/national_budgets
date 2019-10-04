@@ -1,6 +1,3 @@
-<h1><%= t('.title', number: amendment.number) %></h1>
+<h1 class="page-title"><%= fa_icon "list-alt", text: t('.title', budget: budget.title, amendment: amendment.number) %></h1>
 
 <%= render 'form', budget: nil, amendment: amendment %>
-
-<%= link_to t('helpers.action.show'), amendment_path(amendment) %> |
-<%= link_to t('helpers.action.back'), budget_amendments_path(budget) %>

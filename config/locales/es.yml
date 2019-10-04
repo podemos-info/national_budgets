@@ -6,39 +6,43 @@ es:
       title: Proyectos de presupuestos
   amendments:
     index:
-      title: Enmiendas en %{budget}
+      title: 
+        one: "%{budget}: %{count} enmienda"
+        other: "%{budget}: %{count} enmiendas"
+    show:
+      title: "%{budget}: Enmienda n.º %{amendment}"
     new:
-      title: Nueva enmienda
+      title: "%{budget}: Nueva enmienda"
     edit:
-      title: Editar enmienda %{number}
+      title: "%{budget}: Editar enmienda n.º %{amendment}"
     create:
-      notice: La enmienda ha sido creada.
+      success: La enmienda ha sido creada.
     update:
-      notice: La enmienda ha sido actualizada.
+      success: La enmienda ha sido actualizada.
     destroy:
-      notice: La enmienda ha sido eliminada.
+      success: La enmienda ha sido eliminada.
   modifications:
     new:
-      title: Añadir modificación
+      title: "%{budget}: Enmienda n.º %{amendment}: Añadir modificación"
     edit:
-      title: Editar modificación
+      title: "%{budget}: Enmienda n.º %{amendment}: Editar modificación"
     create:
-      notice: La modificación ha sido añadida.
+      success: La modificación ha sido añadida.
     update:
-      notice: La modificación ha sido actualizada.
+      success: La modificación ha sido actualizada.
     destroy:
-      notice: La modificación ha sido eliminada.
+      success: La modificación ha sido eliminada.
   articulateds:
     new:
-      title: Completar articulado
+      title: "%{budget}: Enmienda n.º %{amendment}: Completar articulado"
     edit:
-      title: Editar articulado
+      title: "%{budget}: Enmienda n.º %{amendment}: Editar articulado"
     create:
-      notice: El articulado ha sido añadido.
+      success: El articulado ha sido añadido.
     update:
-      notice: El articulado ha sido actualizado.
+      success: El articulado ha sido actualizado.
     destroy:
-      notice: El articulado ha sido eliminado.
+      success: El articulado ha sido eliminado.
   activerecord:
     models:
       budget:
@@ -122,7 +126,7 @@ es:
         article: Artículo
         chapter: Capítulo
         concept: Concepto
-        subconcept: Suboncepto
+        subconcept: Subconcepto
       modifications/standard_modification:
         type: 'Modificación de enmienda de alta/baja'
       modifications/transfer_modification:
@@ -157,14 +161,17 @@ es:
   helpers:
     action:
       show: Ver
+      show_model: Ver %{model}
       edit: Editar
       destroy: Eliminar
       back: Atrás
+      cancel: Cancelar
     label:
       amendment:
         number: Nº de enmienda
         type: Tipo de enmienda
         explanation: Exposición de motivos
+        total_amount: "Importe total"
       articulated:
         section: Sección
         title: Título
@@ -177,6 +184,8 @@ es:
         project_new: Nuevo proyecto
         amount: Importe
     submit:
+      create: "Crear %{model}"
+      update: "Actualizar %{model}"
       amendment:
         create: Crear enmienda
         update: Actualizar enmienda
@@ -186,5 +195,17 @@ es:
       articulated:
         create: Completar articulado
         update: Actualizar articulado
+    views:
+      list_model: "Listado de %{model}"
+      count_model: "%{count} %{model}"
+      choose_model: "Elige %{model}"
+      empty_collection: "No hay %{model}."
+      amendment:
+        number: "N.º %{amendment}"
+      by_author: "Por %{author}"
     messages:
       are_you_sure: "¿Estás seguro?"
+  number:
+    currency:
+      format:
+        unit: 'miles de €'

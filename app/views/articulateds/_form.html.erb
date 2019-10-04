@@ -1,4 +1,4 @@
-<%= form_with(model: [amendment.becomes(Amendment), articulated.becomes(Articulated)], local: true) do |form| %>
+<%= bootstrap_form_for([amendment.becomes(Amendment), articulated.becomes(Articulated)], layout: :horizontal, label_col: "col-sm-3 text-sm-right", control_col: "col-sm-7") do |f| %>
   <% if articulated.errors.any? %>
     <div id="error_explanation">
       <h2><%= pluralize(articulated.errors.count, "error") %> prohibited this articulated from being saved:</h2>
@@ -11,53 +11,28 @@
     </div>
   <% end %>
 
-  <div class="field" id="type">
-    <%= form.label :type %>
-    <%= form.collection_radio_buttons :type, Articulated.descendants.map{|a| [a.to_s, a.new.type_name]}, :first, :last %>
-  </div>
+  <%= f.collection_radio_buttons :type, Articulated.descendants.map{|a| [a.to_s, a.new.type_name]}, :first, :last, custom: :switch, inline: true, wrapper_class: 'align-items-center type' %>
   
-  <div class="field">
-    <%= form.label :section %>
-    <%= form.collection_select :section_id, budget.sections.all, :id, :full_title %>
-  </div>
-  
-  <div class="field">
-    <%= form.label :title %>
-    <%= form.text_field :title %>
-  </div>
-  
-  <div class="field">
-    <%= form.label :text %>
-    <%= form.text_area :text %>
-  </div>
-
-  <div class="field">
-    <%= form.label :justification %>
-    <%= form.text_area :justification %>
-  </div>
-
-  <div class="field" id="number">
-    <%= form.label :number %>
-    <%= form.text_field :number %>
-  </div>
+  <%= f.collection_select :section_id, budget.sections.all, :id, :full_title %>
+  <%= f.text_field :title %>
+  <%= f.text_area :text %>
+  <%= f.text_area :justification %>
+  <%= f.text_field :number, wrapper_class: 'number' %>
 
   <div class="actions">
-    <%= form.submit %>
+    <%= f.submit class: 'btn btn-success' %>
+    <%= link_to t('helpers.action.back'), amendment_path(amendment), class: 'btn btn-danger' %>
   </div>
 <% end %>
 
 <script type="text/javascript">
   $(function () {
-    $("#type input").change(function () {
-      if ($(this).attr('checked', true)) {
-        var type = $(this).val();
-        if (type == "Articulateds::StandardArticulated") {
-          $("#number label").show();
-          $("#number input").show();
-        } else {
-          $("#number label").hide();
-          $("#number input").hide();
-        }
+    $(".form-group.type input").change(function () {
+      var type = $(this).val();
+      if (type == "Articulateds::StandardArticulated") {
+        $(".form-group.number").show();
+      } else {
+        $(".form-group.number").hide();
       }
     });
   });
