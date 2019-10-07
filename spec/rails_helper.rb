@@ -66,4 +66,6 @@ RSpec.configure do |config|
     driven_by :rack_test
   end
 
+  require 'simplecov'
+  SimpleCov.start
 end
