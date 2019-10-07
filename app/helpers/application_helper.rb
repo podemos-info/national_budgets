@@ -6,6 +6,8 @@ module ApplicationHelper
   end
 
   def truncate_with_title(text_to_truncate, length = 160)
-      "<span title='#{text_to_truncate.gsub("'","\\'")}'>#{truncate(text_to_truncate, :length => length)}</span>".html_safe if !text_to_truncate.blank?
+    return if text_to_truncate.blank?
+
+    "<span title='#{text_to_truncate.gsub("'", "\\'")}'>#{truncate(text_to_truncate, length: length)}</span>".html_safe
   end
 end
