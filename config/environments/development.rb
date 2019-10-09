@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-Rails.application.configure do
+Rails.application.configure do # rubocop:disable Metrics/BlockLength
   # Settings specified here will take precedence over those in config/application.rb.
 
   # In the development environment your application's code is reloaded on
@@ -67,4 +67,7 @@ Rails.application.configure do
   ActiveSupport::Reloader.to_prepare do
     Dir['app/models/*/*.rb'].each { |file| require_dependency file }
   end
+
+  require 'faker'
+  I18n.reload!
 end
