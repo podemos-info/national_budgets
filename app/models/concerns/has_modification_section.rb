@@ -8,10 +8,6 @@ module HasModificationSection
   end
 
   def first_modification
-    modifications.first
-  end
-
-  def section
-    @section ||= first_modification.section if modifications?
+    modifications&.first
   end
 end
