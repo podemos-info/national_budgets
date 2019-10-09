@@ -9,4 +9,5 @@ class Budget < ApplicationRecord
   has_many :articles, through: :chapters
   has_many :concepts, through: :articles
   has_many :subconcepts, through: :concepts
+  belongs_to :user
 end
