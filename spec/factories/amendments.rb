@@ -9,7 +9,7 @@ FactoryBot.define do
   end
 
   factory :articulated_amendment, class: :'amendments/articulated_amendment', parent: :amendment do
-    factory :articulated_amendment_with_articulated do
+    trait :with_articulated do
       transient do
         articulateds_count { 1 }
       end
@@ -21,7 +21,7 @@ FactoryBot.define do
   end
 
   factory :standard_amendment, class: :'amendments/standard_amendment', parent: :amendment do
-    factory :standard_amendment_with_modifications do
+    trait :with_modifications do
       transient do
         modifications_count { 1 }
       end
@@ -33,7 +33,7 @@ FactoryBot.define do
   end
 
   factory :transfer_amendment, class: :'amendments/transfer_amendment', parent: :amendment do
-    factory :transfer_amendment_with_modifications do
+    trait :with_modifications do
       transient do
         modifications_count { 1 }
       end
@@ -45,7 +45,6 @@ FactoryBot.define do
   end
 
   factory :articulated do
-    type { Articulated.descendants.sample.to_s }
     title { Faker::Lorem.sentence(word_count: 5, supplemental: true, random_words_to_add: 15) }
     text { Faker::Lorem.paragraph(sentence_count: 2, supplemental: false, random_sentences_to_add: 4) }
     justification { Faker::Lorem.paragraph(sentence_count: 2, supplemental: false, random_sentences_to_add: 4) }

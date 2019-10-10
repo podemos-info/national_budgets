@@ -2,69 +2,71 @@
 
 require 'rails_helper'
 
-describe Amendment do # rubocop:disable Metrics/BlockLength
-  describe Amendments::ArticulatedAmendment do
-    subject(:articulated_amendment) { build(:articulated_amendment, **params) }
+describe Amendment do
+  subject(:amendment) { build(:amendment, type: type) }
 
-    let(:params) { {} }
+  let(:type) { 'Amendments::ArticulatedAmendment' }
+
+  it { is_expected.to be_valid }
+
+  context 'when has no type' do
+    let(:type) { nil }
+
+    it { is_expected.to be_invalid }
+  end
+
+  describe Amendments::ArticulatedAmendment do
+    subject(:amendment) { build(:articulated_amendment) }
 
     it { is_expected.to be_valid }
     it { is_expected.to be_allow_articulated }
+    it { is_expected.not_to be_allow_modifications }
+    it { is_expected.not_to be_any_articulated }
 
-    context 'when type is nil' do
-      let(:params) { { type: nil } }
+    context 'when has an articulated' do
+      subject(:amendment) { create(:articulated_amendment, :with_articulated) }
 
-      it { is_expected.to be_invalid }
+      it { is_expected.to be_any_articulated }
     end
 
-    context 'when has articulated' do
-      subject(:articulated_amendment_with_articulated) { create(:articulated_amendment_with_articulated) }
+    # build con 2 articulados deberia ser invalido
+  end
 
-      it { is_expected.to be_articulated }
-    end
+  shared_examples 'an amendment that allow modifications' do
+    it { is_expected.to be_valid }
+    it { is_expected.not_to be_allow_articulated }
+    it { is_expected.to be_allow_modifications }
+    it { is_expected.not_to be_locked_type }
+    it { is_expected.not_to be_any_section }
+  end
+
+  shared_examples 'an amendment with modifications' do
+    it { is_expected.to be_locked_type }
+    it { is_expected.to be_any_section }
+    it { is_expected.to be_any_modifications }
   end
 
   describe Amendments::StandardAmendment do
-    subject(:standard_amendment) { build(:standard_amendment, **params) }
+    subject(:amendment) { build(:standard_amendment) }
 
-    let(:params) { {} }
-
-    it { is_expected.to be_valid }
-    it { is_expected.to be_allow_modifications }
-
-    context 'when type is nil' do
-      let(:params) { { type: nil } }
-
-      it { is_expected.to be_invalid }
-    end
+    it_behaves_like 'an amendment that allow modifications'
 
     context 'when has modifications' do
-      subject(:standard_amendment_with_modifications) { create(:standard_amendment_with_modifications) }
+      subject(:amendment) { create(:standard_amendment, :with_modifications) }
 
-      it { is_expected.to be_locked_type }
-      it { is_expected.to be_section }
+      it_behaves_like 'an amendment with modifications'
     end
   end
 
   describe Amendments::TransferAmendment do
-    subject(:transfer_amendment) { build(:transfer_amendment, **params) }
+    subject(:amendment) { build(:transfer_amendment) }
 
-    let(:params) { {} }
-
-    it { is_expected.to be_valid }
-    it { is_expected.to be_allow_modifications }
-
-    context 'when type is nil' do
-      let(:params) { { type: nil } }
-
-      it { is_expected.to be_invalid }
-    end
+    it_behaves_like 'an amendment that allow modifications'
 
     context 'when has modifications' do
-      subject(:tramsfer_amendment_with_modifications) { create(:transfer_amendment_with_modifications) }
+      subject(:amendment) { create(:transfer_amendment, :with_modifications) }
 
-      it { is_expected.to be_locked_type }
-      it { is_expected.to be_section }
+      it_behaves_like 'an amendment with modifications'
     end
   end
 end
