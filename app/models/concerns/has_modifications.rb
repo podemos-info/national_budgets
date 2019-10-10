@@ -3,7 +3,7 @@
 module HasModifications
   extend ActiveSupport::Concern
 
-  def modifications?
+  def any_modifications?
     modifications.size.positive?
   end
 

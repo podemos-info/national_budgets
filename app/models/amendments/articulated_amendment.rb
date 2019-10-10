@@ -5,7 +5,7 @@ module Amendments
     has_one :articulated, foreign_key: :amendment_id, dependent: :destroy, inverse_of: :amendment
     delegate :section, to: :articulated, allow_nil: true
 
-    def articulated?
+    def any_articulated?
       articulated.present?
     end
 

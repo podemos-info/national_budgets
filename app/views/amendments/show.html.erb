@@ -13,7 +13,7 @@
   <hr>
   <%= amendment_section_label(amendment) %>
   <hr>
-  <% if amendment.articulated? %>
+  <% if amendment.any_articulated? %>
     <table class="w-100">
       <thead>
         <tr>
@@ -52,7 +52,7 @@
   <hr>
   <%= amendment_section_label(amendment) %>
   <hr>
-  <% if amendment.modifications? %>
+  <% if amendment.any_modifications? %>
     <table class="w-100">
       <thead>
         <tr>
