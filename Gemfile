@@ -28,12 +28,6 @@ gem 'uglifier', '>= 1.3.0'
 
 group :development, :test do
   gem 'byebug', platforms: %i[mri mingw x64_mingw]
-  gem 'factory_bot_rails'
-  gem 'faker'
-  gem 'rack-test'
-  gem 'rspec-rails', '~> 3.8'
-  gem 'rubocop-rspec'
-  gem 'simplecov', require: false
 end
 
 group :development do
@@ -47,9 +41,15 @@ group :development do
 end
 
 group :test do
-  gem 'capybara', '>= 2.15'
-  gem 'chromedriver-helper'
+  gem 'apparition'
+  gem 'capybara'
+  gem 'factory_bot_rails'
+  gem 'faker'
+  gem 'rack-test'
+  gem 'rspec-rails', '~> 3.8'
+  gem 'rubocop-rspec'
   gem 'selenium-webdriver'
+  gem 'simplecov', require: false
 end
 
 gem 'tzinfo-data', platforms: %i[mingw mswin x64_mingw jruby]
