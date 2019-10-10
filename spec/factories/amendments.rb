@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-FactoryBot.define do # rubocop:disable Metrics/BlockLength
+FactoryBot.define do
   factory :amendment do
     number { Faker::Alphanumeric.alphanumeric(number: 10, min_alpha: 3) }
     explanation { Faker::Lorem.paragraph(sentence_count: 2, supplemental: false, random_sentences_to_add: 4) }

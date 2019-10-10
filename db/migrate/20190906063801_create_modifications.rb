@@ -1,7 +1,6 @@
 # frozen_string_literal: true
 
 class CreateModifications < ActiveRecord::Migration[5.2]
-  # rubocop:disable Metrics/MethodLength
   def change
     create_table :modifications do |t|
       t.references :amendment, foreign_key: true
@@ -20,5 +19,4 @@ class CreateModifications < ActiveRecord::Migration[5.2]
       t.timestamps
     end
   end
-  # rubocop:enable Metrics/MethodLength
 end

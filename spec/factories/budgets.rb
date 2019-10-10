@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-FactoryBot.define do # rubocop:disable Metrics/BlockLength
+FactoryBot.define do
   factory :budget do
     title { Faker::Lorem.sentences(number: 1) }
     date { Faker::Date.between_except(from: 1.year.ago, to: 1.year.from_now, excepted: Time.zone.today) }
