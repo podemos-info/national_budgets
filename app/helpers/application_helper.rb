@@ -8,6 +8,6 @@ module ApplicationHelper
   def truncate_with_title(text_to_truncate, length = 160)
     return if text_to_truncate.blank?
 
-    "<span title='#{text_to_truncate.gsub("'", "\\'")}'>#{truncate(text_to_truncate, length: length)}</span>".html_safe
+    safe_join([content_tag(:span, truncate(text_to_truncate, length: length), title: text_to_truncate.gsub("'", "\\'"))])
   end
 end
