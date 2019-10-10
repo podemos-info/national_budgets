@@ -8,6 +8,6 @@ module HasModificationSection
   end
 
   def first_modification
-    modifications&.first
+    modifications.first
   end
 end
