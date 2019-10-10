@@ -4,11 +4,11 @@ module AmendmentsHelper
   def collection_title(collection)
     return t('helpers.views.empty_collection', model: collection.model_name.human(count: 0).downcase) if collection.empty?
 
-    safe_join(content_tag(:b, t('helpers.views.choose_model', model: collection.model_name.human.downcase)), ':<br>')
+    safe_join([content_tag(:b, t('helpers.views.choose_model', model: collection.model_name.human.downcase)), ':<br>'])
   end
 
   def browse_title(object)
-    safe_join(content_tag(:b, object.class.model_name.human + ': '), content_tag(:span, object.full_title), '<br>')
+    safe_join([content_tag(:b, object.class.model_name.human + ': '), content_tag(:span, object.full_title), '<br>'])
   end
 
   def browse_link(object, path)

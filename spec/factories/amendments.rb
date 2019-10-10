@@ -10,12 +10,8 @@ FactoryBot.define do
 
   factory :articulated_amendment, class: :'amendments/articulated_amendment', parent: :amendment do
     trait :with_articulated do
-      transient do
-        articulateds_count { 1 }
-      end
-
-      after(:create) do |amendment, evaluator|
-        create_list(:standard_articulated, evaluator.articulateds_count, amendment: amendment)
+      after(:create) do |amendment|
+        create(:standard_articulated, amendment: amendment)
       end
     end
   end
