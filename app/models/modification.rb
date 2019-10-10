@@ -11,6 +11,7 @@ class Modification < ApplicationRecord
   belongs_to :concept, optional: true
   belongs_to :subconcept, optional: true
   after_initialize :set_section
+  validates :type, :amount, presence: true
   validate :section_not_unique
 
   def locked_section?

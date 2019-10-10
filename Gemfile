@@ -11,7 +11,7 @@ gem 'dotenv-rails', require: 'dotenv/rails-now'
 gem 'activeadmin'
 gem 'bootsnap', '>= 1.1.0', require: false
 gem 'bootstrap', '~> 4.3.1'
-gem "bootstrap_form", "~> 4.0"
+gem 'bootstrap_form', '~> 4.0'
 gem 'coffee-rails', '~> 4.2'
 gem 'devise'
 gem 'devise-i18n'
@@ -41,9 +41,15 @@ group :development do
 end
 
 group :test do
-  gem 'capybara', '>= 2.15'
-  gem 'chromedriver-helper'
+  gem 'apparition'
+  gem 'capybara'
+  gem 'factory_bot_rails'
+  gem 'faker'
+  gem 'rack-test'
+  gem 'rspec-rails', '~> 3.8'
+  gem 'rubocop-rspec'
   gem 'selenium-webdriver'
+  gem 'simplecov', require: false
 end
 
 gem 'tzinfo-data', platforms: %i[mingw mswin x64_mingw jruby]

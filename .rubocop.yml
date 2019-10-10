@@ -1,4 +1,6 @@
-require: rubocop-rails
+require: 
+  - rubocop-rails
+  - rubocop-rspec
 
 AllCops:
   Include:
@@ -22,3 +24,15 @@ Style/Documentation:
 
 Metrics/LineLength:
   Max: 140
+
+Metrics/BlockLength:
+  Enabled: true
+  Exclude:
+    - config/environments/*.rb
+    - spec/**/*_spec.rb
+    - spec/factories/*.rb
+
+Metrics/MethodLength:
+  Enabled: true
+  Exclude:
+    - db/migrate/*.rb

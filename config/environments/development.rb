@@ -64,7 +64,12 @@ Rails.application.configure do
 
   config.hosts.clear
 
+  # Preload descendant models
+  models = Dir['app/models/*/*.rb']
+  models.each { |file| require_dependency file }
+
+  # Reload descendant models
   ActiveSupport::Reloader.to_prepare do
-    Dir['app/models/*/*.rb'].each { |file| require_dependency file }
+    models.each { |file| require_dependency file }
   end
 end
