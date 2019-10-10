@@ -1,8 +1,8 @@
 # frozen_string_literal: true
 
-require "capybara/apparition"
-require "capybara/rails"
-require "capybara/rspec"
+require 'capybara/apparition'
+require 'capybara/rails'
+require 'capybara/rspec'
 
 Capybara.server = :puma, { Silent: true }
 Capybara.javascript_driver = :apparition
@@ -16,4 +16,3 @@ RSpec.configure do |config|
     end
   end
 end
-

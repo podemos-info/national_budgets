@@ -1,16 +1,16 @@
 # frozen_string_literal: true
 
-require "rails_helper"
+require 'rails_helper'
 
-describe "Amendment creation", type: :system do
+describe 'Amendment creation', type: :system do
   let(:user) { create(:user) }
   let(:budget) { create(:budget) }
- 
+
   before do
     login_as user
   end
 
-  it "creates a new amendment" do
+  it 'creates a new amendment' do
     visit budget_amendments_path(budget)
 
     first(:link, 'Crear enmienda').click

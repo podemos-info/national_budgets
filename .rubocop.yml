@@ -1,4 +1,4 @@
-require: 
+require:
   - rubocop-rails
   - rubocop-rspec
 
@@ -36,3 +36,11 @@ Metrics/MethodLength:
   Enabled: true
   Exclude:
     - db/migrate/*.rb
+
+RSpec/MultipleExpectations:
+  Exclude:
+    - spec/system/**/*_spec.rb
+
+RSpec/ExampleLength:
+  Exclude:
+    - spec/system/**/*_spec.rb

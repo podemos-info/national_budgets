@@ -28,8 +28,6 @@ describe Amendment do
 
       it { is_expected.to be_any_articulated }
     end
-
-    # build con 2 articulados deberia ser invalido
   end
 
   shared_examples 'an amendment that allow modifications' do
