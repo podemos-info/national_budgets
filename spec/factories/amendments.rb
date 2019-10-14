@@ -11,7 +11,7 @@ FactoryBot.define do
   factory :articulated_amendment, class: :'amendments/articulated_amendment', parent: :amendment do
     trait :with_articulated do
       after(:create) do |amendment|
-        create :standard_articulated, amendment_id: amendment.id
+        create :standard_articulated, amendment: amendment
       end
     end
   end
@@ -47,7 +47,7 @@ FactoryBot.define do
     text { Faker::Lorem.paragraph(sentence_count: 2, supplemental: false, random_sentences_to_add: 4) }
     justification { Faker::Lorem.paragraph(sentence_count: 2, supplemental: false, random_sentences_to_add: 4) }
     number { Faker::Alphanumeric.alphanumeric(number: 10, min_alpha: 3) }
-    section { create(:section) }
+    section
   end
 
   factory :additional_articulated, class: :'articulateds/additional_articulated', parent: :articulated do
