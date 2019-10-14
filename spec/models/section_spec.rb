@@ -12,7 +12,7 @@ describe Section do
     let(:title) { 'Testing full title' }
 
     it 'has valid full title' do
-      expect(subject.full_title).to eq "01. Testing full title"
+      expect(section.full_title).to eq '01. Testing full title'
     end
   end
 end
