@@ -7,21 +7,13 @@ class Amendment < ApplicationRecord
   validates :type, :number, :explanation, presence: true
   validate :type_cannot_be_changed, on: :update, if: :locked_type?
 
-  def any_modifications?
-    false
-  end
+  def any_modifications?; end
 
-  def allow_modifications?
-    false
-  end
+  def allow_modifications?; end
 
-  def any_articulated?
-    false
-  end
+  def any_articulated?; end
 
-  def allow_articulated?
-    false
-  end
+  def allow_articulated?; end
 
   def locked_type?
     persisted? && (any_articulated? || any_modifications?)
