@@ -11,7 +11,7 @@ FactoryBot.define do
   factory :articulated_amendment, class: :'amendments/articulated_amendment', parent: :amendment do
     trait :with_articulated do
       after(:create) do |amendment|
-        create(:standard_articulated, amendment: amendment)
+        create :standard_articulated, amendment_id: amendment.id
       end
     end
   end
@@ -19,11 +19,12 @@ FactoryBot.define do
   factory :standard_amendment, class: :'amendments/standard_amendment', parent: :amendment do
     trait :with_modifications do
       transient do
-        modifications_count { 1 }
+        modifications_count { 2 }
+        section { create(:section) }
       end
 
       after(:create) do |amendment, evaluator|
-        create_list(:standard_modification, evaluator.modifications_count, amendment: amendment)
+        create_list(:standard_modification, evaluator.modifications_count, amendment: amendment, section: evaluator.section)
       end
     end
   end
@@ -31,11 +32,12 @@ FactoryBot.define do
   factory :transfer_amendment, class: :'amendments/transfer_amendment', parent: :amendment do
     trait :with_modifications do
       transient do
-        modifications_count { 1 }
+        modifications_count { 2 }
+        section { create(:section) }
       end
 
       after(:create) do |amendment, evaluator|
-        create_list(:transfer_modification, evaluator.modifications_count, amendment: amendment)
+        create_list(:transfer_modification, evaluator.modifications_count, amendment: amendment, section: evaluator.section)
       end
     end
   end
@@ -45,7 +47,7 @@ FactoryBot.define do
     text { Faker::Lorem.paragraph(sentence_count: 2, supplemental: false, random_sentences_to_add: 4) }
     justification { Faker::Lorem.paragraph(sentence_count: 2, supplemental: false, random_sentences_to_add: 4) }
     number { Faker::Alphanumeric.alphanumeric(number: 10, min_alpha: 3) }
-    section
+    section { create(:section) }
   end
 
   factory :additional_articulated, class: :'articulateds/additional_articulated', parent: :articulated do
@@ -58,7 +60,7 @@ FactoryBot.define do
   end
 
   factory :modification do
-    section
+    section { amendment.section || create(:section) }
     service
     program
     chapter
