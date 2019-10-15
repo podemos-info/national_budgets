@@ -38,7 +38,7 @@ class ModificationsController < ApplicationController
   # DELETE /amendments/:amendment_id/modifications/:id
   def destroy
     modification.destroy
-    redirect_to amendment_path(amendment), success: flash_message(:success, :check)
+    redirect_to amendment_path(amendment), danger: flash_message(:success, :trash)
   end
 
   private

@@ -45,7 +45,7 @@ class AmendmentsController < ApplicationController
   # DELETE /amendments/:id
   def destroy
     amendment.destroy
-    redirect_to budget_amendments_path(budget), success: flash_message(:success, :check)
+    redirect_to budget_amendments_path(budget), danger: flash_message(:success, :trash)
   end
 
   # GET /amendments/:id/browse/section(/:section_id(/:service_id(/:program_id)))
