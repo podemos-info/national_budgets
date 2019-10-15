@@ -86,7 +86,7 @@
           </tr>
         <% end %>
       <tr style="border-top: 1px solid #eee;">
-        <td colspan="8" style="text-align: right;"><b class="text-secondary"><%= t('helpers.label.amendment.total_amount') %>:</b> <%= number_to_currency amendment.modifications.sum(:amount) %></td>
+        <td colspan="8" style="text-align: right;"><b class="text-secondary"><%= t('helpers.label.amendment.total_amount') %>:</b> <%= number_to_currency amendment.balance %></td>
       </tr>
       </tbody>
     </table>
