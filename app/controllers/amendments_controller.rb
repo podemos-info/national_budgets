@@ -27,7 +27,7 @@ class AmendmentsController < ApplicationController
     amendment.budget = budget
 
     if amendment.save
-      redirect_to amendment_path(amendment), success: flash_message(:success, :check)
+      redirect_to after_create_path, success: flash_message(:success, :check)
     else
       render action: 'new'
     end
@@ -55,6 +55,17 @@ class AmendmentsController < ApplicationController
   def browse_chapter; end
 
   private
+
+  def after_create_path
+    case amendment.type
+    when 'Amendments::ArticulatedAmendment'
+      new_amendment_articulated_path(amendment)
+    when 'Amendments::StandardAmendment', 'Amendments::TransferAmendment'
+      new_amendment_modification_path(amendment)
+    else
+      amendment_path(amendment)
+    end
+  end
 
   def amendment_params
     params.require(:amendment).permit(:number, :type, :explanation, :user_id)

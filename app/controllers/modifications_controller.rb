@@ -20,7 +20,7 @@ class ModificationsController < ApplicationController
     @modification = amendment.modifications.new(modification_params)
 
     if modification.save
-      redirect_to amendment_path(amendment), success: flash_message(:success, :check)
+      redirect_to after_create_path, success: flash_message(:success, :check)
     else
       render action: 'new'
     end
@@ -42,6 +42,14 @@ class ModificationsController < ApplicationController
   end
 
   private
+
+  def after_create_path
+    if amendment.completed?
+      amendment_path(amendment)
+    else
+      new_amendment_modification_path(amendment)
+    end
+  end
 
   def modification_params
     params.require(:modification).permit(:section_id, :service_id,
