@@ -12,5 +12,9 @@ module Amendments
     def allow_articulated?
       true
     end
+
+    def completed?
+      any_articulated?
+    end
   end
 end
