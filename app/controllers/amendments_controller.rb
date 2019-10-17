@@ -57,13 +57,10 @@ class AmendmentsController < ApplicationController
   private
 
   def after_create_path
-    case amendment.type
-    when 'Amendments::ArticulatedAmendment'
+    if amendment.allow_articulated?
       new_amendment_articulated_path(amendment)
-    when 'Amendments::StandardAmendment', 'Amendments::TransferAmendment'
-      new_amendment_modification_path(amendment)
     else
-      amendment_path(amendment)
+      new_amendment_modification_path(amendment)
     end
   end
 
