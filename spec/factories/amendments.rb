@@ -25,7 +25,9 @@ FactoryBot.define do
         end
 
         after(:create) do |amendment, evaluator|
-          create_list("#{model_prefix}_modification".to_sym, evaluator.modifications_count, amendment: amendment, section: evaluator.section)
+          create_list("#{model_prefix}_modification".to_sym,
+                      evaluator.modifications_count,
+                      amendment: amendment, section: evaluator.section)
         end
       end
     end

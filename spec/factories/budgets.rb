@@ -51,7 +51,7 @@ FactoryBot.define do
     chapter
 
     trait :with_concepts do
-      transient do 
+      transient do
         concepts_count { 5 }
       end
 
