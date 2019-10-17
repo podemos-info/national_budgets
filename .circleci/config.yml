@@ -5,7 +5,7 @@ version: 2
 jobs:
   main:
     docker:
-      - image: circleci/ruby:2.6.3-node
+      - image: circleci/ruby:2.6.3-node-browsers
         environment:
           DATABASE_USERNAME: postgres
 
