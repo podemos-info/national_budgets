@@ -10,6 +10,8 @@
     </div>
   <% end %>
 
+  <%= f.collection_radio_buttons :amount_sign, [['+', 'Additional'], ['-', 'Removal']], :first, :last, custom: :switch, inline: true, wrapper_class: 'align-items-center type' %>
+
   <div class="row px-3">
     <div class="pseudoiframe col-12 col-sm-6" src="<%= browse_section_amendment_path(id: amendment, section_id: modification.section, service_id: modification.service_id, program_id: modification.program_id, locked_section: modification.locked_section?)%>"></div>
     <div class="pseudoiframe col-12 col-sm-6" src="<%= browse_chapter_amendment_path(id: amendment, chapter_id: modification.chapter_id, article_id: modification.article_id, concept_id: modification.concept_id, subconcept_id: modification.subconcept_id)%>"></div>
@@ -17,7 +19,7 @@
 
   <%= f.text_field :project %>
   <%= f.check_box :project_new, custom: :switch, class: 'text-center', wrapper_class: 'col-9 offset-3 text-left mb-3' %>
-  <%= f.text_field :amount, type: :number, step: '0.01' %>
+  <%= f.text_field :amount, label: :amount, type: :number, step: '0.01', min: 0, value: modification.abs_amount %>
 
   <div class="actions">
     <%= f.submit class: 'btn btn-sm btn-success' %>

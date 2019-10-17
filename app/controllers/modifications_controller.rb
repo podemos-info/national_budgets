@@ -56,7 +56,7 @@ class ModificationsController < ApplicationController
                                          :program_id, :chapter_id,
                                          :article_id, :concept_id,
                                          :subconcept_id, :project,
-                                         :project_new, :amount)
+                                         :project_new, :amount, :amount_sign)
   end
 
   def modification

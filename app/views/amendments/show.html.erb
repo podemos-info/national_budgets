@@ -63,13 +63,14 @@
           <th><%= Modification.human_attribute_name(:concept) %></th>
           <th><%= Modification.human_attribute_name(:subconcept) %></th>
           <th><%= Modification.human_attribute_name(:project) %></th>
+          <th><%= Modification.human_attribute_name(:amount_sign) %></th>
           <th style="text-align: right;"><%= Modification.human_attribute_name(:amount) %></th>
           <th></th>
         </tr>
       </thead>
 
       <tbody>
-        <% amendment.modifications.each do |modification| %>
+        <% amendment.modifications.order('amount >= 0 desc, id asc').each do |modification| %>
           <tr>
             <td title="<%= modification.service&.full_title %>"><%= modification.service&.ref %></td>
             <td title="<%= modification.program&.full_title %>"><%= modification.program&.ref %></td>
@@ -78,7 +79,8 @@
             <td title="<%= modification.concept&.full_title %>"><%= modification.concept&.ref %></td>
             <td title="<%= modification.subconcept&.full_title %>"><%= modification.subconcept&.ref %></td>
             <td><%= modification.project %></td>
-            <td style="text-align: right;"><%= number_to_currency modification.amount %></td>
+            <td title="<%= modification.concept&.full_title %>"><%= modification.amount_sign_human %></td>
+            <td style="text-align: right;"><%= number_to_currency modification.abs_amount %></td>
             <td align="right">
               <%= link_to t('helpers.action.edit'), edit_amendment_modification_path(amendment, modification), class: 'btn btn-sm btn-outline-warning' %>
               <%= link_to t('helpers.action.destroy'), amendment_modification_path(amendment, modification), method: :delete, data: { confirm: t('helpers.messages.are_you_sure') }, class: 'btn btn-sm btn-outline-danger' %>
@@ -86,7 +88,7 @@
           </tr>
         <% end %>
       <tr style="border-top: 1px solid #eee;">
-        <td colspan="8" style="text-align: right;"><b class="text-secondary"><%= t('helpers.label.amendment.total_amount') %>:</b> <%= number_to_currency amendment.balance %></td>
+        <td colspan="9" style="text-align: right;"><b class="text-secondary"><%= t('helpers.label.amendment.total_amount') %>:</b> <%= number_to_currency amendment.balance %></td>
       </tr>
       </tbody>
     </table>
