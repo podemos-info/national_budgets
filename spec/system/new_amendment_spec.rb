@@ -5,11 +5,13 @@ require 'rails_helper'
 describe 'Amendment creation', type: :system, js: true do
   let(:user) { create(:user) }
   let(:budget) { create(:budget) }
-  let(:section) { create(:section, :with_childs, budget: budget) }
-  let(:chapter) { create(:chapter, :with_childs, budget: budget) }
+  let(:budget) { create(:budget, user: user) }
+  let(:section) { create(:section, :with_children, budget: budget) }
+  let(:chapter) { create(:chapter, :with_children, budget: budget) }
   let(:article) { create(:article, :with_concepts, chapter: chapter) }
   let(:concept) { create(:concept, :with_subconcepts, article: article) }
   let(:subconcept) { create(:subconcept, concept: concept) }
+  let(:wait_time) { 0.3.seconds }
 
   before do
     section
@@ -34,11 +36,17 @@ describe 'Amendment creation', type: :system, js: true do
     expect(page).to have_current_path(new_amendment_modification_path(Amendment.last))
 
     click_link section.full_title
+    sleep(wait_time)
     click_link section.services.first.full_title
+    sleep(wait_time)
     click_link section.programs.first.full_title
-    click_link chapter.full_title
-    click_link article.full_title
-    click_link concept.full_title
+    sleep(wait_time)
+    click_link subconcept.concept.article.chapter.full_title
+    sleep(wait_time)
+    click_link subconcept.concept.article.full_title
+    sleep(wait_time)
+    click_link subconcept.concept.full_title
+    sleep(wait_time)
     click_link subconcept.full_title
 
     fill_in 'Proyecto', with: '1234'
@@ -52,14 +60,19 @@ describe 'Amendment creation', type: :system, js: true do
     expect(page).to have_current_path(new_amendment_modification_path(Amendment.last))
 
     click_link section.services.first.full_title
+    sleep(wait_time)
     click_link section.programs.first.full_title
+    sleep(wait_time)
     click_link subconcept.concept.article.chapter.full_title
+    sleep(wait_time)
     click_link subconcept.concept.article.full_title
+    sleep(wait_time)
     click_link subconcept.concept.full_title
+    sleep(wait_time)
     click_link subconcept.full_title
 
     fill_in 'Proyecto', with: '4321'
-    fill_in 'Importe', with: '-1000000'
+    fill_in 'Importe', with: '1000000'
 
     click_button 'Añadir modificación'
 
