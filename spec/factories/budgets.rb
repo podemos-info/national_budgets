@@ -1,6 +1,10 @@
 # frozen_string_literal: true
 
 FactoryBot.define do
+  sequence(:title) do |n|
+    "#{Faker::Lorem.paragraph(sentence_count: 2, supplemental: false, random_sentences_to_add: 4)}-#{n}"
+  end
+
   factory :budget do
     title { Faker::Lorem.sentences(number: 1) }
     date { Faker::Date.between_except(from: 1.year.ago, to: 1.year.from_now, excepted: Time.zone.today) }
@@ -10,11 +14,11 @@ FactoryBot.define do
   %i[section chapter].each do |model|
     factory model do
       ref { Faker::Alphanumeric.alphanumeric(number: 2) }
-      title { Faker::Lorem.paragraph(sentence_count: 2, supplemental: false, random_sentences_to_add: 4) }
+      title { generate(:title) }
       budget
 
       unless model == :subconcept
-        trait :with_childs do
+        trait :with_children do
           transient do
             child_count { 5 }
             child_models do
@@ -35,19 +39,19 @@ FactoryBot.define do
 
   factory :service do
     ref { Faker::Alphanumeric.alphanumeric(number: 2) }
-    title { Faker::Lorem.paragraph(sentence_count: 2, supplemental: false, random_sentences_to_add: 4) }
+    title { generate(:title) }
     section
   end
 
   factory :program do
     ref { Faker::Alphanumeric.alphanumeric(number: 2) }
-    title { Faker::Lorem.paragraph(sentence_count: 2, supplemental: false, random_sentences_to_add: 4) }
+    title { generate(:title) }
     section
   end
 
   factory :article do
     ref { Faker::Alphanumeric.alphanumeric(number: 2) }
-    title { Faker::Lorem.paragraph(sentence_count: 2, supplemental: false, random_sentences_to_add: 4) }
+    title { generate(:title) }
     chapter
 
     trait :with_concepts do
@@ -63,7 +67,7 @@ FactoryBot.define do
 
   factory :concept do
     ref { Faker::Alphanumeric.alphanumeric(number: 2) }
-    title { Faker::Lorem.paragraph(sentence_count: 2, supplemental: false, random_sentences_to_add: 4) }
+    title { generate(:title) }
     article
 
     trait :with_subconcepts do
@@ -79,7 +83,7 @@ FactoryBot.define do
 
   factory :subconcept do
     ref { Faker::Alphanumeric.alphanumeric(number: 2) }
-    title { Faker::Lorem.paragraph(sentence_count: 2, supplemental: false, random_sentences_to_add: 4) }
+    title { generate(:title) }
     concept
   end
 end

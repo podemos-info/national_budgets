@@ -9,7 +9,7 @@ class ModificationsController < ApplicationController
 
   # GET /amendments/:amendment_id/modifications/new
   def new
-    @modification = modifications.new
+    @modification = modifications.new(amount: amendment.compensation_amount)
   end
 
   # GET /amendments/:amendment_id/modifications/:id/edit
@@ -55,8 +55,8 @@ class ModificationsController < ApplicationController
     params.require(:modification).permit(:section_id, :service_id,
                                          :program_id, :chapter_id,
                                          :article_id, :concept_id,
-                                         :subconcept_id, :project,
-                                         :project_new, :amount, :amount_sign)
+                                         :subconcept_id, :project, :project_new,
+                                         :amount_sign, :abs_amount)
   end
 
   def modification

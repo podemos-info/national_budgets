@@ -15,6 +15,10 @@ module HasModifications
     modifications.sum(:amount)
   end
 
+  def compensation_amount
+    balance * -1
+  end
+
   def completed?
     modifications.size > 1 && balance.zero?
   end

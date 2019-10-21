@@ -21,7 +21,7 @@ describe Amendment do
     it { is_expected.to be_valid }
     it { is_expected.to be_allow_articulated }
     it { is_expected.not_to be_allow_modifications }
-    it { is_expected.not_to be_any_articulated }
+    it { is_expected.not_to be_completed }
 
     it 'type can be changed' do
       expect(amendment.type_cannot_be_changed).to be_truthy
@@ -30,7 +30,7 @@ describe Amendment do
     context 'when has an articulated' do
       subject(:amendment) { create(:articulated_amendment, :with_articulated) }
 
-      it { is_expected.to be_any_articulated }
+      it { is_expected.to be_completed }
 
       it 'type cannot be changed' do
         expect(amendment.type_cannot_be_changed).to be_nil

@@ -10,9 +10,11 @@ class Modification < ApplicationRecord
   belongs_to :article
   belongs_to :concept, optional: true
   belongs_to :subconcept, optional: true
-  after_initialize :set_section
-  validates :type, :amount_sign, :amount, presence: true
+  after_initialize :initialize_section
+  validates :type, :abs_amount, presence: true
   validate :section_not_unique
+
+  scope :additions_first, -> { order(Arel.sql('amount >= 0'), id: :asc) }
 
   def locked_section?
     @locked_section ||= amendment.modifications.where.not(id: id).count.positive?
@@ -23,16 +25,26 @@ class Modification < ApplicationRecord
   end
 
   def abs_amount
-    amount&.abs
+    @abs_amount ||= amount&.abs || 0
+  end
+
+  def abs_amount=(value)
+    @abs_amount = value
+    sync_amount
+  end
+
+  def amount=(value)
+    @amount_sign = @abs_amount = nil
+    self[:amount] = value
   end
 
   def amount_sign
-    @amount_sign ||= ('++-'[amount <=> 0] if amount && persisted?)
+    @amount_sign ||= amount&.negative? ? '-' : '+'
   end
 
   def amount_sign=(sign)
     @amount_sign = sign
-    self.amount = "#{sign}#{amount.abs}".to_f
+    sync_amount
   end
 
   def amount_sign_human
@@ -41,7 +53,11 @@ class Modification < ApplicationRecord
 
   private
 
-  def set_section
+  def initialize_section
     self.section ||= amendment&.section if new_record?
+  end
+
+  def sync_amount
+    self[:amount] = "#{@amount_sign}#{@abs_amount}".to_f
   end
 end

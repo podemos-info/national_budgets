@@ -70,7 +70,7 @@
       </thead>
 
       <tbody>
-        <% amendment.modifications.order('amount >= 0 desc, id asc').each do |modification| %>
+        <% amendment.modifications.additions_first.each do |modification| %>
           <tr>
             <td title="<%= modification.service&.full_title %>"><%= modification.service&.ref %></td>
             <td title="<%= modification.program&.full_title %>"><%= modification.program&.ref %></td>
@@ -79,7 +79,7 @@
             <td title="<%= modification.concept&.full_title %>"><%= modification.concept&.ref %></td>
             <td title="<%= modification.subconcept&.full_title %>"><%= modification.subconcept&.ref %></td>
             <td><%= modification.project %></td>
-            <td title="<%= modification.concept&.full_title %>"><%= modification.amount_sign_human %></td>
+            <td title="<%= modification.concept&.full_title %>"><%= t("helpers.label.modification.#{modification.amount_sign_human}") %></td>
             <td style="text-align: right;"><%= number_to_currency modification.abs_amount %></td>
             <td align="right">
               <%= link_to t('helpers.action.edit'), edit_amendment_modification_path(amendment, modification), class: 'btn btn-sm btn-outline-warning' %>
@@ -88,7 +88,7 @@
           </tr>
         <% end %>
       <tr style="border-top: 1px solid #eee;">
-        <td colspan="9" style="text-align: right;"><b class="text-secondary"><%= t('helpers.label.amendment.total_amount') %>:</b> <%= number_to_currency amendment.balance %></td>
+        <td colspan="9" style="text-align: right;"><b class="text-secondary"><%= t('helpers.label.amendment.balance') %>:</b> <%= number_to_currency amendment.balance %></td>
       </tr>
       </tbody>
     </table>
