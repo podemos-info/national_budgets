@@ -4,7 +4,6 @@ require 'rails_helper'
 
 describe 'Amendment creation', type: :system, js: true do
   let(:user) { create(:user) }
-  let(:budget) { create(:budget) }
   let(:budget) { create(:budget, user: user) }
   let(:section) { create(:section, :with_children, budget: budget) }
   let(:chapter) { create(:chapter, :with_children, budget: budget) }

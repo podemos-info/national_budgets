@@ -8,7 +8,7 @@ Capybara.server = :puma, { Silent: true }
 Capybara.javascript_driver = :apparition
 
 Capybara.register_driver :apparition do |app|
-  Capybara::Apparition::Driver.new(app, {window_size: [1280, 720], inspector: true})
+  Capybara::Apparition::Driver.new(app, window_size: [1280, 720], inspector: true)
 end
 
 RSpec.configure do |config|
