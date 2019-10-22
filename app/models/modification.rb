@@ -11,7 +11,7 @@ class Modification < ApplicationRecord
   belongs_to :concept, optional: true
   belongs_to :subconcept, optional: true
   after_initialize :initialize_section
-  validates :type, :abs_amount, presence: true
+  validates :type, :abs_amount, :amendment, presence: true
   validate :section_not_unique
 
   scope :additions_first, -> { order(Arel.sql('amount >= 0'), id: :asc) }
@@ -21,7 +21,7 @@ class Modification < ApplicationRecord
   end
 
   def section_not_unique
-    errors.add(:section, 'is not unique in the amendment') if amendment.section && section != amendment.section
+    errors.add(:section, 'is not unique in the amendment') if amendment&.section && section != amendment.section
   end
 
   def abs_amount
@@ -29,7 +29,7 @@ class Modification < ApplicationRecord
   end
 
   def abs_amount=(value)
-    @abs_amount = value
+    @abs_amount = value.to_f.abs
     sync_amount
   end
 
