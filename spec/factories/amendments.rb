@@ -33,17 +33,14 @@ FactoryBot.define do
 
       trait :completed do
         transient do
-          modifications_count { 1 }
           section { create(:section) }
         end
 
         after(:create) do |amendment, evaluator|
-          create_list("#{model_prefix}_modification".to_sym,
-                      evaluator.modifications_count,
-                      amendment: amendment, section: evaluator.section, abs_amount: '1000', amount_sign: '+')
-          create_list("#{model_prefix}_modification".to_sym,
-                      evaluator.modifications_count,
-                      amendment: amendment, section: evaluator.section, abs_amount: '1000', amount_sign: '-')
+          create("#{model_prefix}_modification".to_sym,
+                 amendment: amendment, section: evaluator.section, abs_amount: '1000', amount_sign: '+')
+          create("#{model_prefix}_modification".to_sym,
+                 amendment: amendment, section: evaluator.section, abs_amount: '1000', amount_sign: '-')
         end
       end
     end
@@ -75,7 +72,7 @@ FactoryBot.define do
     subconcept
     project { '123' }
     project_new { [true, false].sample }
-    amount { 1000 }
+    amount { 1 }
     amendment
   end
 end
