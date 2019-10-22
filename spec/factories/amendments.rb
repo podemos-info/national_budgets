@@ -30,6 +30,22 @@ FactoryBot.define do
                       amendment: amendment, section: evaluator.section)
         end
       end
+
+      trait :completed do
+        transient do
+          modifications_count { 1 }
+          section { create(:section) }
+        end
+
+        after(:create) do |amendment, evaluator|
+          create_list("#{model_prefix}_modification".to_sym,
+                      evaluator.modifications_count,
+                      amendment: amendment, section: evaluator.section, abs_amount: '1000', amount_sign: '+')
+          create_list("#{model_prefix}_modification".to_sym,
+                      evaluator.modifications_count,
+                      amendment: amendment, section: evaluator.section, abs_amount: '1000', amount_sign: '-')
+        end
+      end
     end
 
     factory "#{model_prefix}_modification".to_sym, class: :"modifications/#{model_prefix}_modification", parent: :modification do
@@ -50,7 +66,7 @@ FactoryBot.define do
   end
 
   factory :modification do
-    section { amendment.section || create(:section) }
+    section { amendment&.section || create(:section) }
     service
     program
     chapter
