@@ -71,7 +71,7 @@ describe Modification do
     describe '#abs_amount' do
       subject { modification.abs_amount }
 
-      it { is_expected.to eq(0.0) }
+      it { is_expected.to be_zero }
     end
   end
 
@@ -95,7 +95,13 @@ describe Modification do
     describe '#abs_amount' do
       subject { modification.abs_amount }
 
-      it { is_expected.to eq(0.0) }
+      it { is_expected.to be_zero }
+    end
+
+    context 'when amount_sign changes' do
+      subject(:amount_sign_change) { modification.amount_sign = '-' }
+
+      it { expect { amount_sign_change }.to change(modification, :amount) .from(0.0).to(-0.0) }
     end
   end
 
@@ -166,5 +172,33 @@ describe Modification do
     let(:amendment) { create(:standard_amendment, :with_modifications) }
 
     it { is_expected.to be_locked_section }
+  end
+
+  context 'when abs_amount changes' do
+    subject(:abs_amount_change) { modification.abs_amount = 2 }
+
+    it { expect { abs_amount_change }.to change(modification, :amount) .from(1.0).to(2.0) }
+    it { expect { abs_amount_change }.not_to change(modification, :amount_sign) }
+  end
+
+  context 'when amount changes to negative value' do
+    subject(:amount_change_to_negative) { modification.amount = -2 }
+
+    it { expect { amount_change_to_negative }.to change(modification, :abs_amount) .from(1.0).to(2.0) }
+    it { expect { amount_change_to_negative }.to change(modification, :amount_sign) .from('+').to('-') }
+  end
+
+  context 'when amount changes to another positive value' do
+    subject(:amount_change_to_positive) { modification.amount = 2 }
+
+    it { expect { amount_change_to_positive }.to change(modification, :abs_amount) .from(1.0).to(2.0) }
+    it { expect { amount_change_to_positive }.not_to change(modification, :amount_sign) }
+  end
+
+  context 'when amount_sign changes' do
+    subject(:amount_sign_change) { modification.amount_sign = '-' }
+
+    it { expect { amount_sign_change }.to change(modification, :amount) .from(1.0).to(-1.0) }
+    it { expect { amount_sign_change }.not_to change(modification, :abs_amount) }
   end
 end
