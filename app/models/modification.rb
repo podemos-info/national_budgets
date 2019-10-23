@@ -24,18 +24,22 @@ class Modification < ApplicationRecord
     errors.add(:section, 'is not unique in the amendment') if amendment&.section && section != amendment.section
   end
 
+  def amount
+    super || 0
+  end
+
+  def amount=(value)
+    @amount_sign = @abs_amount = nil
+    super(value)
+  end
+
   def abs_amount
-    @abs_amount ||= amount&.abs || 0
+    @abs_amount ||= amount&.abs
   end
 
   def abs_amount=(value)
     @abs_amount = value.to_f.abs
     sync_amount
-  end
-
-  def amount=(value)
-    @amount_sign = @abs_amount = nil
-    self[:amount] = value
   end
 
   def amount_sign
@@ -58,6 +62,6 @@ class Modification < ApplicationRecord
   end
 
   def sync_amount
-    self[:amount] = "#{@amount_sign}#{@abs_amount}".to_f
+    self[:amount] = "#{amount_sign}#{abs_amount}".to_f
   end
 end
