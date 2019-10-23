@@ -1,7 +1,7 @@
 <div>
   <% if chapter %>
     <%= reset_link(browse_chapter_amendment_path) %>
-    <%= browse_title(chapter) %>  
+    <%= browse_title(chapter) %>
   <% else %>
     <%= collection_title(budget.chapters) %>
     <% budget.chapters.each do |chapter| %>
@@ -10,7 +10,7 @@
   <% end %>
 
   <% if article %>
-    <%= reset_link(browse_chapter_amendment_path(chapter_id: chapter)) %> 
+    <%= reset_link(browse_chapter_amendment_path(chapter_id: chapter)) %>
     <%= browse_title(article) %>
   <% elsif chapter %>
     <hr>
@@ -21,7 +21,7 @@
   <% end %>
 
   <% if concept %>
-    <%= reset_link(browse_chapter_amendment_path(chapter_id: chapter, article_id: article)) %> 
+    <%= reset_link(browse_chapter_amendment_path(chapter_id: chapter, article_id: article)) %>
     <%= browse_title(concept) %>
   <% elsif article %>
     <hr>
@@ -32,7 +32,7 @@
   <% end %>
 
   <% if subconcept %>
-    <%= reset_link(browse_chapter_amendment_path(chapter_id: chapter, article_id: article, concept_id: concept)) %> 
+    <%= reset_link(browse_chapter_amendment_path(chapter_id: chapter, article_id: article, concept_id: concept)) %>
     <%= browse_title(subconcept) %>
   <% elsif concept %>
     <hr>

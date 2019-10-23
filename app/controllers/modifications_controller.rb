@@ -9,7 +9,7 @@ class ModificationsController < ApplicationController
 
   # GET /amendments/:amendment_id/modifications/new
   def new
-    @modification = modifications.new
+    @modification = modifications.new(amount: amendment.compensation_amount)
   end
 
   # GET /amendments/:amendment_id/modifications/:id/edit
@@ -20,7 +20,7 @@ class ModificationsController < ApplicationController
     @modification = amendment.modifications.new(modification_params)
 
     if modification.save
-      redirect_to amendment_path(amendment), success: flash_message(:success, :check)
+      redirect_to after_create_path, success: flash_message(:success, :check)
     else
       render action: 'new'
     end
@@ -38,17 +38,25 @@ class ModificationsController < ApplicationController
   # DELETE /amendments/:amendment_id/modifications/:id
   def destroy
     modification.destroy
-    redirect_to amendment_path(amendment), success: flash_message(:success, :check)
+    redirect_to amendment_path(amendment), danger: flash_message(:success, :trash)
   end
 
   private
+
+  def after_create_path
+    if amendment.completed?
+      amendment_path(amendment)
+    else
+      new_amendment_modification_path(amendment)
+    end
+  end
 
   def modification_params
     params.require(:modification).permit(:section_id, :service_id,
                                          :program_id, :chapter_id,
                                          :article_id, :concept_id,
-                                         :subconcept_id, :project,
-                                         :project_new, :amount)
+                                         :subconcept_id, :project, :project_new,
+                                         :amount_sign, :abs_amount)
   end
 
   def modification

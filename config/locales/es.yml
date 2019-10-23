@@ -6,7 +6,7 @@ es:
       title: Proyectos de presupuestos
   amendments:
     index:
-      title: 
+      title:
         one: "%{budget}: %{count} enmienda"
         other: "%{budget}: %{count} enmiendas"
     show:
@@ -126,6 +126,7 @@ es:
         article: Artículo
         chapter: Capítulo
         concept: Concepto
+        amount_sign: Tipo
         subconcept: Subconcepto
       modifications/standard_modification:
         type: 'Modificación de enmienda de alta/baja'
@@ -171,7 +172,7 @@ es:
         number: Nº de enmienda
         type: Tipo de enmienda
         explanation: Exposición de motivos
-        total_amount: "Importe total"
+        balance: "Balance"
       articulated:
         section: Sección
         title: Título
@@ -182,7 +183,10 @@ es:
       modification:
         project: Proyecto
         project_new: Nuevo proyecto
-        amount: Importe
+        abs_amount: Importe
+        amount_sign: Tipo de modificación
+        addition: Alta
+        removal: Baja
     submit:
       create: "Crear %{model}"
       update: "Actualizar %{model}"

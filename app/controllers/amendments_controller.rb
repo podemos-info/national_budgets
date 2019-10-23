@@ -27,7 +27,7 @@ class AmendmentsController < ApplicationController
     amendment.budget = budget
 
     if amendment.save
-      redirect_to amendment_path(amendment), success: flash_message(:success, :check)
+      redirect_to after_create_path, success: flash_message(:success, :check)
     else
       render action: 'new'
     end
@@ -45,7 +45,7 @@ class AmendmentsController < ApplicationController
   # DELETE /amendments/:id
   def destroy
     amendment.destroy
-    redirect_to budget_amendments_path(budget), success: flash_message(:success, :check)
+    redirect_to budget_amendments_path(budget), danger: flash_message(:success, :trash)
   end
 
   # GET /amendments/:id/browse/section(/:section_id(/:service_id(/:program_id)))
@@ -55,6 +55,14 @@ class AmendmentsController < ApplicationController
   def browse_chapter; end
 
   private
+
+  def after_create_path
+    if amendment.allow_articulated?
+      new_amendment_articulated_path(amendment)
+    else
+      new_amendment_modification_path(amendment)
+    end
+  end
 
   def amendment_params
     params.require(:amendment).permit(:number, :type, :explanation, :user_id)

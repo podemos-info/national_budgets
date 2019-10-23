@@ -15,6 +15,8 @@ class Amendment < ApplicationRecord
 
   def allow_articulated?; end
 
+  def completed?; end
+
   def locked_type?
     persisted? && (any_articulated? || any_modifications?)
   end
