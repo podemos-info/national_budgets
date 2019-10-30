@@ -1,6 +1,6 @@
 <%= bootstrap_form_for([amendment.becomes(Amendment), articulated.becomes(Articulated)], layout: :horizontal, label_col: "col-sm-3 text-sm-right", control_col: "col-sm-7") do |f| %>
   <% if articulated.errors.any? %>
-    <div id="error_explanation">
+    <div id="error_explanation" class="alert alert-danger">
       <h2><%= t('activerecord.errors.prohibited_from_being_saved', :model => Articulated.model_name.human.downcase, :count => articulated.errors.count) %></h2>
       <ul>
       <% articulated.errors.full_messages.each do |message| %>

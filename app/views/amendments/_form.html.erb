@@ -1,7 +1,7 @@
 <%= bootstrap_form_for([budget, amendment.becomes(Amendment)], layout: :horizontal, label_col: "col-sm-3 text-sm-right", control_col: "col-sm-7") do |f| %>
 
   <% if amendment.errors.any? %>
-    <div id="error_explanation">
+    <div id="error_explanation" class="alert alert-danger">
       <h2><%= t('activerecord.errors.prohibited_from_being_saved', :model => Amendment.model_name.human.downcase, :count => amendment.errors.count) %></h2>
       <ul>
       <% amendment.errors.full_messages.each do |message| %>
