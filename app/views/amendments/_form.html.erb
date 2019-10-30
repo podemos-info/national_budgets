@@ -1,9 +1,8 @@
 <%= bootstrap_form_for([budget, amendment.becomes(Amendment)], layout: :horizontal, label_col: "col-sm-3 text-sm-right", control_col: "col-sm-7") do |f| %>
 
   <% if amendment.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(amendment.errors.count, "error") %> prohibited this amendment from being saved:</h2>
-
+    <div id="error_explanation" class="alert alert-danger">
+      <h2><%= t('activerecord.errors.prohibited_from_being_saved', :model => Amendment.model_name.human.downcase, :count => amendment.errors.count) %></h2>
       <ul>
       <% amendment.errors.full_messages.each do |message| %>
         <li><%= message %></li>
@@ -13,7 +12,7 @@
   <% end %>
 
   <% unless amendment.locked_type? %>
-    <%= f.collection_radio_buttons :type, Amendment.descendants.map{|a| [a.to_s, a.new.type_name]}, :first, :last, custom: :switch, inline: true, wrapper_class: 'align-items-center' %>
+    <%= f.collection_radio_buttons :type, descendants_collection(Amendment), :first, :last, custom: :switch, inline: true, wrapper_class: 'align-items-center' %>
   <% end %>
 
   <%= f.text_field :number %>
