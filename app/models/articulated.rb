@@ -3,7 +3,7 @@
 class Articulated < ApplicationRecord
   include HasType
   include HasAmendmentBudget
-  belongs_to :amendment
-  belongs_to :section
-  validates :type, :title, :text, :justification, presence: true
+  belongs_to :amendment, optional: false
+  belongs_to :section, optional: false
+  validates :type, :section, :title, :text, :justification, presence: true
 end

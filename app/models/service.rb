@@ -3,5 +3,5 @@
 class Service < ApplicationRecord
   include HasFullTitle
 
-  belongs_to :section
+  belongs_to :section, optional: false
 end

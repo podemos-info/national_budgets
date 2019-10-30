@@ -3,7 +3,7 @@
 class Section < ApplicationRecord
   include HasFullTitle
 
-  belongs_to :budget
+  belongs_to :budget, optional: false
   has_many :services, dependent: :destroy
   has_many :programs, dependent: :destroy
   has_many :organisms, dependent: :destroy

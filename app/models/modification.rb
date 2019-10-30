@@ -3,16 +3,16 @@
 class Modification < ApplicationRecord
   include HasType
   include HasAmendmentBudget
-  belongs_to :amendment
-  belongs_to :section
-  belongs_to :service
-  belongs_to :program
-  belongs_to :chapter
-  belongs_to :article
+  belongs_to :amendment, optional: false
+  belongs_to :section, optional: false
+  belongs_to :service, optional: false
+  belongs_to :program, optional: false
+  belongs_to :chapter, optional: false
+  belongs_to :article, optional: false
   belongs_to :concept, optional: true
   belongs_to :subconcept, optional: true
   after_initialize :initialize_section
-  validates :type, :abs_amount, :amendment, presence: true
+  validates :type, :abs_amount, presence: true
   validate :section_not_unique, if: :amendment
   validate :chapter_budget_does_not_match, if: -> { chapter && amendment }
 
