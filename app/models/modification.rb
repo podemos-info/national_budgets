@@ -2,6 +2,7 @@
 
 class Modification < ApplicationRecord
   include HasType
+  include HasAmendmentBudget
   belongs_to :amendment
   belongs_to :section
   belongs_to :service
@@ -12,7 +13,12 @@ class Modification < ApplicationRecord
   belongs_to :subconcept, optional: true
   after_initialize :initialize_section
   validates :type, :abs_amount, :amendment, presence: true
-  validate :section_not_unique
+  validate :section_not_unique, if: :amendment
+  validate :chapter_budget_does_not_match, if: -> { chapter && amendment }
+
+  def chapter_budget_does_not_match
+    errors.add(:section, 'the chapter budget does not match with the amendment budget') if chapter.budget != amendment.budget
+  end
 
   scope :additions_first, -> { order(Arel.sql('amount >= 0'), id: :asc) }
 
@@ -21,7 +27,7 @@ class Modification < ApplicationRecord
   end
 
   def section_not_unique
-    errors.add(:section, 'is not unique in the amendment') if amendment&.section && section != amendment.section
+    errors.add(:section, 'is not unique in the amendment') if amendment.section && section != amendment.section
   end
 
   def amount
