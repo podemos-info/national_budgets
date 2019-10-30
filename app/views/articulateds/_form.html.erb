@@ -11,9 +11,9 @@
     </div>
   <% end %>
 
-  <%= f.collection_radio_buttons :type, Articulated.descendants.map{|a| [a.to_s, a.new.type_name]}, :first, :last, custom: :switch, inline: true, wrapper_class: 'align-items-center type' %>
-  
-  <%= f.collection_select :section_id, budget.sections.all, :id, :full_title %>
+  <%= f.collection_radio_buttons :type, descendants_collection(Articulated), :first, :last, custom: :switch, inline: true, wrapper_class: 'align-items-center type' %>
+
+  <%= f.collection_select :section_id, budget.sections.all, :id, :full_title, prompt: true %>
   <%= f.text_field :title %>
   <%= f.text_area :text %>
   <%= f.text_area :justification %>
@@ -39,5 +39,4 @@
   $( document ).ready(function() {
       $("#type input").change();
   });
-  
 </script>

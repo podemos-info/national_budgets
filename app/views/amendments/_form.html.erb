@@ -13,7 +13,7 @@
   <% end %>
 
   <% unless amendment.locked_type? %>
-    <%= f.collection_radio_buttons :type, Amendment.descendants.map{|a| [a.to_s, a.new.type_name]}, :first, :last, custom: :switch, inline: true, wrapper_class: 'align-items-center' %>
+    <%= f.collection_radio_buttons :type, descendants_collection(Amendment), :first, :last, custom: :switch, inline: true, wrapper_class: 'align-items-center' %>
   <% end %>
 
   <%= f.text_field :number %>

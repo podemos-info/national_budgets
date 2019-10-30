@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 class AmendmentsController < ApplicationController
+  include ModelDescendantsHelper
   include HasFlashMessages
   layout false, only: %i[browse_section browse_chapter]
   helper_method :budget, :amendment, :amendments,

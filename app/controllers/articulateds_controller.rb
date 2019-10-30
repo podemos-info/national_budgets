@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 class ArticulatedsController < ApplicationController
+  include ModelDescendantsHelper
   include HasFlashMessages
   helper_method :budget, :amendment, :articulated
 
