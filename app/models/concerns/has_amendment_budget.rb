@@ -9,6 +9,6 @@ module HasAmendmentBudget
   end
 
   def section_budget_does_not_match
-    errors.add(:section, t('es.errors.messages.section_budget_does_not_match')) if section.budget != amendment.budget
+    errors.add(:section, t('activerecord.errors.section_budget_does_not_match')) if section.budget != amendment.budget
   end
 end

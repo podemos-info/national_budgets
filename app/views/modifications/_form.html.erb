@@ -1,7 +1,7 @@
 <%= bootstrap_form_for([amendment.becomes(Amendment), modification.becomes(Modification)], layout: :horizontal, label_col: "col-sm-3 text-md-right", control_col: "col-sm-7") do |f| %>
   <% if modification.errors.any? %>
     <div id="error_explanation">
-      <h2><%= pluralize(modification.errors.count, "error") %> prohibited this modification from being saved:</h2>
+      <h2><%= t('activerecord.errors.prohibited_from_being_saved', :model => Modification.model_name.human.downcase, :count => modification.errors.count) %></h2>
       <ul>
       <% modification.errors.full_messages.each do |message| %>
         <li><%= message %></li>
