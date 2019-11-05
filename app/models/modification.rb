@@ -2,7 +2,7 @@
 
 class Modification < ApplicationRecord
   include HasType
-  include HasAmendmentBudget
+  include HasSectionBudget
   belongs_to :amendment, optional: false
   belongs_to :section, optional: false
   belongs_to :service, optional: false
