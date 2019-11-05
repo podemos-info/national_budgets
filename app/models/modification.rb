@@ -13,8 +13,7 @@ class Modification < ApplicationRecord
   belongs_to :subconcept, optional: true
   after_initialize :initialize_section
   validates :type, :abs_amount, presence: true
-  validate :section_not_unique, on: :update, if: -> { amendment && amendment.modifications.size > 1 }
-  validate :section_not_unique, on: :create, if: :amendment
+  validate :section_locked, if: :amendment
   validate :chapter_budget_does_not_match, if: -> { chapter && amendment }
 
   scope :additions_first, -> { order(Arel.sql('amount >= 0'), id: :asc) }
@@ -27,8 +26,8 @@ class Modification < ApplicationRecord
     @locked_section ||= amendment.modifications.where.not(id: id).count.positive?
   end
 
-  def section_not_unique
-    errors.add(:section, I18n.t('activerecord.errors.section_not_unique')) if amendment.section && section != amendment.section
+  def section_locked
+    errors.add(:section, I18n.t('activerecord.errors.section_locked')) if locked_section? && section != amendment.section
   end
 
   def amount
