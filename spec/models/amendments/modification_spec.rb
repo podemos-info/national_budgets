@@ -27,6 +27,18 @@ describe Modification do
     it { is_expected.to eq(1.0) }
   end
 
+  describe '#locked_section' do
+    subject { modification.valid? }
+
+    it { is_expected.to be_truthy }
+
+    context 'when amendment has only one modification and section changes' do
+      subject(:section_changes) { modification.section = create(:section, budget: modification.amendment.budget) }
+
+      it { expect { section_changes }.not_to change(modification, :valid?) }
+    end
+  end
+
   context 'with amount that is negative' do
     subject(:modification) { build(:standard_modification, amendment: amendment, amount: amount) }
 
