@@ -17,7 +17,7 @@ class Modification < ApplicationRecord
   validate :chapter_budget_does_not_match, if: -> { chapter && amendment }
 
   def chapter_budget_does_not_match
-    errors.add(:section, 'the chapter budget does not match with the amendment budget') if chapter.budget != amendment.budget
+    errors.add(:chapter, I18n.t('activerecord.errors.chapter_budget_does_not_match')) if chapter.budget != amendment.budget
   end
 
   scope :additions_first, -> { order(Arel.sql('amount >= 0'), id: :asc) }
@@ -27,7 +27,7 @@ class Modification < ApplicationRecord
   end
 
   def section_not_unique
-    errors.add(:section, 'is not unique in the amendment') if amendment.section && section != amendment.section
+    errors.add(:section, I18n.t('activerecord.errors.section_not_unique')) if amendment.section && section != amendment.section
   end
 
   def amount
