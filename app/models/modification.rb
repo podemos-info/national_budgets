@@ -13,14 +13,15 @@ class Modification < ApplicationRecord
   belongs_to :subconcept, optional: true
   after_initialize :initialize_section
   validates :type, :abs_amount, presence: true
-  validate :section_not_unique, if: :amendment
+  validate :section_not_unique, on: :update, if: -> { amendment && amendment.modifications.size > 1 }
+  validate :section_not_unique, on: :create, if: :amendment
   validate :chapter_budget_does_not_match, if: -> { chapter && amendment }
+
+  scope :additions_first, -> { order(Arel.sql('amount >= 0'), id: :asc) }
 
   def chapter_budget_does_not_match
     errors.add(:chapter, I18n.t('activerecord.errors.chapter_budget_does_not_match')) if chapter.budget != amendment.budget
   end
-
-  scope :additions_first, -> { order(Arel.sql('amount >= 0'), id: :asc) }
 
   def locked_section?
     @locked_section ||= amendment.modifications.where.not(id: id).count.positive?
