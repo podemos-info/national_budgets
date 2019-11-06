@@ -15,6 +15,7 @@ class Modification < ApplicationRecord
   validates :type, :abs_amount, presence: true
   validate :section_locked, if: :amendment
   validate :chapter_budget_does_not_match, if: -> { chapter && amendment }
+  delegate :budget, to: :amendment, allow_nil: true
 
   scope :additions_first, -> { order(Arel.sql('amount >= 0'), id: :asc) }
 
