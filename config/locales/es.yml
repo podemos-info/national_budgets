@@ -160,6 +160,8 @@ es:
       user:
         email: Correo electrónico
     errors:
+      section_locked: está bloqueada
+      chapter_budget_does_not_match: el proyecto de presupuestos no coincide con el proyecto de presupuestos de la enmienda
       prohibited_from_being_saved:
         one: "%{count} error impidió que esta %{model} fuese guardada"
         other: "%{count} errores impidieron que esta %{model} fuese guardada"

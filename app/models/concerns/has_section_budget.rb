@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-module HasAmendmentBudget
+module HasSectionBudget
   extend ActiveSupport::Concern
   include ActiveModel::Validations
 
@@ -9,6 +9,6 @@ module HasAmendmentBudget
   end
 
   def section_budget_does_not_match
-    errors.add(:section, t('activerecord.errors.section_budget_does_not_match')) if section.budget != amendment.budget
+    errors.add(:section, I18n.t('activerecord.errors.section_budget_does_not_match')) if section.budget != amendment.budget
   end
 end
