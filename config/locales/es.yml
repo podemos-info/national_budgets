@@ -128,10 +128,14 @@ es:
         concept: Concepto
         amount_sign: Tipo
         subconcept: Subconcepto
-      modifications/standard_modification:
-        type: 'Modificación de enmienda de alta/baja'
-      modifications/transfer_modification:
-        type: 'Modificación de enmienda de transferencia'
+      modifications/addition_modification:
+        type: 'Alta'
+      modifications/removal_modification:
+        type: 'Baja'
+      modifications/organism_budget_income_modification:
+        type: 'Alta presupuesto de ingreso'
+      modifications/organism_budget_expenditure_modification:
+        type: 'Alta presupuesto de gasto'
       section:
         title: Título
         budget: Proyecto de presupuestos

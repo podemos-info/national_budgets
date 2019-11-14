@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 class ModificationsController < ApplicationController
+  include ModelDescendantsHelper
   include HasFlashMessages
   helper_method :budget, :amendment, :modification, :modifications
 
@@ -56,7 +57,7 @@ class ModificationsController < ApplicationController
                                          :program_id, :chapter_id,
                                          :article_id, :concept_id,
                                          :subconcept_id, :project, :project_new,
-                                         :amount_sign, :abs_amount)
+                                         :type, :abs_amount)
   end
 
   def modification

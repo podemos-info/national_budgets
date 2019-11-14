@@ -5,5 +5,5 @@ class Articulated < ApplicationRecord
   include HasSectionBudget
   belongs_to :amendment, optional: false
   belongs_to :section, optional: false
-  validates :type, :section, :title, :text, :justification, presence: true
+  validates :section, :title, :text, :justification, presence: true
 end

@@ -17,7 +17,7 @@ describe Modification do
   end
 
   context 'when amendment has only one modification and section changes' do
-    subject(:section_changes) { modification.section = create(:section, budget: modification.amendment.budget) }
+    subject(:section_changes) { modification.section = create(:section, budget: modification.budget) }
 
     it { expect { section_changes }.not_to change(modification, :locked_section?) }
     it { expect { section_changes }.not_to change(modification, :valid?) }

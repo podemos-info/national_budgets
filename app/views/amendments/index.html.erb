@@ -30,22 +30,26 @@
         </div>
 
         <div class="col-12">
+
         <% if amendment.allow_articulated? %>
-  <% if amendment.any_articulated? %>
-    <table class="w-100">
-      <tbody>
-        <% articulated = amendment.articulated %>
-        <tr>
-          <td><b><%= Articulated.human_attribute_name(:type) %>:</b> <%= articulated.type_name %></td>
-          <td><b><%= Articulated.human_attribute_name(:title) %>:</b> <%= articulated.title %></td>
-        </tr>
-      </tbody>
-    </table>
-  <% end %>
+          <% if amendment.any_articulated? %>
+
+            <table class="w-100">
+              <tbody>
+                <% articulated = amendment.articulated %>
+                <tr>
+                  <td><b><%= Articulated.human_attribute_name(:type) %>:</b> <%= articulated.type_name %></td>
+                  <td><b><%= Articulated.human_attribute_name(:title) %>:</b> <%= articulated.title %></td>
+                </tr>
+              </tbody>
+            </table>
+
+          <% end %>
         <% end %>
 
         <% if amendment.allow_modifications? %>
           <% if amendment.modifications.size.positive? %>
+
             <table class="w-100 mt-2">
               <thead class="text-secondary">
                 <tr>
@@ -71,7 +75,7 @@
                     <td title="<%= modification.concept&.full_title %>"><%= modification.concept&.ref %></td>
                     <td title="<%= modification.subconcept&.full_title %>"><%= modification.subconcept&.ref %></td>
                     <td><%= modification.project %></td>
-                    <td title="<%= modification.concept&.full_title %>"><%= t("helpers.label.modification.#{modification.amount_sign_human}") %></td>
+                    <td title="<%= modification.concept&.full_title %>"><%= modification.type_name %></td>
                     <td style="text-align: right;"><%= number_to_currency modification.amount %></td>
                   </tr>
                 <% end %>
@@ -82,8 +86,8 @@
                 <% end %>
               </tbody>
             </table>
-          <% end %>
 
+          <% end %>
         <% end %>
 
         </div>

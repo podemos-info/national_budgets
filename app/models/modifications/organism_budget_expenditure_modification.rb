@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
 module Modifications
-  class StandardModification < Modification
+  class OrganismBudgetExpenditureModification < Modification
   end
 end

@@ -10,16 +10,27 @@
     </div>
   <% end %>
 
-  <%= f.collection_radio_buttons :amount_sign, [['+', t('helpers.label.modification.addition')], ['-', t('helpers.label.modification.removal')]], :first, :last, custom: :switch, inline: true, wrapper_class: 'align-items-center type' %>
+  <%= f.collection_radio_buttons :type, descendants_collection(Modification), :first, :last,
+custom: :switch, inline: true, wrapper_class: 'align-items-center type' %>
 
   <div class="row px-3">
-    <div class="pseudoiframe col-12 col-sm-6" src="<%= browse_section_amendment_path(id: amendment, section_id: modification.section, service_id: modification.service_id, program_id: modification.program_id, locked_section: modification.locked_section?)%>"></div>
-    <div class="pseudoiframe col-12 col-sm-6" src="<%= browse_chapter_amendment_path(id: amendment, chapter_id: modification.chapter_id, article_id: modification.article_id, concept_id: modification.concept_id, subconcept_id: modification.subconcept_id)%>"></div>
+    <div id="section" class="pseudoiframe col-12 col-sm-6" src="<%= browse_section_amendment_path(id: amendment, section_id: modification.section, service_id: modification.service_id, program_id: modification.program_id, locked_section: modification.locked_section?) %>"></div>
+    <div id="chapter" class="pseudoiframe col-12 col-sm-6" src="<%= browse_chapter_amendment_path(id: amendment, chapter_id: modification.chapter_id, article_id: modification.article_id, concept_id: modification.concept_id, subconcept_id: modification.subconcept_id) %>"></div>
   </div>
 
-  <%= f.text_field :project %>
-  <%= f.check_box :project_new, custom: :switch, class: 'text-center', wrapper_class: 'col-9 offset-3 text-left mb-3' %>
-  <%= f.text_field :abs_amount, type: :number, step: '0.01', min: 0 %>
+  <input id="section_initial" type="hidden" value="<%= browse_section_amendment_path(id: amendment, section_id: modification.section, service_id: modification.service_id, program_id: modification.program_id, locked_section: modification.locked_section?) %>" />
+  <input id="chapter_initial" type="hidden" value="<%= browse_chapter_amendment_path(id: amendment, chapter_id: modification.chapter_id, article_id: modification.article_id, concept_id: modification.concept_id, subconcept_id: modification.subconcept_id) %>" />
+
+  <input id="section_reset" type="hidden" value="<%= browse_section_amendment_path(id: amendment, section_id: modification.section, locked_section: modification.locked_section?) %>" />
+  <input id="chapter_reset" type="hidden" value="<%= browse_chapter_amendment_path(id: amendment) %>" />
+
+  <input id="current_type" type="hidden" value="<%= modification.type %>" />
+
+  <div id="standard_modification_detail">
+    <%= f.text_field :project %>
+    <%= f.check_box :project_new, custom: :switch, class: 'text-center', wrapper_class: 'col-9 offset-3 text-left mb-3' %>
+    <%= f.text_field :abs_amount, type: :number, step: '0.01', min: 0 %>
+  </div>
 
   <div class="actions">
     <%= f.submit class: 'btn btn-sm btn-success' %>

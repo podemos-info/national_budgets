@@ -3,6 +3,10 @@
 module HasModifications
   extend ActiveSupport::Concern
 
+  included do
+    has_many :modifications, foreign_key: :amendment_id, dependent: :destroy, inverse_of: :amendment
+  end
+
   def allow_modifications?
     true
   end

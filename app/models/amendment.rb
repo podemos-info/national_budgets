@@ -4,7 +4,7 @@ class Amendment < ApplicationRecord
   include HasType
   belongs_to :user, optional: false
   belongs_to :budget, optional: false
-  validates :type, :number, :explanation, presence: true
+  validates :number, :explanation, presence: true
   validate :type_cannot_be_changed, on: :update, if: :locked_type?
 
   def any_modifications?; end

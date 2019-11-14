@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
 module Modifications
-  class TransferModification < Modification
+  class OrganismBudgetIncomeModification < Modification
   end
 end
