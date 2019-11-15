@@ -2,8 +2,14 @@
 
 module Modifications
   class AdditionModification < Modification
-    def amount_sign
-      '+'
+    validates :amount, presence: true
+
+    def count_amount
+      amount
+    end
+
+    def self.position
+      1
     end
   end
 end

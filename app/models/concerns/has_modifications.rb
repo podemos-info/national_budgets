@@ -16,14 +16,42 @@ module HasModifications
   end
 
   def balance
-    modifications.sum(:amount)
+    modifications.map(&:count_amount).sum
+  end
+
+  def compensation_type
+    if balance.positive?
+      'Modifications::RemovalModification'
+    elsif balance.zero?
+      nil
+    else
+      'Modifications::AdditionModification'
+    end
   end
 
   def compensation_amount
-    balance * -1
+    balance.abs
   end
 
   def completed?
     modifications.size > 1 && balance.zero?
+  end
+
+  def modifications_descendants
+    modifications.map { |m| m.class.to_s }
+  end
+
+  def any_modification_descendant?(descendant_model)
+    modifications_descendants.include?(descendant_model)
+  end
+
+  def locked_modification_descendant?(descendant_model)
+    return false if descendant_model.index('Modifications::OrganismBudget').nil?
+
+    any_modification_descendant?(descendant_model)
+  end
+
+  def excluded_modification_descendants
+    %w[]
   end
 end

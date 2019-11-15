@@ -16,5 +16,9 @@ module Amendments
     def completed?
       any_articulated?
     end
+
+    def self.position
+      3
+    end
   end
 end

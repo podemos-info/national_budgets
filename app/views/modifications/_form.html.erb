@@ -10,8 +10,13 @@
     </div>
   <% end %>
 
-  <%= f.collection_radio_buttons :type, descendants_collection(Modification), :first, :last,
-custom: :switch, inline: true, wrapper_class: 'align-items-center type' %>
+  <div class="form-group type">
+  <%= f.collection_radio_buttons_without_bootstrap :type, descendants_collection(Modification, amendment.excluded_modification_descendants), :first, :last do |b| %>
+     <%= b.label do %>
+       <%= b.radio_button(disabled: amendment.locked_modification_descendant?(b.value)) + ' ' + b.text %>
+     <% end %>
+  <% end %>
+  </div>
 
   <div class="row px-3">
     <div id="section" class="pseudoiframe col-12 col-sm-6" src="<%= browse_section_amendment_path(id: amendment, section_id: modification.section, service_id: modification.service_id, program_id: modification.program_id, locked_section: modification.locked_section?) %>"></div>
@@ -29,7 +34,7 @@ custom: :switch, inline: true, wrapper_class: 'align-items-center type' %>
   <div id="standard_modification_detail">
     <%= f.text_field :project %>
     <%= f.check_box :project_new, custom: :switch, class: 'text-center', wrapper_class: 'col-9 offset-3 text-left mb-3' %>
-    <%= f.text_field :abs_amount, type: :number, step: '0.01', min: 0 %>
+    <%= f.text_field :amount, type: :number, step: '0.01', min: 0 %>
   </div>
 
   <div class="actions">

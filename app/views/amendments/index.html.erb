@@ -66,7 +66,7 @@
               </thead>
 
               <tbody>
-                <% amendment.modifications.additions_first.each do |modification| %>
+                <% amendment.modifications.order_by_type.each do |modification| %>
                   <tr style="border-bottom: 1px solid #eee;">
                     <td title="<%= modification.service&.full_title %>"><%= modification.service&.ref %></td>
                     <td title="<%= modification.program&.full_title %>"><%= modification.program&.ref %></td>
@@ -76,7 +76,7 @@
                     <td title="<%= modification.subconcept&.full_title %>"><%= modification.subconcept&.ref %></td>
                     <td><%= modification.project %></td>
                     <td title="<%= modification.concept&.full_title %>"><%= modification.type_name %></td>
-                    <td style="text-align: right;"><%= number_to_currency modification.amount %></td>
+                    <td style="text-align: right;"><%= number_to_currency modification.count_amount %></td>
                   </tr>
                 <% end %>
                 <% if false %>

@@ -70,7 +70,7 @@
       </thead>
 
       <tbody>
-        <% amendment.modifications.additions_first.each do |modification| %>
+        <% amendment.modifications.order_by_type.each do |modification| %>
           <tr>
             <td title="<%= modification.service&.full_title %>"><%= modification.service&.ref %></td>
             <td title="<%= modification.program&.full_title %>"><%= modification.program&.ref %></td>
@@ -80,7 +80,7 @@
             <td title="<%= modification.subconcept&.full_title %>"><%= modification.subconcept&.ref %></td>
             <td><%= modification.project %></td>
             <td title="<%= modification.concept&.full_title %>"><%= modification.type_name %></td>
-            <td style="text-align: right;"><%= number_to_currency modification.amount %></td>
+            <td style="text-align: right;"><%= number_to_currency modification.count_amount %></td>
             <td align="right">
               <%= link_to t('helpers.action.edit'), edit_amendment_modification_path(amendment, modification), class: 'btn btn-sm btn-outline-warning' %>
               <%= link_to t('helpers.action.destroy'), amendment_modification_path(amendment, modification), method: :delete, data: { confirm: t('helpers.messages.are_you_sure') }, class: 'btn btn-sm btn-outline-danger' %>

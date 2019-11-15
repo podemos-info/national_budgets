@@ -30,4 +30,8 @@ class Amendment < ApplicationRecord
   def any_section?
     section.present?
   end
+
+  def excluded_modification_descendants
+    %w[Modifications::OrganismBudgetIncomeModification Modifications::OrganismBudgetExpenditureModification]
+  end
 end
