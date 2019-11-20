@@ -16,8 +16,6 @@ class Modification < ApplicationRecord
   validate :chapter_budget_does_not_match, if: -> { chapter && amendment }
   delegate :budget, to: :amendment, allow_nil: true
 
-  scope :order_by_type, -> { order(Arel.sql('amount = 0 asc'), type: :desc, id: :asc) }
-
   def chapter_budget_does_not_match
     errors.add(:chapter, I18n.t('activerecord.errors.chapter_budget_does_not_match')) if chapter.budget != amendment.budget
   end
@@ -30,16 +28,28 @@ class Modification < ApplicationRecord
     errors.add(:section, I18n.t('activerecord.errors.section_locked')) if locked_section? && section != amendment.section
   end
 
-  def type
-    super || amendment&.compensation_type
-  end
-
   def amount
     super || 0
   end
 
-  def count_amount
-    0
+  alias :balance_amount :amount
+  alias :display_amount :amount
+  alias :total_amount :amount
+
+  def locked_type?
+    persisted?
+  end
+
+  def self.disabled_modification_type_for?(amendment)
+    false
+  end
+
+  def self.next_modification_type_for?(amendment)
+    false
+  end
+
+  def modification_detail?
+    !locked_type?
   end
 
   private

@@ -17,15 +17,24 @@
 @import "rails_bootstrap_forms";
 @import "font-awesome";
 
+$component-default-color: #672f63;
+$component-default-color-hover: lighten($component-default-color, 14%);
+$up-first-color: #90b46a;
+$up-second-color: $component-default-color;
+$up-third-color: #ab182b;
+$component-default-bg: linear-gradient(40deg, $up-first-color, $up-first-color 5%, $up-second-color 25%, $up-second-color 75%, $up-third-color 95%, $up-third-color);
 $component-active-bg: #d4edda;
 $component-active-bg-hover: lighten(#000, 93.5%);
 $component-active-color: var(--success);
+
 
 h1 { font-size: 1.4rem; font-weight: 700; }
 h2 { font-size: 1.2rem; font-weight: 600; }
 
 a {
+  color: $component-default-color;
   outline: none;
+  transition: ease all .2s;
   &.card-block {
     display: inline-block;
     .card {
@@ -46,6 +55,9 @@ a {
       }
     }
   }
+  &:hover, &:active, &:focus {
+    color: $component-default-color-hover;
+  }
 }
 
 a, .alert {
@@ -54,7 +66,11 @@ a, .alert {
   }
 }
 
+.navbar.navbar-dark.bg-primary { background: $component-default-bg !important; }
+.navbar-brand { font-weight: 700;  }
+
 h1.page-title {
+  color: $component-default-color;
   margin-top: 20px;
   margin-bottom: 30px;
   padding-bottom: 10px;
@@ -82,3 +98,8 @@ div.actions {
 }
 
 .card-header { background-color: #eee; }
+
+input[type="radio"] { cursor: pointer; }
+input[type="radio"] + label { margin: 0 5px; cursor: pointer; }
+input[type="radio"][disabled] { color: red; cursor: not-allowed; }
+input[type="radio"][disabled] + label { color: #999; cursor: not-allowed; }

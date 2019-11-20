@@ -5,10 +5,21 @@ module HasModifications
 
   included do
     has_many :modifications, foreign_key: :amendment_id, dependent: :destroy, inverse_of: :amendment
+    allowed_modifications.each do |klass|
+      has_many klass.name.demodulize.pluralize.underscore.to_sym,
+               class_name: klass.name,
+               foreign_key: :amendment_id,
+               dependent: :destroy,
+               inverse_of: :amendment
+    end
   end
 
   def allow_modifications?
     true
+  end
+
+  def allowed_modifications
+    self.class.allowed_modifications
   end
 
   def any_modifications?
@@ -16,42 +27,30 @@ module HasModifications
   end
 
   def balance
-    modifications.map(&:count_amount).sum
+    modifications.map(&:balance_amount).sum
   end
 
-  def compensation_type
-    if balance.positive?
-      'Modifications::RemovalModification'
-    elsif balance.zero?
-      nil
+  def total_amount
+    addition_modifications.map(&:total_amount).sum
+  end
+
+  def next_modification_type
+    allowed_modifications.select { |klass| klass if klass.next_modification_type_for?(self) }
+  end
+
+  def disabled_modifications_types
+    allowed_modifications.select { |klass| klass if klass.disabled_modification_type_for?(self) }
+  end
+
+  def status_icon_params
+    if completed?
+      ['check-square-o', class: 'pl-2 text-success', title: I18n.t('helpers.action.completed')]
+    elsif balance.negative?
+      ['minus-square-o', class: 'pl-2', title: I18n.t('helpers.action.incomplete_negative_balance')]
+    elsif balance.positive?
+      ['plus-square-o', class: 'pl-2', title: I18n.t('helpers.action.incomplete_positive_balance')]
     else
-      'Modifications::AdditionModification'
+      ['square-o', class: 'pl-2', title: I18n.t('helpers.action.incomplete_empty')]
     end
-  end
-
-  def compensation_amount
-    balance.abs
-  end
-
-  def completed?
-    modifications.size > 1 && balance.zero?
-  end
-
-  def modifications_descendants
-    modifications.map { |m| m.class.to_s }
-  end
-
-  def any_modification_descendant?(descendant_model)
-    modifications_descendants.include?(descendant_model)
-  end
-
-  def locked_modification_descendant?(descendant_model)
-    return false if descendant_model.index('Modifications::OrganismBudget').nil?
-
-    any_modification_descendant?(descendant_model)
-  end
-
-  def excluded_modification_descendants
-    %w[]
   end
 end

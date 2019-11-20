@@ -10,13 +10,16 @@
     </div>
   <% end %>
 
-  <div class="form-group type">
-  <%= f.collection_radio_buttons_without_bootstrap :type, descendants_collection(Modification, amendment.excluded_modification_descendants), :first, :last do |b| %>
-     <%= b.label do %>
-       <%= b.radio_button(disabled: amendment.locked_modification_descendant?(b.value)) + ' ' + b.text %>
-     <% end %>
+  <% unless modification&.locked_type? %>
+    <div class="form-group row type">
+      <div class="col-form-label col-sm-3 text-md-right">
+        <%= f.label :type %>
+      </div>
+      <div class="col-sm-7 pt-2">
+        <%= f.collection_radio_buttons_without_bootstrap :type, amendment.allowed_modifications.map { |a| [a, a.type_name] }, :first, :last, { checked: amendment.next_modification_type, disabled: amendment.disabled_modifications_types } %>
+      </div>
+    </div>
   <% end %>
-  </div>
 
   <div class="row px-3">
     <div id="section" class="pseudoiframe col-12 col-sm-6" src="<%= browse_section_amendment_path(id: amendment, section_id: modification.section, service_id: modification.service_id, program_id: modification.program_id, locked_section: modification.locked_section?) %>"></div>
@@ -31,11 +34,14 @@
 
   <input id="current_type" type="hidden" value="<%= modification.type %>" />
 
-  <div id="standard_modification_detail">
-    <%= f.text_field :project %>
-    <%= f.check_box :project_new, custom: :switch, class: 'text-center', wrapper_class: 'col-9 offset-3 text-left mb-3' %>
-    <%= f.text_field :amount, type: :number, step: '0.01', min: 0 %>
-  </div>
+  <% if modification.modification_detail? %>
+    <div id="standard_modification_detail">
+      <%= f.text_field :project %>
+      <%= f.check_box :project_new, custom: :switch, class: 'text-center', wrapper_class: 'col-9 offset-3 text-left mb-3' %>
+      <%= f.text_field :amount, type: :number, step: '0.01', min: 0 %>
+    </div>
+  <% end %>
+
 
   <div class="actions">
     <%= f.submit class: 'btn btn-sm btn-success' %>

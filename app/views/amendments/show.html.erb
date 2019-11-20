@@ -1,6 +1,9 @@
 <div class="row">
   <h1 class="col-8 page-title"><%= fa_icon "list-alt", text: t('.title', budget: budget.title, amendment: amendment.number) %></h1>
-  <h1 class="col-4 page-title text-right"><%= amendment.type_name %></h1>
+  <h1 class="col-4 page-title text-right">
+    <%= amendment.type_name %>
+    <%= fa_icon *amendment.status_icon_params %>
+  </h1>
 </div>
 
 <p>
@@ -70,7 +73,7 @@
       </thead>
 
       <tbody>
-        <% amendment.modifications.order_by_type.each do |modification| %>
+        <% amendment.modifications.sort_by(&:position).each do |modification| %>
           <tr>
             <td title="<%= modification.service&.full_title %>"><%= modification.service&.ref %></td>
             <td title="<%= modification.program&.full_title %>"><%= modification.program&.ref %></td>
@@ -80,7 +83,7 @@
             <td title="<%= modification.subconcept&.full_title %>"><%= modification.subconcept&.ref %></td>
             <td><%= modification.project %></td>
             <td title="<%= modification.concept&.full_title %>"><%= modification.type_name %></td>
-            <td style="text-align: right;"><%= number_to_currency modification.count_amount %></td>
+            <td style="text-align: right;"><%= number_to_currency modification.display_amount %></td>
             <td align="right">
               <%= link_to t('helpers.action.edit'), edit_amendment_modification_path(amendment, modification), class: 'btn btn-sm btn-outline-warning' %>
               <%= link_to t('helpers.action.destroy'), amendment_modification_path(amendment, modification), method: :delete, data: { confirm: t('helpers.messages.are_you_sure') }, class: 'btn btn-sm btn-outline-danger' %>
@@ -94,7 +97,7 @@
     </table>
   <% end %>
 
-  <%= link_to t('helpers.submit.modification.create'), new_amendment_modification_path(amendment), class: 'btn btn-sm btn-outline-success' %>
+
 
 <% end %>
 
@@ -103,6 +106,7 @@
     <%= link_to t('helpers.action.edit'), edit_amendment_path(amendment), class: 'btn btn-sm btn-warning' %>
     <%= link_to t('helpers.action.destroy'), amendment_path(amendment), method: :delete, data: { confirm: t('helpers.messages.are_you_sure') }, class: 'btn btn-sm btn-danger' %>
     <%= link_to t('helpers.views.list_model', model: Amendment.model_name.human(count: 0).downcase), budget_amendments_path(budget), class: 'btn btn-sm btn-primary' %>
+    <%= link_to t('helpers.submit.modification.create'), new_amendment_modification_path(amendment), class: 'btn btn-sm btn-outline-success' %>
   </div>
   <div class="col-12 col-md-6 text-right">
     <p><%= t 'helpers.views.by_author', author: amendment.user.email %></p>

@@ -2,15 +2,22 @@
 
 module Amendments
   class StandardAmendment < Amendment
+    def self.allowed_modifications
+      [
+        Modifications::AdditionModification,
+        Modifications::RemovalModification
+      ]
+    end
+
     include HasModifications
     include HasModificationSection
 
-    def excluded_modification_descendants
-      %w[Modifications::OrganismBudgetIncomeModification Modifications::OrganismBudgetExpenditureModification]
-    end
-
     def self.position
       1
+    end
+
+    def completed?
+      any_modifications? && balance.zero?
     end
   end
 end

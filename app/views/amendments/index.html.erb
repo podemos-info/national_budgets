@@ -8,7 +8,7 @@
 <div class="row">
 <% amendments.each do |amendment| %>
 <a class="card-block py-2 col-12" href="<%= amendment_path(amendment) %>" style="flex-grow: 2;">
-  <div class="card">
+  <div class="card card-alert">
     <div class="card-header text-dark">
       <div class="row">
         <div class="col-12 col-md-3">
@@ -19,6 +19,7 @@
         </div>
         <div class="col-12 col-md-3 text-right">
           <span><%= amendment.type_name %></span>
+          <%= fa_icon *amendment.status_icon_params %>
         </div>
       </div>
     </div>
@@ -48,7 +49,7 @@
         <% end %>
 
         <% if amendment.allow_modifications? %>
-          <% if amendment.modifications.size.positive? %>
+          <% if amendment.any_modifications? %>
 
             <table class="w-100 mt-2">
               <thead class="text-secondary">
@@ -66,7 +67,7 @@
               </thead>
 
               <tbody>
-                <% amendment.modifications.order_by_type.each do |modification| %>
+                <% amendment.modifications.sort_by(&:position).each do |modification| %>
                   <tr style="border-bottom: 1px solid #eee;">
                     <td title="<%= modification.service&.full_title %>"><%= modification.service&.ref %></td>
                     <td title="<%= modification.program&.full_title %>"><%= modification.program&.ref %></td>
@@ -76,13 +77,8 @@
                     <td title="<%= modification.subconcept&.full_title %>"><%= modification.subconcept&.ref %></td>
                     <td><%= modification.project %></td>
                     <td title="<%= modification.concept&.full_title %>"><%= modification.type_name %></td>
-                    <td style="text-align: right;"><%= number_to_currency modification.count_amount %></td>
+                    <td style="text-align: right;"><%= number_to_currency modification.display_amount %></td>
                   </tr>
-                <% end %>
-                <% if false %>
-                <tr style="border-bottom: 1px solid #eee;">
-                  <td colspan="8" style="text-align: right;"><b class="text-secondary"><%= t('helpers.label.amendment.total_amount') %>:</b> <%= number_to_currency amendment.modifications.sum(:amount) %></td>
-                </tr>
                 <% end %>
               </tbody>
             </table>

@@ -47,6 +47,6 @@ Rails.application.configure do
   # config.action_view.raise_on_missing_translations = true
 
   # Preload descendant models
-  models = Dir['app/models/*/*.rb']
-  models.each { |file| require_dependency file }
+  # models = Dir['app/models/*/*.rb']
+  # models.each { |file| require_dependency file }
 end
