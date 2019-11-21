@@ -1,3 +1,9 @@
-<h1 class="page-title"><%= t('.title', budget: budget.title, amendment: amendment.number) %></h1>
+<div class="row">
+  <h1 class="col-8 page-title"><%= t('.title', budget: budget.title, amendment: amendment.number, type_name: modification.type_name.downcase) %></h1>
+  <h1 class="col-4 page-title text-right">
+    <%= amendment.type_name %>
+    <%= fa_icon *amendment.status_icon_params %>
+  </h1>
+</div>
 
 <%= render 'form', modification: modification %>

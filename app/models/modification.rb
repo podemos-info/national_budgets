@@ -32,19 +32,19 @@ class Modification < ApplicationRecord
     super || 0
   end
 
-  alias :balance_amount :amount
-  alias :display_amount :amount
-  alias :total_amount :amount
+  alias balance_amount amount
+  alias display_amount amount
+  alias total_amount amount
 
   def locked_type?
     persisted?
   end
 
-  def self.disabled_modification_type_for?(amendment)
+  def self.disabled_modification_type_for?(_amendment)
     false
   end
 
-  def self.next_modification_type_for?(amendment)
+  def self.next_modification_type_for?(_amendment)
     false
   end
 

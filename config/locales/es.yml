@@ -25,7 +25,7 @@ es:
     new:
       title: "%{budget}: Enmienda n.º %{amendment}: Añadir modificación"
     edit:
-      title: "%{budget}: Enmienda n.º %{amendment}: Editar modificación"
+      title: "%{budget}: Enmienda n.º %{amendment}: Editar modificación de %{type_name}"
     create:
       success: La modificación ha sido añadida.
     update:
@@ -180,15 +180,18 @@ es:
       back: Atrás
       cancel: Cancelar
       completed: Completa
-      incomplete_positive_balance: 'Incompleta: balance positivo'
-      incomplete_negative_balance: 'Incompleta: balance positivo'
-      incomplete_empty: 'Incompleta: vacía'
+      positive_balance: 'Incompleta: balance positivo'
+      negative_balance: 'Incompleta: balance negativo'
+      pending_modifications: 'Incompleta: falta %{modifications}'
+      pending_articulated: 'Incompleta: falta «articulado»'
     label:
       amendment:
         number: Nº de enmienda
         type: Tipo de enmienda
         explanation: Exposición de motivos
         balance: "Balance"
+        display_amount: "Balance"
+        total_amount: "Importe"
       articulated:
         section: Sección
         title: Título

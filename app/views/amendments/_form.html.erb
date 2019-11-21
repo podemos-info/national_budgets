@@ -12,7 +12,7 @@
   <% end %>
 
   <% unless amendment.locked_type? %>
-    <%= f.collection_radio_buttons :type, descendants_collection(Amendment), :first, :last, custom: :switch, inline: true, wrapper_class: 'align-items-center' %>
+    <%= f.collection_radio_buttons :type, descendants_collection(Amendment), :first, :last, custom: :switch, inline: true, wrapper_class: 'align-items-center bootstrap-switch-success', class: 'bootstrap-switch-success' %>
   <% end %>
 
   <%= f.text_field :number %>

@@ -8,6 +8,8 @@ module Modifications
       -amount
     end
 
+    alias display_amount balance_amount
+
     def total_amount
       0
     end

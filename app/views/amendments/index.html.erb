@@ -8,13 +8,13 @@
 <div class="row">
 <% amendments.each do |amendment| %>
 <a class="card-block py-2 col-12" href="<%= amendment_path(amendment) %>" style="flex-grow: 2;">
-  <div class="card card-alert">
-    <div class="card-header text-dark">
+  <div class="card card-alert<% if amendment.completed? %> alert-success<% end %>">
+    <div class="card-header">
       <div class="row">
-        <div class="col-12 col-md-3">
+        <div class="col-12 col-md-2">
           <b class="card-title"><%= t('helpers.views.amendment.number', amendment: amendment.number) %></b>
         </div>
-        <div class="col-12 col-md-6">
+        <div class="col-12 col-md-7">
         <%= amendment_section_label(amendment) %>
         </div>
         <div class="col-12 col-md-3 text-right">

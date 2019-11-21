@@ -23,9 +23,9 @@ module Amendments
 
     def status_icon_params
       if completed?
-        ['check-square-o', class: 'pl-2 text-success', title: I18n.t('helpers.action.completed')]
+        ['check-square-o', class: 'status text-success', title: I18n.t('helpers.action.completed')]
       else
-        ['square-o', class: 'pl-2', title: I18n.t('helpers.action.incomplete_empty')]
+        ['square-o', class: 'status', title: I18n.t('helpers.action.pending_articulated')]
       end
     end
   end

@@ -2,10 +2,12 @@
 
 module Modifications
   class OrganismBudgetExpenditureModification < Modification
-    delegate :total_amount, to: :amendment, allow_nil: true
-
-    def amount=(value)
+    def amount=(_value)
       self[:amount] = 0
+    end
+
+    def total_amount
+      0
     end
 
     def balance_amount
@@ -13,7 +15,7 @@ module Modifications
     end
 
     def display_amount
-      -total_amount
+      -amendment.total_amount
     end
 
     def self.position
