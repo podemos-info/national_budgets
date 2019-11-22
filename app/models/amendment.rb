@@ -6,7 +6,7 @@ class Amendment < ApplicationRecord
   belongs_to :budget, optional: false
 
   validates :number, :explanation, presence: true
-  validate :type_cannot_be_changed, on: :update, if: :locked_type?
+  validate :type_locked, on: :update, if: :locked_type?
 
   def any_modifications?; end
 

@@ -2,10 +2,10 @@
 
 module Amendments
   class StandardAmendment < Amendment
-    def self.allowed_modifications
+    def self.allowed_modifications_str
       [
-        Modifications::AdditionModification,
-        Modifications::RemovalModification
+        'Modifications::AdditionModification',
+        'Modifications::RemovalModification'
       ]
     end
 

@@ -28,5 +28,13 @@ module Amendments
         ['square-o', class: 'status', title: I18n.t('helpers.action.pending_articulated')]
       end
     end
+
+    def numbered_articulateds
+      self.class.numbered_articulateds
+    end
+
+    def self.numbered_articulateds
+      Articulated.descendants.sort_by(&:position).map { |klass| klass if klass.articulated_number? }.compact
+    end
   end
 end

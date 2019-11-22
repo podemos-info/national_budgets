@@ -12,7 +12,7 @@ module Modifications
       amendment.addition_modifications.size.zero? || amendment.balance.negative?
     end
 
-    def modification_detail?
+    def self.modification_detail?
       true
     end
   end

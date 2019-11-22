@@ -1,23 +1,29 @@
-$( document ).ready(function() {
-  function modification_type_changed( type ) {
-    var current_type = $('#current_type').val();
-    var sufix = (type == current_type) ? '_initial' : '_reset';
-    console.log($('#section'+sufix).val());
-    $('#section.pseudoiframe').load( $('#section'+sufix).val() );
-    console.log($('#chapter'+sufix).val());
-    $('#chapter.pseudoiframe').load( $('#chapter'+sufix).val() );
+function is_detailed_modification( modification_type ) {
+  return (JSON.parse( $('#detailed_modification_types').val() ).indexOf(modification_type) != -1)
+}
 
-    console.log(sufix);
-    if (type.indexOf('Modifications::OrganismBudget') == 0) {
-      $('#standard_modification_detail').hide();
-    } else {
-      $('#standard_modification_detail').show();
-    }
+function modification_type_changed( selected_modification_type ) {
+  var selected_modification_type = $('#current_type').val()
+  var src_attr = (selected_modification_type == current_type) ? 'initial-src' : 'reset-src'
+
+  $('#section.pseudoiframe').load( $('#section.pseudoiframe').attr(src_attr) )
+  $('#chapter.pseudoiframe').load( $('#chapter.pseudoiframe').attr(src_attr) )
+
+  if ( is_detailed_modification(selected_modification_type) ) {
+    $('#standard_modification_detail').show('fast')
+  } else {
+    $('#standard_modification_detail').hide('fast')
   }
+}
 
-  $('.form-group.type input').change( function () { modification_type_changed($(this).val()) } )
+$( document ).ready(function() {
+  if ( $('.form-group.type input:checked') )
+    var initial_modification_type = $('.form-group.type input:checked').val()
+  else
+    var initial_modification_type = $('#current_type').val()
 
-  console.log($('.form-group.type input:checked').val());
-  modification_type_changed( $('.form-group.type input:checked').val() );
+  modification_type_changed( initial_modification_type )
+
+  $('.form-group.type input').bind( 'change', function () { modification_type_changed($(this).val()) } )
 });
 

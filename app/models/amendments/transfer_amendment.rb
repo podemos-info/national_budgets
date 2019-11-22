@@ -2,12 +2,12 @@
 
 module Amendments
   class TransferAmendment < Amendment
-    def self.allowed_modifications
+    def self.allowed_modifications_str
       [
-        Modifications::AdditionModification,
-        Modifications::RemovalModification,
-        Modifications::OrganismBudgetIncomeModification,
-        Modifications::OrganismBudgetExpenditureModification
+        'Modifications::AdditionModification',
+        'Modifications::RemovalModification',
+        'Modifications::OrganismBudgetIncomeModification',
+        'Modifications::OrganismBudgetExpenditureModification'
       ]
     end
 

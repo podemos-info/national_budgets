@@ -63,4 +63,13 @@ Rails.application.configure do
   I18n::Debug.logger = Logger.new(Rails.root.join('log', 'i18n-debug.log'))
 
   config.hosts.clear
+
+  # Preload descendant models
+  models = Dir['app/models/*/*.rb']
+  models.each { |file| require_dependency file }
+
+  # Reload descendant models
+  ActiveSupport::Reloader.to_prepare do
+    models.each { |file| require_dependency file }
+  end
 end

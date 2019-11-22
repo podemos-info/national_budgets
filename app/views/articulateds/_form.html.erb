@@ -18,6 +18,8 @@
   <%= f.text_area :justification %>
   <%= f.text_field :number, wrapper_class: 'number' %>
 
+  <input id="numbered_articulated_types" type="hidden" value="<%= amendment.numbered_articulateds.map(&:name).to_json %>" />
+
   <div class="actions">
     <%= f.submit class: 'btn btn-sm btn-success' %>
     <%= link_to t('helpers.action.back'), amendment_path(amendment), class: 'btn btn-sm btn-danger' %>
@@ -25,17 +27,21 @@
 <% end %>
 
 <script type="text/javascript">
+  function is_numbered_articulated( articulated_type ) {
+    return JSON.parse( $('#numbered_articulated_types').val() ).indexOf(articulated_type) != -1
+  }
+
   $(function () {
-    $(".form-group.type input").change(function () {
-      var type = $(this).val();
-      if (type == "Articulateds::StandardArticulated") {
-        $(".form-group.number").show();
+    $(".form-group.type input").bind('change', function () {
+      var initial_articulated_type = $(this).val();
+      if ( is_numbered_articulated(initial_articulated_type) ) {
+        $(".form-group.number").show('fast');
       } else {
-        $(".form-group.number").hide();
+        $(".form-group.number").hide('fast');
       }
     });
   });
   $( document ).ready(function() {
-      $("#type input").change();
+    $("#type input").change();
   });
 </script>

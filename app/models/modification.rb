@@ -16,6 +16,8 @@ class Modification < ApplicationRecord
   validate :chapter_budget_does_not_match, if: -> { chapter && amendment }
   delegate :budget, to: :amendment, allow_nil: true
 
+  scope :persisted, -> { where 'id IS NOT NULL' }
+
   def chapter_budget_does_not_match
     errors.add(:chapter, I18n.t('activerecord.errors.chapter_budget_does_not_match')) if chapter.budget != amendment.budget
   end
@@ -48,8 +50,16 @@ class Modification < ApplicationRecord
     false
   end
 
+  def self.next_modification_type_for(amendment)
+    amendment.allowed_modifications.select { |a| a if a.next_modification_type_for?(amendment) }.first
+  end
+
   def modification_detail?
-    !locked_type?
+    self.class.modification_detail?
+  end
+
+  def self.modification_detail?
+    false
   end
 
   private

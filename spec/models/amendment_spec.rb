@@ -24,7 +24,7 @@ describe Amendment do
     it { is_expected.not_to be_completed }
 
     it 'type can be changed' do
-      expect(amendment.type_cannot_be_changed).to be_truthy
+      expect(amendment.type_locked).to be_truthy
     end
 
     context 'when has an articulated' do
@@ -33,7 +33,7 @@ describe Amendment do
       it { is_expected.to be_completed }
 
       it 'type cannot be changed' do
-        expect(amendment.type_cannot_be_changed).to be_nil
+        expect(amendment.type_locked).to be_nil
       end
     end
   end
@@ -48,7 +48,7 @@ describe Amendment do
     it { is_expected.not_to be_completed }
 
     it 'type can be changed' do
-      expect(subject.type_cannot_be_changed).to be_truthy
+      expect(subject.type_locked).to be_truthy
     end
   end
 
@@ -58,7 +58,7 @@ describe Amendment do
     it { is_expected.to be_any_modifications }
 
     it 'type cannot be changed' do
-      expect(subject.type_cannot_be_changed).to be_nil
+      expect(subject.type_locked).to be_nil
     end
   end
 
@@ -71,11 +71,11 @@ describe Amendment do
       it { is_expected.to be_zero }
     end
 
-    describe '#compensation_amount' do
-      subject { amendment.compensation_amount }
-
-      it { is_expected.to be_zero }
-    end
+    #     describe '#compensation_amount' do
+    #       subject { amendment.compensation_amount }
+    #
+    #       it { is_expected.to be_zero }
+    #     end
   end
 
   describe Amendments::StandardAmendment do

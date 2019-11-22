@@ -19,7 +19,8 @@ module Modifications
     end
 
     def self.next_modification_type_for?(amendment)
-      amendment.removal_modifications.size.zero? || amendment.balance.positive?
+      (amendment.addition_modifications.size.positive? && amendment.removal_modifications.size.zero?) ||
+        amendment.balance.positive?
     end
 
     def self.modification_detail?

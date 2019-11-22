@@ -43,11 +43,6 @@
       </tbody>
     </table>
   <% end %>
-
-  <% unless amendment.articulated %>
-    <%= link_to t('helpers.submit.articulated.create'), new_amendment_articulated_path(amendment), class: 'btn btn-sm btn-outline-success' %>
-  <% end %>
-
 <% end %>
 
 <% if amendment.allow_modifications? %>
@@ -110,7 +105,15 @@
     <%= link_to t('helpers.action.edit'), edit_amendment_path(amendment), class: 'btn btn-sm btn-warning' %>
     <%= link_to t('helpers.action.destroy'), amendment_path(amendment), method: :delete, data: { confirm: t('helpers.messages.are_you_sure') }, class: 'btn btn-sm btn-danger' %>
     <%= link_to t('helpers.views.list_model', model: Amendment.model_name.human(count: 0).downcase), budget_amendments_path(budget), class: 'btn btn-sm btn-primary' %>
+
+    <% if amendment.allow_modifications? %>
     <%= link_to t('helpers.submit.modification.create'), new_amendment_modification_path(amendment), class: 'btn btn-sm btn-outline-success' %>
+    <% end %>
+
+    <% if amendment.allow_articulated? && !amendment.any_articulated? %>
+      <%= link_to t('helpers.submit.articulated.create'), new_amendment_articulated_path(amendment), class: 'btn btn-sm btn-outline-success' %>
+    <% end %>
+
   </div>
   <div class="col-12 col-md-6 text-right">
     <p><%= t 'helpers.views.by_author', author: amendment.user.email %></p>

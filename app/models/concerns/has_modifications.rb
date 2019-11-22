@@ -5,9 +5,9 @@ module HasModifications
 
   included do
     has_many :modifications, foreign_key: :amendment_id, dependent: :destroy, inverse_of: :amendment
-    allowed_modifications.each do |klass|
-      has_many klass.name.demodulize.pluralize.underscore.to_sym,
-               class_name: klass.name, # rubocop:disable Rails/ReflectionClassName
+    allowed_modifications_str.each do |class_name|
+      has_many class_name.demodulize.pluralize.underscore.to_sym,
+               class_name: class_name, # rubocop:disable Rails/ReflectionClassName
                foreign_key: :amendment_id,
                dependent: :destroy,
                inverse_of: :amendment
@@ -30,20 +30,24 @@ module HasModifications
     pending_modifications.map { |klass| "«#{klass.type_name.downcase}»" }.to_sentence
   end
 
+  def detailed_modifications
+    self.class.detailed_modifications
+  end
+
   def any_modifications?
     modifications.size.positive?
   end
 
   def balance
-    modifications.map(&:balance_amount).sum
+    modifications.persisted.map(&:balance_amount).sum
   end
 
   def total_amount
-    modifications.map(&:total_amount).sum
+    modifications.persisted.map(&:total_amount).sum
   end
 
   def display_amount
-    modifications.map(&:display_amount).sum
+    modifications.persisted.map(&:display_amount).sum
   end
 
   def next_modification_type
@@ -63,6 +67,16 @@ module HasModifications
       ['plus-square-o', class: 'status', title: I18n.t('helpers.action.positive_balance')]
     elsif completed?
       ['check-square-o', class: 'status text-success', title: I18n.t('helpers.action.completed')]
+    end
+  end
+
+  class_methods do
+    def allowed_modifications
+      allowed_modifications_str.map(&:constantize)
+    end
+
+    def detailed_modifications
+      allowed_modifications.select { |klass| klass if klass.modification_detail? }
     end
   end
 end
