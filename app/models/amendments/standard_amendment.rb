@@ -15,9 +15,5 @@ module Amendments
     def self.position
       1
     end
-
-    def completed?
-      any_modifications? && balance.zero?
-    end
   end
 end

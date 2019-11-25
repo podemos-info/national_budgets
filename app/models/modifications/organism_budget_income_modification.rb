@@ -23,10 +23,7 @@ module Modifications
     end
 
     def self.next_modification_type_for?(amendment)
-      amendment.removal_modifications.size.positive? &&
-        amendment.balance.zero? &&
-        amendment.addition_modifications.any? &&
-        amendment.organism_budget_income_modifications.none?
+      amendment.organism_budget_income_modifications.none?
     end
 
     def self.disabled_modification_type_for?(amendment)

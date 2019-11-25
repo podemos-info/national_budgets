@@ -10,7 +10,7 @@ class ModificationsController < ApplicationController
 
   # GET /amendments/:amendment_id/modifications/new
   def new
-    @modification = modifications.new(amount: amendment.balance.abs, type: Modification.next_modification_type_for(amendment))
+    @modification = modifications.new(amount: amendment.balance.abs, type: amendment.next_modification_type)
   end
 
   # GET /amendments/:amendment_id/modifications/:id/edit

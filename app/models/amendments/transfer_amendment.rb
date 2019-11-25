@@ -14,10 +14,6 @@ module Amendments
     include HasModifications
     include HasModificationSection
 
-    def completed?
-      any_modifications? && balance.zero? && next_modification_type.empty?
-    end
-
     def self.position
       2
     end

@@ -22,12 +22,20 @@ module HasModifications
     self.class.allowed_modifications
   end
 
+  def completed?
+    !next_modification_type
+  end
+
   def pending_modifications
-    allowed_modifications - modifications.map(&:class)
+    allowed_modifications - persisted_modifications.map(&:class)
   end
 
   def pending_modifications_sentence
     pending_modifications.map { |klass| "«#{klass.type_name.downcase}»" }.to_sentence
+  end
+
+  def persisted_modifications
+    modifications.select(&:persisted?)
   end
 
   def detailed_modifications
@@ -39,19 +47,19 @@ module HasModifications
   end
 
   def balance
-    modifications.persisted.map(&:balance_amount).sum
+    persisted_modifications.sum(&:balance_amount)
   end
 
   def total_amount
-    modifications.persisted.map(&:total_amount).sum
+    persisted_modifications.sum(&:total_amount)
   end
 
   def display_amount
-    modifications.persisted.map(&:display_amount).sum
+    persisted_modifications.sum(&:display_amount)
   end
 
   def next_modification_type
-    allowed_modifications.select { |klass| klass if klass.next_modification_type_for?(self) }
+    allowed_modifications.select { |m| m if m.next_modification_type_for?(self) }.first
   end
 
   def disabled_modifications_types
@@ -59,7 +67,7 @@ module HasModifications
   end
 
   def status_icon_params
-    if pending_modifications.size.positive?
+    if pending_modifications.any?
       ['square-o', class: 'status', title: I18n.t('helpers.action.pending_modifications', modifications: pending_modifications_sentence)]
     elsif display_amount.negative?
       ['minus-square-o', class: 'status', title: I18n.t('helpers.action.negative_balance')]
@@ -76,7 +84,7 @@ module HasModifications
     end
 
     def detailed_modifications
-      allowed_modifications.select { |klass| klass if klass.modification_detail? }
+      allowed_modifications.select(&:modification_detail?)
     end
   end
 end
