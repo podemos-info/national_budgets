@@ -17,5 +17,5 @@
 //= require jquery3
 //= require popper
 //= require bootstrap-sprockets
-//= stub 'pseudoiframe-inner'
-//= stub 'pseudoiframe-outer'
+//= stub 'pseudoiframe'
+//= stub 'modifications'
