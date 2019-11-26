@@ -14,7 +14,7 @@ module Amendments
     end
 
     def completed?
-      any_articulated?
+      any_articulated? && articulated.persisted?
     end
 
     def self.position

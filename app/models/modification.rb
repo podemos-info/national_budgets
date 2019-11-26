@@ -44,9 +44,7 @@ class Modification < ApplicationRecord
     false
   end
 
-  def self.next_modification_type_for?(_amendment)
-    false
-  end
+  def self.next_modification_type_for?(_amendment); end
 
   def modification_detail?
     self.class.modification_detail?
