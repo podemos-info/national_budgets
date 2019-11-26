@@ -2,5 +2,8 @@
 
 module Articulateds
   class AdditionalArticulated < Articulated
+    def self.position
+      2
+    end
   end
 end

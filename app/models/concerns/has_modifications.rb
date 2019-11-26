@@ -3,8 +3,43 @@
 module HasModifications
   extend ActiveSupport::Concern
 
+  included do
+    has_many :modifications, foreign_key: :amendment_id, dependent: :destroy, inverse_of: :amendment
+    allowed_modifications_str.each do |class_name|
+      has_many class_name.demodulize.pluralize.underscore.to_sym,
+               class_name: class_name, # rubocop:disable Rails/ReflectionClassName
+               foreign_key: :amendment_id,
+               dependent: :destroy,
+               inverse_of: :amendment
+    end
+  end
+
   def allow_modifications?
     true
+  end
+
+  def allowed_modifications
+    self.class.allowed_modifications
+  end
+
+  def completed?
+    !next_modification_type
+  end
+
+  def pending_modifications
+    allowed_modifications - persisted_modifications.map(&:class)
+  end
+
+  def pending_modifications_sentence
+    pending_modifications.map { |klass| "«#{klass.type_name.downcase}»" }.to_sentence
+  end
+
+  def persisted_modifications
+    modifications.select(&:persisted?)
+  end
+
+  def detailed_modifications
+    self.class.detailed_modifications
   end
 
   def any_modifications?
@@ -12,14 +47,44 @@ module HasModifications
   end
 
   def balance
-    modifications.sum(:amount)
+    persisted_modifications.sum(&:balance_amount)
   end
 
-  def compensation_amount
-    balance * -1
+  def total_amount
+    persisted_modifications.sum(&:total_amount)
   end
 
-  def completed?
-    modifications.size > 1 && balance.zero?
+  def display_amount
+    persisted_modifications.sum(&:display_amount)
+  end
+
+  def next_modification_type
+    allowed_modifications.select { |m| m if m.next_modification_type_for?(self) }.first
+  end
+
+  def disabled_modifications_types
+    allowed_modifications.select { |klass| klass if klass.disabled_modification_type_for?(self) }
+  end
+
+  def status_icon_params
+    if pending_modifications.any?
+      ['square-o', class: 'status', title: I18n.t('helpers.action.pending_modifications', modifications: pending_modifications_sentence)]
+    elsif display_amount.negative?
+      ['minus-square-o', class: 'status', title: I18n.t('helpers.action.negative_balance')]
+    elsif display_amount.positive?
+      ['plus-square-o', class: 'status', title: I18n.t('helpers.action.positive_balance')]
+    elsif completed?
+      ['check-square-o', class: 'status text-success', title: I18n.t('helpers.action.completed')]
+    end
+  end
+
+  class_methods do
+    def allowed_modifications
+      allowed_modifications_str.map(&:constantize)
+    end
+
+    def detailed_modifications
+      allowed_modifications.select(&:modification_detail?)
+    end
   end
 end

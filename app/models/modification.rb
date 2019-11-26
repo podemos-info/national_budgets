@@ -12,12 +12,9 @@ class Modification < ApplicationRecord
   belongs_to :concept, optional: true
   belongs_to :subconcept, optional: true
   after_initialize :initialize_section
-  validates :type, :abs_amount, presence: true
   validate :section_locked, if: :amendment
   validate :chapter_budget_does_not_match, if: -> { chapter && amendment }
   delegate :budget, to: :amendment, allow_nil: true
-
-  scope :additions_first, -> { order(Arel.sql('amount >= 0'), id: :asc) }
 
   def chapter_budget_does_not_match
     errors.add(:chapter, I18n.t('activerecord.errors.chapter_budget_does_not_match')) if chapter.budget != amendment.budget
@@ -35,40 +32,31 @@ class Modification < ApplicationRecord
     super || 0
   end
 
-  def amount=(value)
-    @amount_sign = @abs_amount = nil
-    super(value)
+  alias balance_amount amount
+  alias display_amount amount
+  alias total_amount amount
+
+  def locked_type?
+    persisted?
   end
 
-  def abs_amount
-    @abs_amount ||= amount&.abs
+  def self.disabled_modification_type_for?(_amendment)
+    false
   end
 
-  def abs_amount=(value)
-    @abs_amount = value.to_f.abs
-    sync_amount
+  def self.next_modification_type_for?(_amendment); end
+
+  def modification_detail?
+    self.class.modification_detail?
   end
 
-  def amount_sign
-    @amount_sign ||= amount&.negative? ? '-' : '+'
-  end
-
-  def amount_sign=(sign)
-    @amount_sign = sign
-    sync_amount
-  end
-
-  def amount_sign_human
-    { '+' => :addition, '-' => :removal }[amount_sign]
+  def self.modification_detail?
+    false
   end
 
   private
 
   def initialize_section
     self.section ||= amendment&.section if new_record?
-  end
-
-  def sync_amount
-    self[:amount] = "#{amount_sign}#{abs_amount}".to_f
   end
 end

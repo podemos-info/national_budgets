@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class AmendmentsController < ApplicationController
-  include ModelDescendantsHelper
+  include ModelsHelper
   include HasFlashMessages
   layout false, only: %i[browse_section browse_chapter]
   helper_method :budget, :amendment, :amendments,
@@ -66,7 +66,10 @@ class AmendmentsController < ApplicationController
   end
 
   def amendment_params
-    params.require(:amendment).permit(:number, :type, :explanation, :user_id)
+    @permited_params = %i[number explanation user_id]
+    @permited_params << :type unless amendment&.locked_type?
+
+    params.require(:amendment).permit(*@permited_params)
   end
 
   def budget

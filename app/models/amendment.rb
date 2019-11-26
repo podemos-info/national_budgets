@@ -4,8 +4,9 @@ class Amendment < ApplicationRecord
   include HasType
   belongs_to :user, optional: false
   belongs_to :budget, optional: false
-  validates :type, :number, :explanation, presence: true
-  validate :type_cannot_be_changed, on: :update, if: :locked_type?
+
+  validates :number, :explanation, presence: true
+  validate :type_locked, on: :update, if: :locked_type?
 
   def any_modifications?; end
 
@@ -19,10 +20,6 @@ class Amendment < ApplicationRecord
 
   def locked_type?
     persisted? && (any_articulated? || any_modifications?)
-  end
-
-  def type_cannot_be_changed
-    errors.add(:type, 'can not be changed') if type_changed? && type != type_was
   end
 
   def section; end

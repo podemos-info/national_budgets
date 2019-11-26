@@ -1,6 +1,9 @@
 <div class="row">
   <h1 class="col-8 page-title"><%= fa_icon "list-alt", text: t('.title', budget: budget.title, amendment: amendment.number) %></h1>
-  <h1 class="col-4 page-title text-right"><%= amendment.type_name %></h1>
+  <h1 class="col-4 page-title text-right">
+    <%= amendment.type_name %>
+    <%= fa_icon *amendment.status_icon_params %>
+  </h1>
 </div>
 
 <p>
@@ -40,11 +43,6 @@
       </tbody>
     </table>
   <% end %>
-
-  <% unless amendment.articulated %>
-    <%= link_to t('helpers.submit.articulated.create'), new_amendment_articulated_path(amendment), class: 'btn btn-sm btn-outline-success' %>
-  <% end %>
-
 <% end %>
 
 <% if amendment.allow_modifications? %>
@@ -70,7 +68,7 @@
       </thead>
 
       <tbody>
-        <% amendment.modifications.additions_first.each do |modification| %>
+        <% amendment.modifications.sort_by(&:position).each do |modification| %>
           <tr>
             <td title="<%= modification.service&.full_title %>"><%= modification.service&.ref %></td>
             <td title="<%= modification.program&.full_title %>"><%= modification.program&.ref %></td>
@@ -79,8 +77,8 @@
             <td title="<%= modification.concept&.full_title %>"><%= modification.concept&.ref %></td>
             <td title="<%= modification.subconcept&.full_title %>"><%= modification.subconcept&.ref %></td>
             <td><%= modification.project %></td>
-            <td title="<%= modification.concept&.full_title %>"><%= t("helpers.label.modification.#{modification.amount_sign_human}") %></td>
-            <td style="text-align: right;"><%= number_to_currency modification.abs_amount %></td>
+            <td title="<%= modification.concept&.full_title %>"><%= modification.type_name %></td>
+            <td style="text-align: right;"><%= number_to_currency modification.display_amount %></td>
             <td align="right">
               <%= link_to t('helpers.action.edit'), edit_amendment_modification_path(amendment, modification), class: 'btn btn-sm btn-outline-warning' %>
               <%= link_to t('helpers.action.destroy'), amendment_modification_path(amendment, modification), method: :delete, data: { confirm: t('helpers.messages.are_you_sure') }, class: 'btn btn-sm btn-outline-danger' %>
@@ -88,13 +86,17 @@
           </tr>
         <% end %>
       <tr style="border-top: 1px solid #eee;">
-        <td colspan="9" style="text-align: right;"><b class="text-secondary"><%= t('helpers.label.amendment.balance') %>:</b> <%= number_to_currency amendment.balance %></td>
+        <td colspan="9" style="text-align: right;">
+            <b class="text-secondary"><%= t('helpers.label.amendment.total_amount') %>:</b> <%= number_to_currency amendment.total_amount %>
+            &nbsp;&nbsp;&nbsp;
+            <b class="text-secondary"><%= t('helpers.label.amendment.display_amount') %>:</b> <%= number_to_currency amendment.display_amount %>
+        </td>
       </tr>
       </tbody>
     </table>
   <% end %>
 
-  <%= link_to t('helpers.submit.modification.create'), new_amendment_modification_path(amendment), class: 'btn btn-sm btn-outline-success' %>
+
 
 <% end %>
 
@@ -103,6 +105,15 @@
     <%= link_to t('helpers.action.edit'), edit_amendment_path(amendment), class: 'btn btn-sm btn-warning' %>
     <%= link_to t('helpers.action.destroy'), amendment_path(amendment), method: :delete, data: { confirm: t('helpers.messages.are_you_sure') }, class: 'btn btn-sm btn-danger' %>
     <%= link_to t('helpers.views.list_model', model: Amendment.model_name.human(count: 0).downcase), budget_amendments_path(budget), class: 'btn btn-sm btn-primary' %>
+
+    <% if amendment.allow_modifications? %>
+    <%= link_to t('helpers.submit.modification.create'), new_amendment_modification_path(amendment), class: 'btn btn-sm btn-outline-success' %>
+    <% end %>
+
+    <% if amendment.allow_articulated? && !amendment.any_articulated? %>
+      <%= link_to t('helpers.submit.articulated.create'), new_amendment_articulated_path(amendment), class: 'btn btn-sm btn-outline-success' %>
+    <% end %>
+
   </div>
   <div class="col-12 col-md-6 text-right">
     <p><%= t 'helpers.views.by_author', author: amendment.user.email %></p>

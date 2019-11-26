@@ -25,7 +25,7 @@ es:
     new:
       title: "%{budget}: Enmienda n.º %{amendment}: Añadir modificación"
     edit:
-      title: "%{budget}: Enmienda n.º %{amendment}: Editar modificación"
+      title: "%{budget}: Enmienda n.º %{amendment}: Editar modificación de %{type_name}"
     create:
       success: La modificación ha sido añadida.
     update:
@@ -128,10 +128,14 @@ es:
         concept: Concepto
         amount_sign: Tipo
         subconcept: Subconcepto
-      modifications/standard_modification:
-        type: 'Modificación de enmienda de alta/baja'
-      modifications/transfer_modification:
-        type: 'Modificación de enmienda de transferencia'
+      modifications/addition_modification:
+        type: 'Alta'
+      modifications/removal_modification:
+        type: 'Baja'
+      modifications/organism_budget_income_modification:
+        type: 'Alta presupuesto de ingreso'
+      modifications/organism_budget_expenditure_modification:
+        type: 'Alta presupuesto de gasto'
       section:
         title: Título
         budget: Proyecto de presupuestos
@@ -161,6 +165,7 @@ es:
         email: Correo electrónico
     errors:
       section_locked: está bloqueada
+      type_locked: está bloqueado
       chapter_budget_does_not_match: el proyecto de presupuestos no coincide con el proyecto de presupuestos de la enmienda
       prohibited_from_being_saved:
         one: "%{count} error impidió que esta %{model} fuese guardada"
@@ -174,12 +179,19 @@ es:
       destroy: Eliminar
       back: Atrás
       cancel: Cancelar
+      completed: Completa
+      positive_balance: 'Incompleta: balance positivo'
+      negative_balance: 'Incompleta: balance negativo'
+      pending_modifications: 'Incompleta: falta %{modifications}'
+      pending_articulated: 'Incompleta: falta «articulado»'
     label:
       amendment:
         number: Nº de enmienda
         type: Tipo de enmienda
         explanation: Exposición de motivos
         balance: "Balance"
+        display_amount: "Balance"
+        total_amount: "Importe"
       articulated:
         section: Sección
         title: Título

@@ -10,16 +10,36 @@
     </div>
   <% end %>
 
-  <%= f.collection_radio_buttons :amount_sign, [['+', t('helpers.label.modification.addition')], ['-', t('helpers.label.modification.removal')]], :first, :last, custom: :switch, inline: true, wrapper_class: 'align-items-center type' %>
+  <% unless modification.locked_type? %>
+    <div class="form-group row type">
+      <div class="col-form-label col-sm-3 text-md-right">
+        <%= f.label :type %>
+      </div>
+      <div class="col-sm-7 pt-2">
+        <%= f.collection_radio_buttons_without_bootstrap :type, amendment.allowed_modifications.map { |a| [a, a.type_name] }, :first, :last, { checked: amendment.next_modification_type, disabled: amendment.disabled_modifications_types } %>
+      </div>
+    </div>
+  <% end %>
 
   <div class="row px-3">
-    <div class="pseudoiframe col-12 col-sm-6" src="<%= browse_section_amendment_path(id: amendment, section_id: modification.section, service_id: modification.service_id, program_id: modification.program_id, locked_section: modification.locked_section?)%>"></div>
-    <div class="pseudoiframe col-12 col-sm-6" src="<%= browse_chapter_amendment_path(id: amendment, chapter_id: modification.chapter_id, article_id: modification.article_id, concept_id: modification.concept_id, subconcept_id: modification.subconcept_id)%>"></div>
+    <div id="section" class="pseudoiframe col-12 col-sm-6"
+      src="<%= browse_section_amendment_path(id: amendment, section_id: modification.section, service_id: modification.service_id, program_id: modification.program_id, locked_section: modification.locked_section?) %>" reset-src="<%= browse_section_amendment_path(id: amendment, section_id: modification.section, locked_section: modification.locked_section?) %>"
+      ></div>
+    <div id="chapter" class="pseudoiframe col-12 col-sm-6"
+      src="<%= browse_chapter_amendment_path(id: amendment, chapter_id: modification.chapter_id, article_id: modification.article_id, concept_id: modification.concept_id, subconcept_id: modification.subconcept_id) %>" reset-src="<%= browse_chapter_amendment_path(id: amendment) %>"
+      ></div>
   </div>
 
-  <%= f.text_field :project %>
-  <%= f.check_box :project_new, custom: :switch, class: 'text-center', wrapper_class: 'col-9 offset-3 text-left mb-3' %>
-  <%= f.text_field :abs_amount, type: :number, step: '0.01', min: 0 %>
+  <% if !modification.locked_type? || modification.modification_detail? %>
+    <div id="standard_modification_detail">
+      <%= f.text_field :project %>
+      <%= f.check_box :project_new, custom: :switch, class: 'text-center', wrapper_class: 'col-9 offset-3 text-left mb-3' %>
+      <%= f.text_field :amount, type: :number, step: '0.01', min: 0 %>
+    </div>
+  <% end %>
+
+  <input id="current_type" type="hidden" value="<%= modification.type %>" />
+  <input id="detailed_modification_types" type="hidden" value="<%= amendment.detailed_modifications.map(&:name).to_json %>" />
 
   <div class="actions">
     <%= f.submit class: 'btn btn-sm btn-success' %>
@@ -27,5 +47,6 @@
   </div>
 <% end %>
 
-<%= javascript_include_tag 'pseudoiframe-outer' %>
+<%= javascript_include_tag 'pseudoiframe' %>
+<%= javascript_include_tag 'modifications' %>
 <%= stylesheet_link_tag    'pseudoiframe' %>

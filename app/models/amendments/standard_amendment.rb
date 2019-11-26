@@ -2,12 +2,18 @@
 
 module Amendments
   class StandardAmendment < Amendment
+    def self.allowed_modifications_str
+      [
+        'Modifications::AdditionModification',
+        'Modifications::RemovalModification'
+      ]
+    end
+
     include HasModifications
     include HasModificationSection
 
-    has_many :modifications, foreign_key: :amendment_id,
-                             class_name: 'Modifications::StandardModification',
-                             dependent: :destroy,
-                             inverse_of: :amendment
+    def self.position
+      1
+    end
   end
 end

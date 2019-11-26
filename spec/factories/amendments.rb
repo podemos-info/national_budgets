@@ -8,60 +8,76 @@ FactoryBot.define do
     user
   end
 
-  factory :articulated_amendment, class: :'amendments/articulated_amendment', parent: :amendment do
-    trait :with_articulated do
-      after(:create) do |amendment|
-        create(:standard_articulated, amendment: amendment)
-        amendment.reload
+  factory :standard_amendment, class: :"amendments/standard_amendment", parent: :amendment do
+    trait :with_modifications do
+      transient do
+        modifications_count { 2 }
+        section { create(:section, budget: budget) }
+      end
+
+      after(:create) do |amendment, evaluator|
+        create_list(:addition_modification,
+                    evaluator.modifications_count,
+                    amendment: amendment,
+                    section: evaluator.section)
+      end
+    end
+
+    trait :completed do
+      transient do
+        section { create(:section, budget: budget) }
+      end
+
+      after(:create) do |amendment, evaluator|
+        create(:addition_modification,
+               amendment: amendment,
+               section: evaluator.section,
+               amount: '1000')
+        create(:removal_modification,
+               amendment: amendment,
+               section: evaluator.section,
+               amount: '1000')
       end
     end
   end
 
-  %w[standard transfer].each do |model_prefix|
-    factory "#{model_prefix}_amendment".to_sym, class: :"amendments/#{model_prefix}_amendment", parent: :amendment do
-      trait :with_modifications do
-        transient do
-          modifications_count { 2 }
-          section { create(:section, budget: budget) }
-        end
-
-        after(:create) do |amendment, evaluator|
-          create_list("#{model_prefix}_modification".to_sym,
-                      evaluator.modifications_count,
-                      amendment: amendment,
-                      section: evaluator.section)
-        end
+  factory :transfer_amendment, class: :"amendments/transfer_amendment", parent: :amendment do
+    trait :with_modifications do
+      transient do
+        modifications_count { 2 }
+        section { create(:section, budget: budget) }
       end
 
-      trait :completed do
-        transient do
-          section { create(:section, budget: budget) }
-        end
-
-        after(:create) do |amendment, evaluator|
-          create("#{model_prefix}_modification".to_sym,
-                 amendment: amendment, section: evaluator.section, abs_amount: '1000', amount_sign: '+')
-          create("#{model_prefix}_modification".to_sym,
-                 amendment: amendment, section: evaluator.section, abs_amount: '1000', amount_sign: '-')
-        end
+      after(:create) do |amendment, evaluator|
+        create_list(:addition_modification,
+                    evaluator.modifications_count,
+                    amendment: amendment,
+                    section: evaluator.section)
       end
     end
 
-    factory "#{model_prefix}_modification".to_sym, class: :"modifications/#{model_prefix}_modification", parent: :modification
+    trait :completed do
+      transient do
+        section { create(:section, budget: budget) }
+      end
+
+      after(:create) do |amendment, evaluator|
+        create(:addition_modification,
+               amendment: amendment,
+               section: evaluator.section,
+               amount: '1000')
+        create(:removal_modification,
+               amendment: amendment,
+               section: evaluator.section,
+               amount: '1000')
+      end
+    end
   end
 
-  factory :articulated do
-    amendment
-    title { Faker::Lorem.sentence(word_count: 5, supplemental: true, random_words_to_add: 15) }
-    text { Faker::Lorem.paragraph(sentence_count: 2, supplemental: false, random_sentences_to_add: 4) }
-    justification { Faker::Lorem.paragraph(sentence_count: 2, supplemental: false, random_sentences_to_add: 4) }
-    number { Faker::Alphanumeric.alphanumeric(number: 10, min_alpha: 3) }
-    section { amendment&.section || create(:section, budget: amendment&.budget || create(:budget)) }
-  end
-
-  %w[additional final standard].each do |model_prefix|
-    factory "#{model_prefix}_articulated".to_sym, class: :"articulateds/#{model_prefix}_articulated", parent: :articulated
-  end
+  factory :addition_modification, class: :"modifications/addition_modification", parent: :modification
+  factory :removal_modification, class: :"modifications/removal_modification", parent: :modification
+  factory :organism_budget_income_modification, class: :"modifications/organism_budget_income_modification", parent: :modification
+  factory :organism_budget_expenditure_modification, class: :"modifications/organism_budget_expenditure_modification", parent: :modification
 
   factory :modification do
     amendment { create(:standard_amendment) }
@@ -75,5 +91,27 @@ FactoryBot.define do
     project { '123' }
     project_new { [true, false].sample }
     amount { 1 }
+  end
+
+  factory :articulated_amendment, class: :'amendments/articulated_amendment', parent: :amendment do
+    trait :with_articulated do
+      after(:create) do |amendment|
+        create(:standard_articulated, amendment: amendment)
+        amendment.reload
+      end
+    end
+  end
+
+  factory :articulated do
+    amendment
+    title { Faker::Lorem.sentence(word_count: 5, supplemental: true, random_words_to_add: 15) }
+    text { Faker::Lorem.paragraph(sentence_count: 2, supplemental: false, random_sentences_to_add: 4) }
+    justification { Faker::Lorem.paragraph(sentence_count: 2, supplemental: false, random_sentences_to_add: 4) }
+    number { Faker::Alphanumeric.alphanumeric(number: 10, min_alpha: 3) }
+    section { amendment&.section || create(:section, budget: amendment&.budget || create(:budget)) }
+  end
+
+  %w[additional final standard].each do |model_prefix|
+    factory "#{model_prefix}_articulated".to_sym, class: :"articulateds/#{model_prefix}_articulated", parent: :articulated
   end
 end

@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 class ModificationsController < ApplicationController
+  include ModelsHelper
   include HasFlashMessages
   helper_method :budget, :amendment, :modification, :modifications
 
@@ -9,7 +10,7 @@ class ModificationsController < ApplicationController
 
   # GET /amendments/:amendment_id/modifications/new
   def new
-    @modification = modifications.new(amount: amendment.compensation_amount)
+    @modification = modifications.new(amount: amendment.balance.abs, type: amendment.next_modification_type)
   end
 
   # GET /amendments/:amendment_id/modifications/:id/edit
@@ -52,15 +53,14 @@ class ModificationsController < ApplicationController
   end
 
   def modification_params
-    params.require(:modification).permit(:section_id, :service_id,
-                                         :program_id, :chapter_id,
-                                         :article_id, :concept_id,
-                                         :subconcept_id, :project, :project_new,
-                                         :amount_sign, :abs_amount)
+    @permited_params = %i[section_id service_id program_id chapter_id article_id concept_id subconcept_id project project_new amount]
+    @permited_params << :type unless modification&.locked_type?
+
+    params.require(:modification).permit(*@permited_params)
   end
 
   def modification
-    @modification ||= modifications.find(params[:id])
+    @modification ||= (modifications.find(params[:id]) if params[:id])
   end
 
   def modifications

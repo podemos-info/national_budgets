@@ -17,15 +17,39 @@
 @import "rails_bootstrap_forms";
 @import "font-awesome";
 
+$component-default-color: #672f63;
+$component-default-color-hover: lighten($component-default-color, 14%);
+$up-first-color: #90b46a;
+$up-second-color: $component-default-color;
+$up-third-color: #ab182b;
+$component-default-bg: linear-gradient(40deg, $up-first-color, $up-first-color 5%, $up-second-color 25%, $up-second-color 75%, $up-third-color 95%, $up-third-color);
 $component-active-bg: #d4edda;
 $component-active-bg-hover: lighten(#000, 93.5%);
 $component-active-color: var(--success);
+$component-active-border: lighten($component-default-color, 27%);
+$component-active-border-shadow: lighten($component-default-color, 49%);
 
-h1 { font-size: 1.4rem; font-weight: 700; }
-h2 { font-size: 1.2rem; font-weight: 600; }
+textarea, input {
+  &:active, &:focus {
+    border-color: $component-active-border !important;
+    box-shadow: 0 1px 1px $component-active-border-shadow inset, 0 0 4px $component-active-border-shadow !important;
+    outline: 0 none;
+  }
+}
+
+.custom-control-input:checked ~ .custom-control-label::before {
+  color: #fff;
+  border-color: $component-default-color;
+  background-color: $component-default-color;
+}
+
+h1 { font-size: 1.15rem; font-weight: 600; color: $component-default-color; }
+h2 { font-size: 1.05rem; font-weight: 600; color: $component-default-color; }
 
 a {
+  color: $component-default-color;
   outline: none;
+  transition: ease all .2s;
   &.card-block {
     display: inline-block;
     .card {
@@ -46,6 +70,9 @@ a {
       }
     }
   }
+  &:hover, &:active, &:focus {
+    color: $component-default-color-hover;
+  }
 }
 
 a, .alert {
@@ -53,14 +80,25 @@ a, .alert {
     padding-right: 5px;
   }
 }
+i.fa.status {
+  padding-left: 10px;
+  cursor: help;
+}
+
+.navbar.navbar-dark.bg-primary { background: $component-default-bg !important; }
+.navbar-brand { font-weight: 700;  }
 
 h1.page-title {
-  margin-top: 20px;
+  margin-top: 25px;
   margin-bottom: 30px;
   padding-bottom: 10px;
   border-bottom-color: rgba(0, 0, 0, 0.1);
   border-bottom-style: solid;
   border-bottom-width: 1px;
+}
+
+h2.card-title {
+  color: inherit;
 }
 
 div.actions {
@@ -82,3 +120,8 @@ div.actions {
 }
 
 .card-header { background-color: #eee; }
+
+input[type="radio"] { cursor: pointer; }
+input[type="radio"] + label { margin: 0 5px; cursor: pointer; }
+input[type="radio"][disabled] { color: red; cursor: not-allowed; }
+input[type="radio"][disabled] + label { color: #999; cursor: not-allowed; }

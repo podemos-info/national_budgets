@@ -2,12 +2,20 @@
 
 module Amendments
   class TransferAmendment < Amendment
+    def self.allowed_modifications_str
+      [
+        'Modifications::AdditionModification',
+        'Modifications::RemovalModification',
+        'Modifications::OrganismBudgetIncomeModification',
+        'Modifications::OrganismBudgetExpenditureModification'
+      ]
+    end
+
     include HasModifications
     include HasModificationSection
 
-    has_many :modifications, foreign_key: :amendment_id,
-                             class_name: 'Modifications::TransferModification',
-                             dependent: :destroy,
-                             inverse_of: :amendment
+    def self.position
+      2
+    end
   end
 end
