@@ -23,14 +23,10 @@
 
   <div class="row px-3">
     <div id="section" class="pseudoiframe col-12 col-sm-6"
-      src="<%= browse_section_amendment_path(id: amendment, section_id: modification.section, service_id: modification.service_id, program_id: modification.program_id, locked_section: modification.locked_section?) %>"
-      initial-src="<%= browse_section_amendment_path(id: amendment, section_id: modification.section, service_id: modification.service_id, program_id: modification.program_id, locked_section: modification.locked_section?) %>"
-      reset-src="<%= browse_section_amendment_path(id: amendment, section_id: modification.section, locked_section: modification.locked_section?) %>"
+      src="<%= browse_section_amendment_path(id: amendment, section_id: modification.section, service_id: modification.service_id, program_id: modification.program_id, locked_section: modification.locked_section?) %>" reset-src="<%= browse_section_amendment_path(id: amendment, section_id: modification.section, locked_section: modification.locked_section?) %>"
       ></div>
     <div id="chapter" class="pseudoiframe col-12 col-sm-6"
-      src="<%= browse_chapter_amendment_path(id: amendment, chapter_id: modification.chapter_id, article_id: modification.article_id, concept_id: modification.concept_id, subconcept_id: modification.subconcept_id) %>"
-      initial-src="<%= browse_chapter_amendment_path(id: amendment, chapter_id: modification.chapter_id, article_id: modification.article_id, concept_id: modification.concept_id, subconcept_id: modification.subconcept_id) %>"
-      reset-src="<%= browse_chapter_amendment_path(id: amendment) %>"
+      src="<%= browse_chapter_amendment_path(id: amendment, chapter_id: modification.chapter_id, article_id: modification.article_id, concept_id: modification.concept_id, subconcept_id: modification.subconcept_id) %>" reset-src="<%= browse_chapter_amendment_path(id: amendment) %>"
       ></div>
   </div>
 
@@ -51,5 +47,6 @@
   </div>
 <% end %>
 
-<%= javascript_include_tag 'pseudoiframe-outer' %>
+<%= javascript_include_tag 'pseudoiframe' %>
+<%= javascript_include_tag 'modifications' %>
 <%= stylesheet_link_tag    'pseudoiframe' %>
