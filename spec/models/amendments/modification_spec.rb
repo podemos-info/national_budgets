@@ -9,6 +9,7 @@ describe Modification do
 
   it { is_expected.to be_valid }
   it { is_expected.not_to be_locked_section }
+  it { is_expected.to be_modification_detail }
 
   context 'when amendment already has a modification' do
     let(:amendment) { create(:standard_amendment, :with_modifications) }
