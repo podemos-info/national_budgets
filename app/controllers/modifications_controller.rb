@@ -53,7 +53,9 @@ class ModificationsController < ApplicationController
   end
 
   def modification_params
-    @permited_params = %i[section_id service_id program_id chapter_id article_id concept_id subconcept_id project project_new amount]
+    @permited_params = %i[section_id service_id program_id organism_id
+                          chapter_id article_id concept_id subconcept_id
+                          project project_new amount]
     @permited_params << :type unless modification&.locked_type?
 
     params.require(:modification).permit(*@permited_params)

@@ -5,8 +5,9 @@ class Modification < ApplicationRecord
   include HasSectionBudget
   belongs_to :amendment, optional: false
   belongs_to :section, optional: false
-  belongs_to :service, optional: false
-  belongs_to :program, optional: false
+  belongs_to :service, optional: true
+  belongs_to :program, optional: true
+  belongs_to :organism, optional: true
   belongs_to :chapter, optional: false
   belongs_to :article, optional: false
   belongs_to :concept, optional: true
@@ -15,6 +16,16 @@ class Modification < ApplicationRecord
   validate :section_locked, if: :amendment
   validate :chapter_budget_does_not_match, if: -> { chapter && amendment }
   delegate :budget, to: :amendment, allow_nil: true
+
+  def present_fields
+    self.class.present_fields
+  end
+
+  def self.present_fields; end
+
+  def self.show_field?(field)
+    present_fields.member?(field)
+  end
 
   def chapter_budget_does_not_match
     errors.add(:chapter, I18n.t('activerecord.errors.chapter_budget_does_not_match')) if chapter.budget != amendment.budget

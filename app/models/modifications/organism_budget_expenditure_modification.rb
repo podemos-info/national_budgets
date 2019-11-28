@@ -27,7 +27,11 @@ module Modifications
     end
 
     def self.disabled_modification_type_for?(amendment)
-      amendment.organism_budget_expenditure_modifications.any?
+      amendment.organism_budget_expenditure_modifications.any? || amendment.organism_budget_income_modifications.none?
+    end
+
+    def self.present_fields
+      %i[program chapter]
     end
   end
 end

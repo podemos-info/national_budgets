@@ -15,5 +15,9 @@ module Modifications
     def self.modification_detail?
       true
     end
+
+    def self.present_fields
+      %i[section chapter project project_new amount]
+    end
   end
 end

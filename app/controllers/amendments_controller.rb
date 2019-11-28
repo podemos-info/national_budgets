@@ -3,9 +3,9 @@
 class AmendmentsController < ApplicationController
   include ModelsHelper
   include HasFlashMessages
-  layout false, only: %i[browse_section browse_chapter]
+  layout false, only: %i[browse_section browse_chapter browse_organism browse_program]
   helper_method :budget, :amendment, :amendments,
-                :section, :service, :program, :locked_section?,
+                :section, :service, :program, :organism, :locked_section?,
                 :chapter, :article, :concept, :subconcept
 
   # GET /amendments
@@ -55,6 +55,12 @@ class AmendmentsController < ApplicationController
   # GET /amendments/:id/browse/chapter(/:chapter_id(/:article_id(/:concept_id(/:subconcept_id))))
   def browse_chapter; end
 
+  # GET /amendments/:id/browse/section/:section_id(/:organism_id)
+  def browse_organism; end
+
+  # GET /amendments/:id/browse/program/:section_id/:organism_id/(/:program_id)
+  def browse_program; end
+
   private
 
   def after_create_path
@@ -93,7 +99,14 @@ class AmendmentsController < ApplicationController
   end
 
   def program
-    @program ||= section.programs.find(params[:program_id]) if params[:program_id]
+    # si es enmienda de transferencia los programas son descendientes de organism
+    @program ||= if params[:program_id]
+                   section&.programs&.find(params[:program_id]) || amendment.organism.programs.find(params[:program_id])
+                 end
+  end
+
+  def organism
+    @organism ||= section.organisms.find(params[:organism_id]) if params[:organism_id]
   end
 
   def chapter

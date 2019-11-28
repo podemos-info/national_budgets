@@ -27,7 +27,11 @@ module Modifications
     end
 
     def self.disabled_modification_type_for?(amendment)
-      amendment.organism_budget_income_modifications.any?
+      amendment.organism_budget_income_modifications.any? || !amendment.section
+    end
+
+    def self.present_fields
+      %i[organism chapter]
     end
   end
 end

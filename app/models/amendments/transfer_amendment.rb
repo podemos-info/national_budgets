@@ -13,6 +13,7 @@ module Amendments
 
     include HasModifications
     include HasModificationSection
+    include HasModificationOrganism
 
     def self.position
       2
