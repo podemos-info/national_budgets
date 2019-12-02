@@ -4,8 +4,8 @@ class AmendmentsController < ApplicationController
   include ModelsHelper
   include HasFlashMessages
   layout false, only: %i[browse_section browse_chapter browse_organism browse_program]
-  helper_method :budget, :amendment, :amendments,
-                :section, :service, :program, :organism, :locked_section?,
+  helper_method :budget, :amendment, :amendments, :modification_type,
+                :section, :service, :program, :organism, :locked_section?, :locked_organism?,
                 :chapter, :article, :concept, :subconcept
 
   # GET /amendments
@@ -95,17 +95,20 @@ class AmendmentsController < ApplicationController
   end
 
   def service
+    return 0 unless modification_type.show_field?(:service)
+
     @service ||= section.services.find(params[:service_id]) if params[:service_id]
   end
 
   def program
-    # si es enmienda de transferencia los programas son descendientes de organism
     @program ||= if params[:program_id]
                    section&.programs&.find(params[:program_id]) || amendment.organism.programs.find(params[:program_id])
                  end
   end
 
   def organism
+    return 0 unless modification_type.show_field?(:organism)
+
     @organism ||= section.organisms.find(params[:organism_id]) if params[:organism_id]
   end
 
@@ -127,5 +130,13 @@ class AmendmentsController < ApplicationController
 
   def locked_section?
     params['locked_section'] == 'true'
+  end
+
+  def locked_organism?
+    params['locked_organism'] == 'true'
+  end
+
+  def modification_type
+    params[:modification_type].constantize
   end
 end

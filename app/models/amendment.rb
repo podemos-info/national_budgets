@@ -22,6 +22,10 @@ class Amendment < ApplicationRecord
     persisted? && (any_articulated? || any_modifications?)
   end
 
+  def locked_organism?
+    false
+  end
+
   def section; end
 
   def any_section?

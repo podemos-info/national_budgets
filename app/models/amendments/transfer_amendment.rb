@@ -18,5 +18,9 @@ module Amendments
     def self.position
       2
     end
+
+    def locked_organism?
+      organism_budget_income_modifications.any? || organism_budget_expenditure_modifications.any?
+    end
   end
 end

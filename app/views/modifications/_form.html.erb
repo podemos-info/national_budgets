@@ -23,12 +23,34 @@
   <% end %>
 
   <div class="tab-content">
-    <% if modification.locked_type? %>
-      <%= render 'form_type_tab_pane', f: f, modification_class: modification.class, active: true %>
-    <% else %>
-      <% amendment.allowed_modifications.each do |modification_class| %>
-        <%= render 'form_type_tab_pane', f: f, modification_class: modification_class, active: false %>
-      <% end %>
+      <% (modification.locked_type? ? [modification.class] : amendment.allowed_modifications).each do |modification_class| %>
+
+        <div id="<%= modification_class.name.demodulize %>" class="tab-pane<% if modification.locked_type? %> active<% end %>">
+          <div class="row px-3">
+
+            <div id="section" class="pseudoiframe col-12 col-sm-6" src="<%= browse_section_amendment_path(id: amendment, modification_type: modification_class, section_id: modification.section, service_id: (modification_class.show_field?(:service) ? modification.service_id : 0), organism_id: (modification_class.show_field?(:organism) ? modification.organism_id : 0), program_id: modification.program_id, locked_section: modification.locked_section?, locked_organism: modification.locked_organism?) %>"></div>
+
+            <div id="chapter" class="pseudoiframe col-12 col-sm-6" src="<%= browse_chapter_amendment_path(id: amendment, chapter_id: modification.chapter_id, article_id: modification.article_id, concept_id: modification.concept_id, subconcept_id: modification.subconcept_id) %>"></div>
+
+          </div>
+
+          <% if modification_class.show_field?(:project) %>
+            <%= f.text_field :project %>
+          <% end %>
+
+          <% if modification_class.show_field?(:project_new) %>
+            <%= f.check_box :project_new, custom: :switch, class: 'text-center', wrapper_class: 'col-9 offset-3 text-left mb-3' %>
+          <% end %>
+
+          <% if modification_class.show_field?(:amount) %>
+            <%= f.text_field :amount, type: :number, step: '0.01', min: 0 %>
+          <% end %>
+
+          <input id="current_type" type="hidden" value="<%= modification.type %>" />
+          <input id="detailed_modification_types" type="hidden" value="<%= amendment.detailed_modifications.map(&:name).to_json %>" />
+
+        </div>
+
     <% end %>
   </div>
 

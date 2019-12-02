@@ -13,9 +13,12 @@ class Modification < ApplicationRecord
   belongs_to :concept, optional: true
   belongs_to :subconcept, optional: true
   after_initialize :initialize_section
+  after_initialize :initialize_organism
   validate :section_locked, if: :amendment
+  validate :organism_locked, if: :amendment
   validate :chapter_budget_does_not_match, if: -> { chapter && amendment }
   delegate :budget, to: :amendment, allow_nil: true
+  delegate :locked_organism?, to: :amendment, allow_nil: true
 
   def present_fields
     self.class.present_fields
@@ -37,6 +40,10 @@ class Modification < ApplicationRecord
 
   def section_locked
     errors.add(:section, I18n.t('activerecord.errors.section_locked')) if locked_section? && section != amendment.section
+  end
+
+  def organism_locked
+    errors.add(:section, I18n.t('activerecord.errors.section_locked')) if locked_organism? && organism != amendment.organism
   end
 
   def amount
@@ -69,5 +76,9 @@ class Modification < ApplicationRecord
 
   def initialize_section
     self.section ||= amendment&.section if new_record?
+  end
+
+  def initialize_organism
+    self.organism ||= amendment&.organism if new_record?
   end
 end

@@ -9,12 +9,8 @@ Rails.application.routes.draw do
         resources :articulateds, except: [:show], shallow: false
         resources :modifications, except: [:show], shallow: false
         member do
-          get 'browse/section(/:section_id(/:service_id(/:program_id)))',
+          get 'browse/section/:modification_type(/:section_id(/:service_id(/:organism_id(/:program_id))))',
               to: 'amendments#browse_section', as: :browse_section
-          get 'browse/organism/:section_id(/:organism_id)',
-              to: 'amendments#browse_organism', as: :browse_organism
-          get 'browse/program/:organism_id(/:program_id)',
-              to: 'amendments#browse_program', as: :browse_program
           get 'browse/chapter(/:chapter_id(/:article_id(/:concept_id(/:subconcept_id))))',
               to: 'amendments#browse_chapter', as: :browse_chapter
         end

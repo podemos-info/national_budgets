@@ -31,7 +31,7 @@ module Modifications
     end
 
     def self.present_fields
-      %i[program chapter]
+      %i[section organism program chapter]
     end
   end
 end

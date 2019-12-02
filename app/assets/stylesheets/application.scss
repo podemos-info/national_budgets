@@ -71,7 +71,7 @@ a {
     }
   }
   &:hover, &:active, &:focus {
-    color: $component-default-color-hover;
+    filter: brightness(90%) contrast(110%);
   }
 }
 

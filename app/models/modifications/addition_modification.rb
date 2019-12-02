@@ -17,7 +17,7 @@ module Modifications
     end
 
     def self.present_fields
-      %i[section chapter project project_new amount]
+      %i[section service program chapter project project_new amount]
     end
   end
 end
