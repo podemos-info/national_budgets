@@ -22,10 +22,6 @@ module Modifications
       amendment.removal_modifications.none? || amendment.balance.positive?
     end
 
-    def self.modification_detail?
-      true
-    end
-
     def self.present_fields
       %i[section service program chapter project amount]
     end

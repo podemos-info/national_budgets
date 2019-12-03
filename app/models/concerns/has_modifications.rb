@@ -38,10 +38,6 @@ module HasModifications
     modifications.select(&:persisted?)
   end
 
-  def detailed_modifications
-    self.class.detailed_modifications
-  end
-
   def any_modifications?
     modifications.size.positive?
   end
@@ -81,10 +77,6 @@ module HasModifications
   class_methods do
     def allowed_modifications
       allowed_modifications_str.map(&:constantize)
-    end
-
-    def detailed_modifications
-      allowed_modifications.select(&:modification_detail?)
     end
   end
 end

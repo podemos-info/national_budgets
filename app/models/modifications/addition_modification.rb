@@ -12,10 +12,6 @@ module Modifications
       amendment.addition_modifications.size.zero? || amendment.balance.negative?
     end
 
-    def self.modification_detail?
-      true
-    end
-
     def self.present_fields
       %i[section service program chapter project project_new amount]
     end

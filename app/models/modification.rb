@@ -64,14 +64,6 @@ class Modification < ApplicationRecord
 
   def self.next_modification_type_for?(_amendment); end
 
-  def modification_detail?
-    self.class.modification_detail?
-  end
-
-  def self.modification_detail?
-    false
-  end
-
   private
 
   def initialize_section
