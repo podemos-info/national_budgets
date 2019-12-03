@@ -92,9 +92,7 @@ class AmendmentsController < ApplicationController
   end
 
   def program
-    @program ||= if params[:program_id]
-                   section&.programs&.find(params[:program_id]) || amendment.organism.programs.find(params[:program_id])
-                 end
+    @program ||= (modification_type.use_field?(:organism) ? organism : section)&.programs&.find(params[:program_id]) if params[:program_id]
   end
 
   def chapter

@@ -48,7 +48,7 @@
     <% else %>
         <hr>
         <%= collection_title(section.programs) %>
-        <% section.programs.each do |program| %>
+        <% (organism || section).programs.each do |program| %>
           <%= browse_link(program, browse_section_amendment_path(modification_type: modification_type, section_id: section, service_or_organism_id: service || organism, program_id: program, locked_section: locked_section?, locked_organism: locked_organism?)) %>
         <% end %>
     <% end %>
