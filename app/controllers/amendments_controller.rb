@@ -91,8 +91,16 @@ class AmendmentsController < ApplicationController
     @organism ||= section.organisms.find(params[:service_or_organism_id])
   end
 
+  def programs_parent
+    if modification_type.use_field?(:organism)
+      organism
+    else
+      section
+    end
+  end
+
   def program
-    @program ||= (modification_type.use_field?(:organism) ? organism : section)&.programs&.find(params[:program_id]) if params[:program_id]
+    @program ||= programs_parent&.programs&.find(params[:program_id]) if params[:program_id]
   end
 
   def chapter
