@@ -5,18 +5,14 @@ class ModificationsController < ApplicationController
   include HasFlashMessages
   helper_method :budget, :amendment, :modification, :modifications
 
-  # GET /amendments/:amendment_id/modifications
   def index; end
 
-  # GET /amendments/:amendment_id/modifications/new
   def new
     @modification = modifications.new(amount: amendment.balance.abs, type: amendment.next_modification_type)
   end
 
-  # GET /amendments/:amendment_id/modifications/:id/edit
   def edit; end
 
-  # POST /amendments/:amendment_id/modifications
   def create
     @modification = amendment.modifications.new(modification_params)
 
@@ -27,7 +23,6 @@ class ModificationsController < ApplicationController
     end
   end
 
-  # PATCH/PUT /amendments/:amendment_id/modifications/:id
   def update
     if modification.update(modification_params)
       redirect_to amendment_path(amendment), success: flash_message(:success, :check)
@@ -36,7 +31,6 @@ class ModificationsController < ApplicationController
     end
   end
 
-  # DELETE /amendments/:amendment_id/modifications/:id
   def destroy
     modification.destroy
     redirect_to amendment_path(amendment), danger: flash_message(:success, :trash)

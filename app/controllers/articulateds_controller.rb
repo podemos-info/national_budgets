@@ -5,18 +5,14 @@ class ArticulatedsController < ApplicationController
   include HasFlashMessages
   helper_method :budget, :amendment, :articulated
 
-  # GET /amendments/:amendment_id/articulateds
   def index; end
 
-  # GET /amendments/:amendment_id/articulateds/new
   def new
     @articulated = amendment.build_articulated
   end
 
-  # GET /amendments/:amendment_id/articulateds/:id/edit
   def edit; end
 
-  # POST /amendments/:amendment_id/articulateds
   def create
     @articulated = amendment.create_articulated(articulated_params)
 
@@ -27,7 +23,6 @@ class ArticulatedsController < ApplicationController
     end
   end
 
-  # PATCH/PUT /amendments/:amendment_id/articulateds/1
   def update
     if articulated.update(articulated_params)
       redirect_to amendment_path(amendment), success: flash_message(:success, :check)
@@ -36,7 +31,6 @@ class ArticulatedsController < ApplicationController
     end
   end
 
-  # DELETE /amendments/:amendment_id/articulateds/1
   def destroy
     articulated.destroy
     redirect_to amendment_path(amendment), danger: flash_message(:success, :trash)

@@ -26,7 +26,7 @@ class Modification < ApplicationRecord
 
   def self.present_fields; end
 
-  def self.show_field?(field)
+  def self.use_field?(field)
     present_fields.member?(field)
   end
 
