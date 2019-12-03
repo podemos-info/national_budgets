@@ -64,6 +64,10 @@ class Modification < ApplicationRecord
 
   def self.next_modification_type_for?(_amendment); end
 
+  def self.to_param
+    name.demodulize.underscore
+  end
+
   private
 
   def initialize_section

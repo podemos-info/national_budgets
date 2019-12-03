@@ -4,9 +4,8 @@ class AmendmentsController < ApplicationController
   include ModelsHelper
   include HasFlashMessages
   layout false, only: %i[browse_section browse_chapter browse_organism browse_program]
-  helper_method :budget, :amendment, :amendments, :modification_type,
-                :section, :service, :program, :programs, :organism,
-                :locked_section?, :locked_organism?,
+  helper_method :budget, :amendment, :amendments, :modification_type, :modification_class,
+                :section, :service, :program, :programs, :organism, :locked_section?, :locked_organism?,
                 :chapter, :article, :concept, :subconcept
 
   def index; end
@@ -81,19 +80,19 @@ class AmendmentsController < ApplicationController
   end
 
   def service
-    return unless modification_type.use_field?(:service) && params[:service_or_organism_id]
+    return unless modification_class.use_field?(:service) && params[:service_or_organism_id]
 
     @service ||= section.services.find(params[:service_or_organism_id])
   end
 
   def organism
-    return unless modification_type.use_field?(:organism) && params[:service_or_organism_id]
+    return unless modification_class.use_field?(:organism) && params[:service_or_organism_id]
 
     @organism ||= section.organisms.find(params[:service_or_organism_id])
   end
 
   def programs_parent
-    if modification_type.use_field?(:organism)
+    if modification_class.use_field?(:organism)
       organism
     else
       section
@@ -133,6 +132,11 @@ class AmendmentsController < ApplicationController
   end
 
   def modification_type
-    params[:modification_type].constantize
+    params[:modification_type] if params[:modification_type]
+  end
+
+  def modification_class
+    modification_class = "Modifications::#{modification_type.camelcase}".constantize if modification_type
+    modification_class if amendment.class.allowed_modifications.include?(modification_class)
   end
 end
