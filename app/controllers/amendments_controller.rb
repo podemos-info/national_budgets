@@ -5,7 +5,8 @@ class AmendmentsController < ApplicationController
   include HasFlashMessages
   layout false, only: %i[browse_section browse_chapter browse_organism browse_program]
   helper_method :budget, :amendment, :amendments, :modification_type,
-                :section, :service, :program, :organism, :locked_section?, :locked_organism?,
+                :section, :service, :program, :programs, :organism,
+                :locked_section?, :locked_organism?,
                 :chapter, :article, :concept, :subconcept
 
   def index; end
@@ -101,6 +102,10 @@ class AmendmentsController < ApplicationController
 
   def program
     @program ||= programs_parent&.programs&.find(params[:program_id]) if params[:program_id]
+  end
+
+  def programs
+    programs_parent.programs
   end
 
   def chapter
