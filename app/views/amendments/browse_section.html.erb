@@ -1,4 +1,5 @@
 <div>
+
   <% if modification_class.use_field?(:section) %>
     <% if section %>
       <% unless locked_section? %>
@@ -29,7 +30,7 @@
   <% if modification_class.use_field?(:organism) %>
     <% if organism %>
       <% unless locked_organism? %>
-        <%= reset_link(browse_section_amendment_path(modification_type: modification_type, section_id: section, service_or_organism_id: organism, locked_section: locked_section?, locked_organism: locked_organism?)) %>
+        <%= reset_link(browse_section_amendment_path(modification_type: modification_type, section_id: section, locked_section: locked_section?, locked_organism: locked_organism?)) %>
       <% end %>
       <%= browse_title(organism) %>
     <% elsif section %>
@@ -56,6 +57,6 @@
 </div>
 
 <%= hidden_field(:modification, :section_id, value: section.id) if section %>
-<%= hidden_field(:modification, :service_id, value: service.id) if modification_class.use_field?(:service) && service %>
-<%= hidden_field(:modification, :organism_id, value: organism.id) if modification_class.use_field?(:organism) && organism %>
-<%= hidden_field(:modification, :program_id, value: program.id) if modification_class.use_field?(:program) && program %>
+<%= hidden_field(:modification, :service_id, value: service.id) if service %>
+<%= hidden_field(:modification, :organism_id, value: organism.id) if organism %>
+<%= hidden_field(:modification, :program_id, value: program.id) if program %>

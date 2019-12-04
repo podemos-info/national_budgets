@@ -9,7 +9,6 @@ describe Modification do
 
   it { is_expected.to be_valid }
   it { is_expected.not_to be_locked_section }
-  it { is_expected.to be_modification_detail }
 
   context 'when amendment already has a modification' do
     let(:amendment) { create(:standard_amendment, :with_modifications) }
@@ -28,5 +27,37 @@ describe Modification do
     let(:amendment) { nil }
 
     it { is_expected.to be_invalid }
+  end
+
+  describe Modifications::Addition do
+    subject { described_class }
+
+    it { is_expected.to be_use_field(:amount) }
+    it { is_expected.to be_use_field(:project) }
+    it { is_expected.to be_use_field(:project_new) }
+  end
+
+  describe Modifications::Removal do
+    subject { described_class }
+
+    it { is_expected.to be_use_field(:amount) }
+    it { is_expected.to be_use_field(:project) }
+    it { is_expected.not_to be_use_field(:project_new) }
+  end
+
+  describe Modifications::OrganismBudgetIncome do
+    subject { described_class }
+
+    it { is_expected.not_to be_use_field(:amount) }
+    it { is_expected.not_to be_use_field(:project) }
+    it { is_expected.not_to be_use_field(:project_new) }
+  end
+
+  describe Modifications::OrganismBudgetExpenditure do
+    subject { described_class }
+
+    it { is_expected.not_to be_use_field(:amount) }
+    it { is_expected.not_to be_use_field(:project) }
+    it { is_expected.not_to be_use_field(:project_new) }
   end
 end

@@ -17,22 +17,36 @@ FactoryBot.define do
       title { generate(:title) }
       budget
 
-      unless model == :subconcept
-        trait :with_children do
-          transient do
-            child_count { 5 }
-            child_models do
-              { section: %i[service program],
-                chapter: %i[article] }
-            end
-          end
-
-          after(:create) do |parent, evaluator|
-            evaluator.child_models[model].each do |child_model|
-              create_list(child_model, evaluator.child_count, model => parent)
-            end
+      trait :with_children do
+        transient do
+          child_count { 5 }
+          child_models do
+            { section: %i[service program],
+              chapter: %i[article] }
           end
         end
+
+        after(:create) do |parent, evaluator|
+          evaluator.child_models[model].each do |child_model|
+            create_list(child_model, evaluator.child_count, model => parent)
+          end
+        end
+      end
+    end
+  end
+
+  factory :organism do
+    ref { Faker::Alphanumeric.alphanumeric(number: 2) }
+    title { generate(:title) }
+    section
+
+    trait :with_programs do
+      transient do
+        child_count { 5 }
+      end
+
+      after(:create) do |parent, evaluator|
+        create_list(:program, evaluator.child_count, organism: parent, section: nil)
       end
     end
   end
@@ -47,6 +61,7 @@ FactoryBot.define do
     ref { Faker::Alphanumeric.alphanumeric(number: 2) }
     title { generate(:title) }
     section
+    organism { nil }
   end
 
   factory :article do

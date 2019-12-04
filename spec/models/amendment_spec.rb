@@ -5,7 +5,7 @@ require 'rails_helper'
 describe Amendment do
   subject(:amendment) { build(:amendment, type: type) }
 
-  let(:type) { 'Amendments::ArticulatedAmendment' }
+  let(:type) { 'Amendments::Articulated' }
 
   it { is_expected.to be_valid }
 
@@ -15,7 +15,7 @@ describe Amendment do
     it { is_expected.to be_invalid }
   end
 
-  describe Amendments::ArticulatedAmendment do
+  describe Amendments::Articulated do
     subject(:amendment) { build(:articulated_amendment) }
 
     it { is_expected.to be_valid }
@@ -78,7 +78,7 @@ describe Amendment do
     #     end
   end
 
-  describe Amendments::StandardAmendment do
+  describe Amendments::Standard do
     subject(:amendment) { build(:standard_amendment) }
 
     it_behaves_like 'an amendment that allow modifications'
@@ -97,7 +97,7 @@ describe Amendment do
     end
   end
 
-  describe Amendments::TransferAmendment do
+  describe Amendments::Transfer do
     subject(:amendment) { build(:transfer_amendment) }
 
     it_behaves_like 'an amendment that allow modifications'

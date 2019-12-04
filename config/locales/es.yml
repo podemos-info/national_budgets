@@ -95,11 +95,11 @@ es:
         explanation: Exposición de motivos
         user: Autor
         budget: Proyecto de presupuestos
-      amendments/articulated_amendment:
+      amendments/articulated:
         type: 'Enmienda al articulado'
-      amendments/transfer_amendment:
+      amendments/transfer:
         type: 'Enmienda de transferencia'
-      amendments/standard_amendment:
+      amendments/standard:
         type: 'Alta/baja'
       articulated:
         type: Tipo de modificación al articulado
@@ -108,11 +108,11 @@ es:
         text: Texto
         justification: Justificación
         number: Número
-      articulateds/additional_articulated:
+      articulateds/additional:
         type: Disposición adicional
-      articulateds/final_articulated:
+      articulateds/final:
         type: Disposición final
-      articulateds/standard_articulated:
+      articulateds/standard:
         type: Articulado
       modification:
         number: Nº de enmienda
@@ -128,13 +128,13 @@ es:
         concept: Concepto
         amount_sign: Tipo
         subconcept: Subconcepto
-      modifications/addition_modification:
+      modifications/addition:
         type: 'Alta'
-      modifications/removal_modification:
+      modifications/removal:
         type: 'Baja'
-      modifications/organism_budget_income_modification:
+      modifications/organism_budget_income:
         type: 'Alta presupuesto de ingreso'
-      modifications/organism_budget_expenditure_modification:
+      modifications/organism_budget_expenditure:
         type: 'Alta presupuesto de gasto'
       section:
         title: Título

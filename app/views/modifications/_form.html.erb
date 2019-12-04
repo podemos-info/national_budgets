@@ -28,7 +28,7 @@
       <div id="<%= modification_class.name.demodulize %>" class="tab-pane<% if modification.locked_type? %> active<% end %>">
         <div class="row px-3">
 
-          <div id="section" class="pseudoiframe col-12 col-sm-6" src="<%= browse_section_amendment_path(id: amendment, modification_type: modification_class.to_param, section_id: modification.section, service_or_organism_id: modification.service || modification.organism, program_id: modification.program, locked_section: modification.locked_section?, locked_organism: modification.locked_organism?) %>"></div>
+          <div id="section" class="pseudoiframe col-12 col-sm-6" src="<%= browse_section_amendment_path(id: amendment, modification_type: modification_class.to_param, section_id: modification.section, service_or_organism_id: modification_class.use_field?(:service) ? modification.service : modification.organism, program_id: modification.program, locked_section: modification.locked_section?, locked_organism: modification.locked_organism?) %>"></div>
 
           <div id="chapter" class="pseudoiframe col-12 col-sm-6" src="<%= browse_chapter_amendment_path(id: amendment, chapter_id: modification.chapter, article_id: modification.article, concept_id: modification.concept, subconcept_id: modification.subconcept) %>"></div>
 

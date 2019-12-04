@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module Modifications
-  class AdditionModification < Modification
+  class Addition < Modification
     validates :amount, presence: true
 
     def self.position
@@ -9,7 +9,7 @@ module Modifications
     end
 
     def self.next_modification_type_for?(amendment)
-      amendment.addition_modifications.size.zero? || amendment.balance.negative?
+      amendment.additions.size.zero? || amendment.balance.negative?
     end
 
     def self.present_fields

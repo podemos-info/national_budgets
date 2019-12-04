@@ -13,7 +13,6 @@ class Modification < ApplicationRecord
   belongs_to :concept, optional: true
   belongs_to :subconcept, optional: true
   after_initialize :initialize_section
-  after_initialize :initialize_organism
   validate :section_locked, if: :amendment
   validate :organism_locked, if: :amendment
   validate :chapter_budget_does_not_match, if: -> { chapter && amendment }
@@ -72,9 +71,5 @@ class Modification < ApplicationRecord
 
   def initialize_section
     self.section ||= amendment&.section if new_record?
-  end
-
-  def initialize_organism
-    self.organism ||= amendment&.organism if new_record?
   end
 end

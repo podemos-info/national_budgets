@@ -6,6 +6,7 @@ describe 'Amendment creation', type: :system, js: true do
   let(:user) { create(:user) }
   let(:budget) { create(:budget, user: user) }
   let(:section) { create(:section, :with_children, budget: budget) }
+  let(:organism) { create(:organism, :with_programs, section: section) }
   let(:chapter) { create(:chapter, :with_children, budget: budget) }
   let(:article) { create(:article, :with_concepts, chapter: chapter) }
   let(:concept) { create(:concept, :with_subconcepts, article: article) }
@@ -81,6 +82,7 @@ describe 'Amendment creation', type: :system, js: true do
     fill_in 'Importe', with: '1000000'
 
     click_button 'Añadir modificación'
+
     expect(page).to have_content('La modificación ha sido añadida.')
     expect(page).to have_content("#{Amendment.last.budget.title}: Enmienda n.º #{Amendment.last.number}: Añadir modificación")
     expect(page).to have_current_path(new_amendment_modification_path(Amendment.last))
@@ -122,9 +124,9 @@ describe 'Amendment creation', type: :system, js: true do
     expect(find(:css, 'i.fa.fa-square-o')['title'])
       .to eq('Incompleta: falta «alta», «baja», «alta presupuesto de ingreso» y «alta presupuesto de gasto»')
 
-    click_link section.full_title
-    click_link section.services.first.full_title
-    click_link section.programs.first.full_title
+    click_link organism.section.full_title
+    click_link organism.section.services.first.full_title
+    click_link organism.section.programs.first.full_title
     click_link subconcept.concept.article.chapter.full_title
     click_link subconcept.concept.article.full_title
     click_link subconcept.concept.full_title
@@ -142,8 +144,8 @@ describe 'Amendment creation', type: :system, js: true do
     expect(find(:css, 'i.fa.fa-square-o')['title'])
       .to eq('Incompleta: falta «baja», «alta presupuesto de ingreso» y «alta presupuesto de gasto»')
 
-    click_link section.services.first.full_title
-    click_link section.programs.first.full_title
+    click_link organism.section.services.first.full_title
+    click_link organism.section.programs.first.full_title
     click_link subconcept.concept.article.chapter.full_title
     click_link subconcept.concept.article.full_title
     click_link subconcept.concept.full_title
@@ -158,8 +160,7 @@ describe 'Amendment creation', type: :system, js: true do
     expect(page).to have_current_path(new_amendment_modification_path(Amendment.last))
     expect(find(:css, 'i.fa.fa-square-o')['title']).to eq('Incompleta: falta «alta presupuesto de ingreso» y «alta presupuesto de gasto»')
 
-    click_link section.services.first.full_title
-    click_link section.programs.first.full_title
+    click_link organism.full_title
     click_link subconcept.concept.article.chapter.full_title
     click_link subconcept.concept.article.full_title
     click_link subconcept.concept.full_title
@@ -172,8 +173,7 @@ describe 'Amendment creation', type: :system, js: true do
     expect(page).to have_current_path(new_amendment_modification_path(Amendment.last))
     expect(find(:css, 'i.fa.fa-square-o')['title']).to eq('Incompleta: falta «alta presupuesto de gasto»')
 
-    click_link section.services.first.full_title
-    click_link section.programs.first.full_title
+    click_link organism.programs.first.full_title
     click_link subconcept.concept.article.chapter.full_title
     click_link subconcept.concept.article.full_title
     click_link subconcept.concept.full_title
@@ -212,6 +212,7 @@ describe 'Amendment creation', type: :system, js: true do
     fill_in 'Número', with: '123456'
 
     click_button 'Completar articulado'
+
     expect(page).to have_current_path(amendment_path(Amendment.last))
     find(:css, 'i.fa.fa-check-square-o')['title'].should have_content 'Completa'
   end

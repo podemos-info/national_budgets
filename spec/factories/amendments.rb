@@ -8,7 +8,7 @@ FactoryBot.define do
     user
   end
 
-  factory :standard_amendment, class: :"amendments/standard_amendment", parent: :amendment do
+  factory :standard_amendment, class: :"amendments/standard", parent: :amendment do
     trait :with_modifications do
       transient do
         modifications_count { 2 }
@@ -41,7 +41,7 @@ FactoryBot.define do
     end
   end
 
-  factory :transfer_amendment, class: :"amendments/transfer_amendment", parent: :amendment do
+  factory :transfer_amendment, class: :"amendments/transfer", parent: :amendment do
     trait :with_modifications do
       transient do
         modifications_count { 2 }
@@ -74,10 +74,10 @@ FactoryBot.define do
     end
   end
 
-  factory :addition_modification, class: :"modifications/addition_modification", parent: :modification
-  factory :removal_modification, class: :"modifications/removal_modification", parent: :modification
-  factory :organism_budget_income_modification, class: :"modifications/organism_budget_income_modification", parent: :modification
-  factory :organism_budget_expenditure_modification, class: :"modifications/organism_budget_expenditure_modification", parent: :modification
+  factory :addition_modification, class: :"modifications/addition", parent: :modification
+  factory :removal_modification, class: :"modifications/removal", parent: :modification
+  factory :organism_budget_income_modification, class: :"modifications/organism_budget_income", parent: :modification
+  factory :organism_budget_expenditure_modification, class: :"modifications/organism_budget_expenditure", parent: :modification
 
   factory :modification do
     amendment { create(:standard_amendment) }
@@ -93,7 +93,7 @@ FactoryBot.define do
     amount { 1 }
   end
 
-  factory :articulated_amendment, class: :'amendments/articulated_amendment', parent: :amendment do
+  factory :articulated_amendment, class: :'amendments/articulated', parent: :amendment do
     trait :with_articulated do
       after(:create) do |amendment|
         create(:standard_articulated, amendment: amendment)
@@ -112,6 +112,6 @@ FactoryBot.define do
   end
 
   %w[additional final standard].each do |model_prefix|
-    factory "#{model_prefix}_articulated".to_sym, class: :"articulateds/#{model_prefix}_articulated", parent: :articulated
+    factory "#{model_prefix}_articulated".to_sym, class: :"articulateds/#{model_prefix}", parent: :articulated
   end
 end
