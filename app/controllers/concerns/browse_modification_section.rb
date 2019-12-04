@@ -4,13 +4,14 @@ module BrowseModificationSection
   extend ActiveSupport::Concern
 
   included do
-    layout false, only: :browse_section
     helper_method :modification_type, :modification_class, :locked_section?, :locked_organism?,
                   :section, :service, :program, :programs, :organism
     delegate :programs, to: :programs_parent
   end
 
-  def browse_section; end
+  def browse_section
+    render layout: false
+  end
 
   private
 

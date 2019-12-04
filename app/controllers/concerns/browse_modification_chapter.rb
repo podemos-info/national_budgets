@@ -4,11 +4,12 @@ module BrowseModificationChapter
   extend ActiveSupport::Concern
 
   included do
-    layout false, only: :browse_chapter
     helper_method :chapter, :article, :concept, :subconcept
   end
 
-  def browse_chapter; end
+  def browse_chapter
+    render layout: false
+  end
 
   private
 
