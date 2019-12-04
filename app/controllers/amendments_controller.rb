@@ -2,7 +2,7 @@
 
 class AmendmentsController < ApplicationController
   include ModelsHelper
-  include HasFlashMessages
+  include FlashMessages
   include BrowseModificationSection
   include BrowseModificationChapter
 

@@ -2,7 +2,7 @@
 
 class ModificationsController < ApplicationController
   include ModelsHelper
-  include HasFlashMessages
+  include FlashMessages
   helper_method :budget, :amendment, :modification, :modifications
 
   def index; end

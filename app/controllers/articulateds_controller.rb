@@ -2,7 +2,7 @@
 
 class ArticulatedsController < ApplicationController
   include ModelsHelper
-  include HasFlashMessages
+  include FlashMessages
   helper_method :budget, :amendment, :articulated
 
   def index; end

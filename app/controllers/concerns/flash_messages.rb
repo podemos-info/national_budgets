@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-module HasFlashMessages
+module FlashMessages
   extend ActiveSupport::Concern
 
   def flash_message(alert_type, icon_name)
