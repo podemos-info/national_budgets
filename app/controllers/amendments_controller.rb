@@ -3,10 +3,10 @@
 class AmendmentsController < ApplicationController
   include ModelsHelper
   include HasFlashMessages
-  include HasPseudoiframeBrowsing
+  include BrowseModificationSection
+  include BrowseModificationChapter
 
-  helper_method :budget, :amendment, :amendments, :section, :service, :program, :programs, :organism,
-                :chapter, :article, :concept, :subconcept
+  helper_method :budget, :amendment, :amendments
 
   def index; end
 

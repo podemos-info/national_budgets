@@ -1,17 +1,18 @@
 # frozen_string_literal: true
 
-module HasPseudoiframeBrowsing
+module BrowseModificationSection
   extend ActiveSupport::Concern
 
   included do
-    layout false, only: %i[browse_section browse_chapter]
-    helper_method :modification_type, :modification_class, :locked_section?, :locked_organism?
+    layout false, only: :browse_section
+    helper_method :modification_type, :modification_class, :locked_section?, :locked_organism?,
+                  :section, :service, :program, :programs, :organism
     delegate :programs, to: :programs_parent
   end
 
   def browse_section; end
 
-  def browse_chapter; end
+  private
 
   def section
     @section ||= budget.sections.find(params[:section_id]) if params[:section_id]
@@ -39,22 +40,6 @@ module HasPseudoiframeBrowsing
 
   def program
     @program ||= programs_parent&.programs&.find(params[:program_id]) if params[:program_id]
-  end
-
-  def chapter
-    @chapter ||= budget.chapters.find(params[:chapter_id]) if params[:chapter_id]
-  end
-
-  def article
-    @article ||= chapter.articles.find(params[:article_id]) if params[:article_id]
-  end
-
-  def concept
-    @concept ||= article.concepts.find(params[:concept_id]) if params[:concept_id]
-  end
-
-  def subconcept
-    @subconcept ||= concept.subconcepts.find(params[:subconcept_id]) if params[:subconcept_id]
   end
 
   def locked_section?
