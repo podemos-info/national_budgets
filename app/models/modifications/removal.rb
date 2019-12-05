@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module Modifications
-  class RemovalModification < Modification
+  class Removal < Modification
     validates :amount, presence: true
 
     def balance_amount
@@ -19,11 +19,11 @@ module Modifications
     end
 
     def self.next_modification_type_for?(amendment)
-      amendment.removal_modifications.none? || amendment.balance.positive?
+      amendment.removals.none? || amendment.balance.positive?
     end
 
-    def self.modification_detail?
-      true
+    def self.present_fields
+      %i[section service program chapter project amount]
     end
   end
 end

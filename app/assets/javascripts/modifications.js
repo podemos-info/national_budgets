@@ -1,18 +1,18 @@
-function is_detailed_modification( modification_type ) {
-  return !modification_type || JSON.parse( $('#detailed_modification_types').val() ).indexOf(modification_type) != -1
-}
+$(document).ready(function () {
+  $('input:radio[name="modification[type]"]')
+    .each(function() {
+      $(this).attr('data-target', $(this).val().replace('Modifications::','#'));
+    })
+    .click(function () {
+      $(this).tab('show');
+      $(this).removeClass('active');
+      $('.tab-content').find('input').prop("disabled", true);
+      $($(this).attr('data-target')).find('input').prop("disabled", false);
+    });
 
-function modification_type_changed( selected_modification_type ) {
   $('.pseudoiframe').each(function() {
-    reset_pseudoiframe( $(this) )
+    pseudoiframe_load_src($(this));
   });
-  $('#standard_modification_detail').toggle( is_detailed_modification(selected_modification_type) )
-}
 
-$( document ).ready(function() {
-  modification_type_changed( $('.form-group.type input:checked').val() )
-
-  $('.form-group.type input').bind( 'change', function () {
-    modification_type_changed( $(this).val() )
-  } )
+  $('.form-group.type input:checked').click();
 });

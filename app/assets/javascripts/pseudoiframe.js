@@ -1,10 +1,12 @@
-function reset_pseudoiframe(pseudoiframe) {
-  pseudoiframe.load( pseudoiframe.attr('reset-src') );
+function pseudoiframe_load_src(pseudoiframe) {
+  pseudoiframe.load( pseudoiframe.attr('src') );
 }
 
 $( document ).ready(function() {
   $('.pseudoiframe').on( 'click', 'a', function(e) {
     e.preventDefault();
-    $(this).parents('.pseudoiframe').load( $(this).attr('href') );
+    $(this)
+      .parents('.pseudoiframe')
+      .load( $(this).attr('href') );
   });
 });

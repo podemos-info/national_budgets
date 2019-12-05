@@ -3,7 +3,6 @@
 class BudgetsController < ApplicationController
   helper_method :budget, :budgets
 
-  # GET /
   def index; end
 
   private

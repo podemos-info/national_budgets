@@ -1,7 +1,9 @@
 # frozen_string_literal: true
 
 module Modifications
-  class OrganismBudgetIncomeModification < Modification
+  class OrganismBudgetIncome < Modification
+    include HasOrganism
+
     def amount=(_value)
       self[:amount] = 0
     end
@@ -23,11 +25,15 @@ module Modifications
     end
 
     def self.next_modification_type_for?(amendment)
-      amendment.organism_budget_income_modifications.none?
+      amendment.organism_budget_incomes.none?
     end
 
     def self.disabled_modification_type_for?(amendment)
-      amendment.organism_budget_income_modifications.any?
+      amendment.organism_budget_incomes.any? || !amendment.section
+    end
+
+    def self.present_fields
+      %i[section organism chapter]
     end
   end
 end

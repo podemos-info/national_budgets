@@ -10,7 +10,7 @@ describe Articulated do
   it { is_expected.to be_valid }
   it { is_expected.to be_articulated_number }
 
-  describe Articulateds::StandardArticulated do
+  describe Articulateds::Standard do
     subject(:articulated) { build(:additional_articulated, amendment: amendment) }
 
     let(:amendment) { create(:articulated_amendment) }
@@ -19,7 +19,7 @@ describe Articulated do
     it { is_expected.not_to be_articulated_number }
   end
 
-  describe Articulateds::FinalArticulated do
+  describe Articulateds::Final do
     subject(:articulated) { build(:final_articulated, amendment: amendment) }
 
     let(:amendment) { create(:articulated_amendment) }

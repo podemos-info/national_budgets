@@ -1,39 +1,62 @@
 <div>
-  <% if section %>
-    <% unless locked_section? %>
-      <%= reset_link(browse_section_amendment_path(locked_section: locked_section?)) %>
-    <% end %>
-    <%= browse_title(section) %>
-  <% else %>
-    <%= collection_title(budget.sections) %>
-    <% budget.sections.each do |section| %>
-      <%= browse_link(section, browse_section_amendment_path(section_id: section, locked_section: locked_section?)) %>
+
+  <% if modification_class.use_field?(:section) %>
+    <% if section %>
+      <% unless locked_section? %>
+        <%= reset_link(browse_section_amendment_path(modification_type: modification_type, locked_section: locked_section?, locked_organism: locked_organism?)) %>
+      <% end %>
+      <%= browse_title(section) %>
+    <% else %>
+      <%= collection_title(budget.sections) %>
+      <% budget.sections.each do |section| %>
+        <%= browse_link(section, browse_section_amendment_path(modification_type: modification_type, section_id: section, locked_section: locked_section?, locked_organism: locked_organism?)) %>
+      <% end %>
     <% end %>
   <% end %>
 
-  <% if service %>
-    <%= reset_link(browse_section_amendment_path(section_id: section, locked_section: locked_section?)) %>
-    <%= browse_title(service) %>
-  <% elsif section %>
-      <hr>
-      <%= collection_title(section.services) %>
-      <% section.services.each do |service| %>
-        <%= browse_link(service, browse_section_amendment_path(section_id: section, service_id: service, locked_section: locked_section?)) %>
-      <% end %>
+  <% if modification_class.use_field?(:service) %>
+    <% if service %>
+      <%= reset_link(browse_section_amendment_path(modification_type: modification_type, section_id: section, service_or_organism_id: service, locked_section: locked_section?, locked_organism: locked_organism?)) %>
+      <%= browse_title(service) %>
+    <% elsif section %>
+        <hr>
+        <%= collection_title(section.services) %>
+        <% section.services.each do |service| %>
+          <%= browse_link(service, browse_section_amendment_path(modification_type: modification_type, section_id: section, service_or_organism_id: service, locked_section: locked_section?, locked_organism: locked_organism?)) %>
+        <% end %>
+    <% end %>
   <% end %>
 
-  <% if program %>
-    <%= reset_link(browse_section_amendment_path(section_id: section, service_id: service, locked_section: locked_section?)) %>
-    <%= browse_title(program) %>
-  <% elsif section && service %>
-      <hr>
-      <%= collection_title(section.programs) %>
-      <% section.programs.each do |program| %>
-        <%= browse_link(program, browse_section_amendment_path(section_id: section, service_id: service, program_id: program, locked_section: locked_section?)) %>
+  <% if modification_class.use_field?(:organism) %>
+    <% if organism %>
+      <% unless locked_organism? %>
+        <%= reset_link(browse_section_amendment_path(modification_type: modification_type, section_id: section, locked_section: locked_section?, locked_organism: locked_organism?)) %>
       <% end %>
+      <%= browse_title(organism) %>
+    <% elsif section %>
+        <hr>
+        <%= collection_title(section.organisms) %>
+        <% section.organisms.each do |organism| %>
+          <%= browse_link(organism, browse_section_amendment_path(modification_type: modification_type, section_id: section, service_or_organism_id: organism, locked_section: locked_section?, locked_organism: locked_organism?)) %>
+        <% end %>
+    <% end %>
+  <% end %>
+
+  <% if modification_class.use_field?(:program) && ((service && service.class != Integer) || (organism && organism.class != Integer)) %>
+    <% if program %>
+      <%= reset_link(browse_section_amendment_path(modification_type: modification_type, section_id: section, service_or_organism_id: service || organism, locked_section: locked_section?, locked_organism: locked_organism?)) %>
+      <%= browse_title(program) %>
+    <% else %>
+        <hr>
+        <%= collection_title(section.programs) %>
+        <% programs.each do |program| %>
+          <%= browse_link(program, browse_section_amendment_path(modification_type: modification_type, section_id: section, service_or_organism_id: service || organism, program_id: program, locked_section: locked_section?, locked_organism: locked_organism?)) %>
+        <% end %>
+    <% end %>
   <% end %>
 </div>
 
 <%= hidden_field(:modification, :section_id, value: section.id) if section %>
 <%= hidden_field(:modification, :service_id, value: service.id) if service %>
+<%= hidden_field(:modification, :organism_id, value: organism.id) if organism %>
 <%= hidden_field(:modification, :program_id, value: program.id) if program %>

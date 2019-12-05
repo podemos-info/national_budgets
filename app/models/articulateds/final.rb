@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module Articulateds
-  class FinalArticulated < Articulated
+  class Final < Articulated
     def self.position
       3
     end
