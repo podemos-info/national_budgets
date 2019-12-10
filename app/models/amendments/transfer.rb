@@ -28,7 +28,7 @@ module Amendments
     end
 
     def self.filtered_programs(programs, modification_class)
-      programs.where(self.programs_filter[modification_class.name.to_sym])
+      programs.where(programs_filter[modification_class.name.to_sym])
     end
 
     def self.programs_filter
