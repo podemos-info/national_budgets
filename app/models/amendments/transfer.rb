@@ -22,5 +22,8 @@ module Amendments
     def locked_organism?
       organism_budget_incomes.any? || organism_budget_expenditures.any?
     end
-  end
+
+    def self.filtered_sections(sections)
+      sections.joins(:organisms).distinct
+    end
 end

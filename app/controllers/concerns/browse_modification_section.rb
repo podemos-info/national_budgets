@@ -5,7 +5,7 @@ module BrowseModificationSection
 
   included do
     helper_method :modification_type, :modification_class, :locked_section?, :locked_organism?,
-                  :section, :service, :program, :programs, :organism
+                  :sections, :section, :service, :program, :programs, :organism
     delegate :programs, to: :programs_parent
   end
 
@@ -17,6 +17,10 @@ module BrowseModificationSection
 
   def section
     @section ||= budget.sections.find(params[:section_id]) if params[:section_id]
+  end
+
+  def sections
+    amendment.class.filtered_sections(budget.sections)
   end
 
   def service

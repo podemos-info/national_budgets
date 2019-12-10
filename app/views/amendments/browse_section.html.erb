@@ -8,7 +8,7 @@
       <%= browse_title(section) %>
     <% else %>
       <%= collection_title(budget.sections) %>
-      <% budget.sections.each do |section| %>
+      <% sections.each do |section| %>
         <%= browse_link(section, browse_section_amendment_path(modification_type: modification_type, section_id: section, locked_section: locked_section?, locked_organism: locked_organism?)) %>
       <% end %>
     <% end %>
