@@ -28,6 +28,14 @@ class Amendment < ApplicationRecord
 
   def section; end
 
+  def self.filtered_sections(sections)
+    sections
+  end
+
+  def self.filtered_programs(programs, _modification_class)
+    programs
+  end
+
   def any_section?
     section.present?
   end

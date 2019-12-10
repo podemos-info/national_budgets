@@ -22,5 +22,20 @@ module Amendments
     def locked_organism?
       organism_budget_incomes.any? || organism_budget_expenditures.any?
     end
+
+    def self.filtered_sections(sections)
+      sections.joins(:organisms).distinct
+    end
+
+    def self.filtered_programs(programs, modification_class)
+      programs.where(programs_filter[modification_class.name.to_sym])
+    end
+
+    def self.programs_filter
+      { 'Modifications::Addition': ['ref = ?', '000X'],
+        'Modifications::Removal': ['ref != ?', '000X'],
+        'Modifications::OrganismBudgetIncome': nil,
+        'Modifications::OrganismBudgetExpenditure': nil }
+    end
   end
 end

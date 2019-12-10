@@ -1,8 +1,8 @@
 # frozen_string_literal: true
 
 class AmendmentsController < ApplicationController
-  include ModelsHelper
   include FlashMessages
+  include ModelsHelper
   include BrowseModificationSection
   include BrowseModificationChapter
 

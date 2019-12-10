@@ -70,12 +70,6 @@ describe Amendment do
 
       it { is_expected.to be_zero }
     end
-
-    #     describe '#compensation_amount' do
-    #       subject { amendment.compensation_amount }
-    #
-    #       it { is_expected.to be_zero }
-    #     end
   end
 
   describe Amendments::Standard do
