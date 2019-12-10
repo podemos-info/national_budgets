@@ -32,7 +32,7 @@ class Amendment < ApplicationRecord
     sections
   end
 
-  def self.filtered_programs(programs)
+  def self.filtered_programs(programs, _modification_class)
     programs
   end
 
