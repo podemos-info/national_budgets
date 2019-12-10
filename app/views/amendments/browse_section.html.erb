@@ -16,7 +16,7 @@
 
   <% if modification_class.use_field?(:service) %>
     <% if service %>
-      <%= reset_link(browse_section_amendment_path(modification_type: modification_type, section_id: section, service_or_organism_id: service, locked_section: locked_section?, locked_organism: locked_organism?)) %>
+      <%= reset_link(browse_section_amendment_path(modification_type: modification_type, section_id: section, locked_section: locked_section?, locked_organism: locked_organism?)) %>
       <%= browse_title(service) %>
     <% elsif section %>
         <hr>
