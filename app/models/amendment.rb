@@ -32,6 +32,10 @@ class Amendment < ApplicationRecord
     sections
   end
 
+  def self.filtered_programs(programs)
+    programs
+  end
+
   def any_section?
     section.present?
   end

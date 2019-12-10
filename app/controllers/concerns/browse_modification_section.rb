@@ -6,7 +6,6 @@ module BrowseModificationSection
   included do
     helper_method :modification_type, :modification_class, :locked_section?, :locked_organism?,
                   :sections, :section, :service, :program, :programs, :organism
-    delegate :programs, to: :programs_parent
   end
 
   def browse_section
@@ -41,6 +40,10 @@ module BrowseModificationSection
     else
       section
     end
+  end
+
+  def programs
+    @programs ||= amendment.class.filtered_programs(programs_parent.programs, modification_class)
   end
 
   def program
