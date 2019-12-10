@@ -8,12 +8,15 @@ describe 'Amendment creation', type: :system, js: true do
   let(:section) { create(:section, :with_children, budget: budget) }
   let(:organism) { create(:organism, :with_programs, section: section) }
   let(:chapter) { create(:chapter, :with_children, budget: budget) }
+  let(:program_000x) { create(:program, ref: '000X', section: section) }
   let(:article) { create(:article, :with_concepts, chapter: chapter) }
   let(:concept) { create(:concept, :with_subconcepts, article: article) }
   let(:subconcept) { create(:subconcept, concept: concept) }
 
   before do
     section
+    organism
+    program_000x
     subconcept
     login_as user
   end
@@ -126,7 +129,7 @@ describe 'Amendment creation', type: :system, js: true do
 
     click_link organism.section.full_title
     click_link organism.section.services.first.full_title
-    click_link organism.section.programs.first.full_title
+    click_link organism.section.programs.where(ref: '000X').first.full_title
     click_link subconcept.concept.article.chapter.full_title
     click_link subconcept.concept.article.full_title
     click_link subconcept.concept.full_title
