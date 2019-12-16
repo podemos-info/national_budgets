@@ -1,44 +1,46 @@
 <div>
   <% if chapter %>
-    <%= reset_link(browse_chapter_amendment_path) %>
+    <%= reset_link(browse_chapter_amendment_path(modification_type: modification_type)) %>
     <%= browse_title(chapter) %>
   <% else %>
     <%= collection_title(budget.chapters) %>
     <% budget.chapters.each do |chapter| %>
-      <%= browse_link(chapter, browse_chapter_amendment_path(chapter_id: chapter)) %>
+      <%= browse_link(chapter, browse_chapter_amendment_path(modification_type: modification_type, chapter_id: chapter)) %>
     <% end %>
   <% end %>
 
   <% if article %>
-    <%= reset_link(browse_chapter_amendment_path(chapter_id: chapter)) %>
+    <%= reset_link(browse_chapter_amendment_path(modification_type: modification_type, chapter_id: chapter)) %>
     <%= browse_title(article) %>
   <% elsif chapter %>
     <hr>
     <%= collection_title(chapter.articles) %>
     <% chapter.articles.each do |article| %>
-      <%= browse_link(article, browse_chapter_amendment_path(chapter_id: chapter, article_id: article)) %>
+      <%= browse_link(article, browse_chapter_amendment_path(modification_type: modification_type, chapter_id: chapter, article_id: article)) %>
     <% end %>
   <% end %>
 
   <% if concept %>
-    <%= reset_link(browse_chapter_amendment_path(chapter_id: chapter, article_id: article)) %>
+    <%= reset_link(browse_chapter_amendment_path(modification_type: modification_type, chapter_id: chapter, article_id: article)) %>
     <%= browse_title(concept) %>
   <% elsif article %>
     <hr>
     <%= collection_title(article.concepts) %>
     <% article.concepts.each do |concept| %>
-      <%= browse_link(concept, browse_chapter_amendment_path(chapter_id: chapter, article_id: article, concept_id: concept)) %>
+      <%= added_badge_for concept %>
+      <%= browse_link(concept, browse_chapter_amendment_path(modification_type: modification_type, chapter_id: chapter, article_id: article, concept_id: concept)) %>
     <% end %>
   <% end %>
 
   <% if subconcept %>
-    <%= reset_link(browse_chapter_amendment_path(chapter_id: chapter, article_id: article, concept_id: concept)) %>
+    <%= reset_link(browse_chapter_amendment_path(modification_type: modification_type, chapter_id: chapter, article_id: article, concept_id: concept)) %>
     <%= browse_title(subconcept) %>
   <% elsif concept %>
     <hr>
     <%= collection_title(concept.subconcepts) %>
     <% concept.subconcepts.each do |subconcept| %>
-      <%= browse_link(subconcept, browse_chapter_amendment_path(chapter_id: chapter, article_id: article, concept_id: concept, subconcept_id: subconcept)) %>
+      <%= added_badge_for subconcept %>
+      <%= browse_link(subconcept, browse_chapter_amendment_path(modification_type: modification_type, chapter_id: chapter, article_id: article, concept_id: concept, subconcept_id: subconcept)) %>
     <% end %>
   <% end %>
 </div>
