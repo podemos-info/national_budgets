@@ -222,6 +222,7 @@ es:
       list_model: "Listado de %{model}"
       count_model: "%{count} %{model}"
       choose_model: "Elige %{model}"
+      new_model_title: "Título del %{model} nuevo"
       empty_collection: "No hay %{model}."
       amendment:
         number: "N.º %{amendment}"

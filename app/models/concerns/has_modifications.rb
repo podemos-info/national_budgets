@@ -74,6 +74,10 @@ module HasModifications
     end
   end
 
+  def allowed_new_field_for?(modification_type, field)
+    self.class.modifications_allowed_new_fields[modification_type.to_sym].include?(field)
+  end
+
   class_methods do
     def allowed_modifications
       allowed_modifications_str.map(&:constantize)

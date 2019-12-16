@@ -15,5 +15,10 @@ module Amendments
     def self.position
       1
     end
+
+    def self.modifications_allowed_new_fields
+      { addition: %i[program concept subconcept],
+        removal: [] }
+    end
   end
 end

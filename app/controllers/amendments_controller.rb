@@ -5,8 +5,9 @@ class AmendmentsController < ApplicationController
   include ModelsHelper
   include BrowseModificationSection
   include BrowseModificationChapter
+  include BrowseActionHandle
 
-  helper_method :budget, :amendment, :amendments
+  helper_method :budget, :amendment, :amendments, :modification_type, :modification_class
 
   def index; end
 
@@ -69,5 +70,14 @@ class AmendmentsController < ApplicationController
 
   def amendments
     @amendments ||= budget.amendments
+  end
+
+  def modification_type
+    params[:modification_type]
+  end
+
+  def modification_class
+    modification_class = "Modifications::#{modification_type.camelcase}".constantize if modification_type
+    modification_class if amendment.class.allowed_modifications.include?(modification_class)
   end
 end

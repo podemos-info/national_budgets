@@ -8,6 +8,8 @@ module BrowseModificationChapter
   end
 
   def browse_chapter
+    return if browse_action_handle
+
     render layout: false
   end
 

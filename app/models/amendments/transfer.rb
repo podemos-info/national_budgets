@@ -37,5 +37,12 @@ module Amendments
         'Modifications::OrganismBudgetIncome': nil,
         'Modifications::OrganismBudgetExpenditure': nil }
     end
+
+    def self.modifications_allowed_new_fields
+      { addition: [],
+        removal: [],
+        organism_budget_income: %i[concept subconcept],
+        organism_budget_expenditure: %i[concept subconcept] }
+    end
   end
 end
