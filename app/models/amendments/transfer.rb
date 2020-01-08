@@ -27,15 +27,12 @@ module Amendments
       sections.joins(:organisms).distinct
     end
 
-    def self.filtered_programs(programs, modification_class)
-      programs.where(programs_filter[modification_class.name.to_sym])
-    end
-
-    def self.programs_filter
-      { 'Modifications::Addition': ['ref = ?', '000X'],
-        'Modifications::Removal': ['ref != ?', '000X'],
-        'Modifications::OrganismBudgetIncome': nil,
-        'Modifications::OrganismBudgetExpenditure': nil }
+    def self.filtered_programs(programs, modification_type)
+      case modification_type
+      when :addition then programs.where(ref: '000X')
+      when :removal then programs.where.not(ref: '000X')
+      else programs
+      end
     end
 
     def self.modifications_allowed_new_fields

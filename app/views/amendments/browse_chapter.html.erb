@@ -1,4 +1,5 @@
 <div>
+  <%= hidden_field :request, :original_fullpath, value: request.original_fullpath.split('&object[').first %>
   <% if chapter %>
     <%= reset_link(browse_chapter_amendment_path(modification_type: modification_type)) %>
     <%= browse_title(chapter) %><%= tag(:br) %>
@@ -7,7 +8,7 @@
     <% budget.chapters.each do |chapter| %>
       <%= browse_link(chapter, browse_chapter_amendment_path(modification_type: modification_type, chapter_id: chapter)) %>
     <% end %>
-    <%= new_field_title_input(:chapter) %>
+    <%= new_object_form(:chapter) %>
   <% end %>
 
   <% if article %>
@@ -19,35 +20,35 @@
     <% chapter.articles.each do |article| %>
       <%= browse_link(article, browse_chapter_amendment_path(modification_type: modification_type, chapter_id: chapter, article_id: article)) %>
     <% end %>
-    <%= new_field_title_input(:article) %>
+    <%= new_object_form(:article) %>
   <% end %>
 
   <% if concept %>
     <%= reset_link(browse_chapter_amendment_path(modification_type: modification_type, chapter_id: chapter, article_id: article)) %>
-    <%= browse_title_with_edit(concept) %>
+    <%= browse_title_editable(concept) %>
     <%= tag(:br) %>
   <% elsif article %>
     <hr>
     <%= collection_title(article.concepts) %>
-    <% article.concepts.each do |concept| %>
+    <% concepts.each do |concept| %>
       <%= added_badge_for concept %>
       <%= browse_link(concept, browse_chapter_amendment_path(modification_type: modification_type, chapter_id: chapter, article_id: article, concept_id: concept)) %>
     <% end %>
-    <%= new_field_title_input(:concept) %>
+    <%= new_object_form(:concept) %>
   <% end %>
 
   <% if subconcept %>
     <%= reset_link(browse_chapter_amendment_path(modification_type: modification_type, chapter_id: chapter, article_id: article, concept_id: concept)) %>
-    <%= browse_title_with_edit(subconcept) %>
+    <%= browse_title_editable(subconcept) %>
     <%= tag(:br) %>
   <% elsif concept %>
     <hr>
     <%= collection_title(concept.subconcepts) %>
-    <% concept.subconcepts.each do |subconcept| %>
+    <% subconcepts.each do |subconcept| %>
       <%= added_badge_for subconcept %>
       <%= browse_link(subconcept, browse_chapter_amendment_path(modification_type: modification_type, chapter_id: chapter, article_id: article, concept_id: concept, subconcept_id: subconcept)) %>
     <% end %>
-    <%= new_field_title_input(:subconcept) %>
+    <%= new_object_form(:subconcept) %>
   <% end %>
 </div>
 

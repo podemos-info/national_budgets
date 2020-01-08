@@ -32,8 +32,8 @@ class Amendment < ApplicationRecord
     sections
   end
 
-  def self.filtered_programs(programs, _modification_class)
-    programs
+  def self.filtered_programs(programs, modification_type)
+    filter_collection_with_added(programs, modification_type)
   end
 
   def any_section?

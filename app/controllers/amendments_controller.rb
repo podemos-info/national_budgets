@@ -73,11 +73,11 @@ class AmendmentsController < ApplicationController
   end
 
   def modification_type
-    params[:modification_type]
+    params[:modification_type].to_sym
   end
 
   def modification_class
-    modification_class = "Modifications::#{modification_type.camelcase}".constantize if modification_type
+    modification_class = "Modifications::#{modification_type.to_s.camelcase}".constantize if modification_type
     modification_class if amendment.class.allowed_modifications.include?(modification_class)
   end
 end

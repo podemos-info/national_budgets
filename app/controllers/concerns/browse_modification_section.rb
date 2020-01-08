@@ -5,7 +5,8 @@ module BrowseModificationSection
 
   included do
     helper_method :locked_section?, :locked_organism?,
-                  :sections, :section, :service, :organism, :program, :programs
+                  :sections, :section, :service, :organism,
+                  :programs_parent, :programs_previous, :program, :programs
   end
 
   def browse_section
@@ -44,8 +45,12 @@ module BrowseModificationSection
     end
   end
 
+  def programs_previous
+    service || organism
+  end
+
   def programs
-    @programs ||= amendment.class.filtered_programs(programs_parent.programs, modification_class)
+    @programs ||= amendment.class.filtered_programs(programs_parent.programs, modification_type)
   end
 
   def program

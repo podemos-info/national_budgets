@@ -4,46 +4,38 @@ module BrowseActionHandle
   extend ActiveSupport::Concern
 
   def browse_action_handle
-    return unless browse_object_params
+    return unless object_params
 
-    @object = create_browse_object || update_browse_object
-    redirect_to browse_redirect_path(@object)
-    true
+    if object
+      object.update(object_params)
+      redirect_to browse_redirect_path(object), success: flash_message(:success, :check)
+    else
+      object = added_objects_collection.new(object_params)
+      object.save
+      redirect_to browse_redirect_path(object), success: flash_message(:success, :check)
+    end
   end
 
-  def create_browse_object
-    return unless params[:new] && !params[:edit]
+  private
 
-    browse_redirect_if_object_exists && return
-
-    @object = browse_objects_collection.new(browse_object_params)
-    return unless @object.save
-
-    @object
+  def action
+    params[:action].to_sym
   end
 
-  def update_browse_object
-    return unless params[:edit] && params[:object_id]
-
-    @object = browse_objects_collection.find(params[:object_id])
-    return unless @object.update(browse_object_params)
-
-    @object
+  def current_model
+    params[:object][:model]
   end
 
-  def browse_redirect_if_object_exists
-    return if browse_objects_collection.where(browse_object_params).empty?
-
-    redirect_to browse_redirect_path
+  def object
+    send(current_model) || added_objects_collection.find_by(object_params)
   end
 
-  def browse_redirect_path(object = false)
-    path_method = params[:action] == 'browse_section' ? 'browse_section_amendment_path' : 'browse_chapter_amendment_path'
-    send path_method, browse_redirect_params(object)
+  def object_params
+    params.require(:object).permit(:title).merge(added: true) if params[:object]
   end
 
-  def browse_objects_collection
-    case params[:model]
+  def added_objects_collection
+    case current_model
     when 'program'
       programs_parent.programs
     when 'concept'
@@ -53,19 +45,22 @@ module BrowseActionHandle
     end
   end
 
+  def browse_redirect_path(object = false)
+    send "#{action}_amendment_path", browse_redirect_params(object)
+  end
+
   def browse_redirect_params(object = false)
-    @redirect_params = { browse_section: browse_section_redirect_params,
-                         browse_chapter: browse_chapter_redirect_params }[params[:action].to_sym]
+    redirect_params = { browse_section: browse_section_redirect_params,
+                        browse_chapter: browse_chapter_redirect_params }[action]
 
-    object ||= browse_objects_collection.where(browse_object_params).first object
-
-    @redirect_params.merge!("#{params[:model]}_id": object)
+    object ||= added_objects_collection.where(object_params).first object
+    redirect_params.merge!("#{current_model}_id": object)
   end
 
   def browse_section_redirect_params
     { modification_type: modification_type,
       section_id: section,
-      service_or_organism_id: service || organism,
+      service_or_organism_id: programs_previous,
       program_id: program,
       locked_section: locked_section?,
       locked_organism: locked_organism? }
@@ -77,11 +72,5 @@ module BrowseActionHandle
       article_id: article,
       concept_id: concept,
       subconcept_id: subconcept }
-  end
-
-  private
-
-  def browse_object_params
-    @browse_object_params ||= { title: params[:new] || params[:edit], added: true } if params[:new] || (params[:edit] && params[:object_id])
   end
 end

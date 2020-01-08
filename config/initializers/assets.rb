@@ -14,4 +14,5 @@ Rails.application.config.assets.paths << Rails.root.join('node_modules')
 # application.js, application.css, and all non-JS/CSS in the app/assets
 # folder are already added.
 # Rails.application.config.assets.precompile += %w( admin.js admin.css )
-Rails.application.config.assets.precompile += %w[pseudoiframe.css pseudoiframe.js modifications.js]
+Rails.application.config.assets.precompile += %w[pseudoiframe.css pseudoiframe_object_form.css
+                                                 pseudoiframe.js pseudoiframe_object_form.js modifications.js]

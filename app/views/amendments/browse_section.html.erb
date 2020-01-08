@@ -1,4 +1,5 @@
 <div>
+  <%= hidden_field :request, :original_fullpath, value: request.original_fullpath.split('&object[').first %>
   <% if modification_class.use_field?(:section) %>
     <% if section %>
       <%= reset_link(browse_section_amendment_path(modification_type: modification_type, locked_section: locked_section?, locked_organism: locked_organism?), locked_section?) %>
@@ -8,7 +9,7 @@
       <% sections.each do |section| %>
         <%= browse_link(section, browse_section_amendment_path(modification_type: modification_type, section_id: section, locked_section: locked_section?, locked_organism: locked_organism?)) %>
       <% end %>
-      <%= new_field_title_input(:section) %>
+      <%= new_object_form(:section) %>
     <% end %>
   <% end %>
 
@@ -22,7 +23,7 @@
         <% section.services.each do |service| %>
           <%= browse_link(service, browse_section_amendment_path(modification_type: modification_type, section_id: section, service_or_organism_id: service, locked_section: locked_section?, locked_organism: locked_organism?)) %>
         <% end %>
-        <%= new_field_title_input(:service) %>
+        <%= new_object_form(:service) %>
     <% end %>
   <% end %>
 
@@ -36,23 +37,23 @@
         <% section.organisms.each do |organism| %>
           <%= browse_link(organism, browse_section_amendment_path(modification_type: modification_type, section_id: section, service_or_organism_id: organism, locked_section: locked_section?, locked_organism: locked_organism?)) %>
         <% end %>
-        <%= new_field_title_input(:organism) %>
+        <%= new_object_form(:organism) %>
     <% end %>
   <% end %>
 
-  <% if modification_class.use_field?(:program) && (service || organism) %>
+  <% if modification_class.use_field?(:program) && programs_previous %>
     <% if program %>
-      <%= reset_link(browse_section_amendment_path(modification_type: modification_type, section_id: section, service_or_organism_id: service || organism, locked_section: locked_section?, locked_organism: locked_organism?)) %>
-      <%= browse_title_with_edit(program) %>
+      <%= reset_link(browse_section_amendment_path(modification_type: modification_type, section_id: section, service_or_organism_id: programs_previous, locked_section: locked_section?, locked_organism: locked_organism?)) %>
+      <%= browse_title_editable(program) %>
       <%= tag(:br) %>
     <% else %>
         <hr>
         <%= collection_title(section.programs) %>
         <% programs.each do |program| %>
           <%= added_badge_for program %>
-          <%= browse_link(program, browse_section_amendment_path(modification_type: modification_type, section_id: section, service_or_organism_id: service || organism, program_id: program, locked_section: locked_section?, locked_organism: locked_organism?)) %>
+          <%= browse_link(program, browse_section_amendment_path(modification_type: modification_type, section_id: section, service_or_organism_id: programs_previous, program_id: program, locked_section: locked_section?, locked_organism: locked_organism?)) %>
         <% end %>
-        <%= new_field_title_input(:program) %>
+        <%= new_object_form(:program) %>
     <% end %>
   <% end %>
 </div>

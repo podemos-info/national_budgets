@@ -12,14 +12,33 @@ module AmendmentsHelper
     safe_join([content_tag(:b, label), content_tag(:span, object.full_title)])
   end
 
-  def browse_title_with_edit(object)
+  def browse_title_editable(object)
     return browse_title(object, object.added) unless object.added
 
-    safe_join [browse_title(object, object.added), edit_field_title_input(object), edit_link(object)]
+    content_tag :div, build_edit_object_form(object), class: 'object_form'
+  end
+
+  def new_object_form(field)
+    return unless amendment.allowed_new_field_for?(modification_type, field)
+
+    content_tag :div, build_new_object_form(field), class: 'object_form new form-control'
+  end
+
+  def build_new_object_form(field)
+    placeholder = t('helpers.views.new_model_title', model: field.to_s.camelcase.constantize.model_name.human.downcase)
+    safe_join [object_title_input('', placeholder),
+               object_hidden_input(:model, field)]
+  end
+
+  def build_edit_object_form(object)
+    safe_join [browse_title(object, object.added),
+               object_title_input(object.title, 'Nuevo título'),
+               object_hidden_input(:model, object.class.name.underscore),
+               edit_links(object)]
   end
 
   def browse_link(object, path)
-    safe_join([link_to(object.full_title, path, class: 'browse_link'), tag(:br)])
+    safe_join([link_to(object.full_title, path), tag(:br)])
   end
 
   def reset_link(path, locked = false)
@@ -32,33 +51,28 @@ module AmendmentsHelper
       style = 'cursor: not-allowed'
       title = 'Bloqueado'
     end
-    link_to(fa_icon('times-circle'), path, class: ['browse_link', color_class], style: style, title: title)
+    link_to(fa_icon('times-circle'), path, class: color_class, style: style, title: title)
   end
 
-  def edit_link(object)
-    link_to(fa_icon('pencil'), 'javascript: void(0)', class: 'edit_link text-dark pl-2 pt-2', object_id: object.id, title: 'Editar')
+  def edit_links(object)
+    safe_join([link_to(fa_icon('pencil'),
+                       'javascript:void(0)',
+                       class: "#{object.model_name.name.underscore} edit_link edit text-dark pl-2 pt-2",
+                       object_id: object.id,
+                       title: 'Editar'),
+               link_to(fa_icon('undo'),
+                       'void(0)',
+                       class: "#{object.model_name.name.underscore} edit_link cancel text-dark pl-2 pt-2",
+                       object_id: object.id,
+                       title: 'Cancelar edición')])
   end
 
-  def new_field_title_input(field)
-    return unless amendment.allowed_new_field_for?(modification_type, field)
-
-    text_field_tag 'new',
-                   '',
-                   class: %w[form-control mt-2],
-                   placeholder: t('helpers.views.new_model_title', model: field.to_s.camelcase.constantize.model_name.human.downcase),
-                   model: field.to_s
+  def object_title_input(value, placeholder)
+    text_field_tag 'object[title]', value, placeholder: placeholder
   end
 
-  def edit_field_title_input(object)
-    return unless object.added
-
-    text_field_tag 'edit',
-                   object.title,
-                   class: "edit-#{object.id}",
-                   placeholder: 'Nuevo título',
-                   model: object.class.name.underscore,
-                   style: 'display: none; line-height: 1rem; border: none; border-bottom: 1px solid black;\
-                           box-shadow: none !important; width: 60%'
+  def object_hidden_input(field, value)
+    hidden_field(:object, field, value: value)
   end
 
   def amendment_section_label(amendment)
