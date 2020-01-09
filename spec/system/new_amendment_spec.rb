@@ -43,11 +43,25 @@ describe 'Amendment creation', type: :system, js: true do
 
     click_link section_sample.full_title
     click_link section_sample.services.sample.full_title
-    click_link section_sample.programs.sample.full_title
+
+    fill_in :object_title, with: "Título de programa nuevo\n"
+    expect(page).to have_content('Programa creado.')
+    expect(page).to have_content('Título de programa nuevo')
+    find(:css, '.program.edit_link').click
+    fill_in :object_title, with: "Título de programa nuevo modificado\n"
+    expect(page).to have_content('Programa actualizado.')
+    expect(page).to have_content('Título de programa nuevo modificado')
+    find(:css, '.reset_link.program').click
+    fill_in :object_title, with: "Título de programa nuevo modificado\n"
+    expect(page).to have_content('Se ha encontrado un programa existente con el título introducido.')
     click_link subconcept.concept.article.chapter.full_title
     click_link subconcept.concept.article.full_title
-    click_link subconcept.concept.full_title
-    click_link subconcept.full_title
+    fill_in :object_title, with: "Título de concepto nuevo\n"
+    expect(page).to have_content('Concepto creado.')
+    expect(page).to have_content('Título de concepto nuevo')
+    fill_in :object_title, with: "Título de subconcepto nuevo\n"
+    expect(page).to have_content('Subconcepto creado.')
+    expect(page).to have_content('Título de subconcepto nuevo')
 
     fill_in 'Proyecto', with: '1234'
     find(:label, text: 'Proyecto nuevo').click
@@ -61,7 +75,7 @@ describe 'Amendment creation', type: :system, js: true do
     expect(find(:css, 'i.fa.fa-square-o')['title']).to eq('Incompleta: falta «baja»')
 
     click_link section_sample.services.sample.full_title
-    click_link section_sample.programs.sample.full_title
+    click_link section_sample.programs.where(added: false).sample.full_title
     click_link subconcept.concept.article.chapter.full_title
     click_link subconcept.concept.article.full_title
     click_link subconcept.concept.full_title
@@ -194,6 +208,8 @@ describe 'Amendment creation', type: :system, js: true do
     expect(page).to have_content("#{Amendment.last.budget.title}: Enmienda n.º #{Amendment.last.number}")
     expect(page).to have_current_path(amendment_path(Amendment.last))
     expect(find(:css, 'i.fa.fa-check-square-o')['title']).to eq('Completa')
+
+    click_link 'Listado de enmiendas'
   end
 
   it 'creates a new articulated amendment' do
