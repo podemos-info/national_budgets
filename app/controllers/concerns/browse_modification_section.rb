@@ -4,11 +4,14 @@ module BrowseModificationSection
   extend ActiveSupport::Concern
 
   included do
-    helper_method :modification_type, :modification_class, :locked_section?, :locked_organism?,
-                  :sections, :section, :service, :program, :programs, :organism
+    helper_method :locked_section?, :locked_organism?,
+                  :sections, :section, :service, :organism,
+                  :programs_parent, :programs_previous, :program, :programs
   end
 
   def browse_section
+    return if browse_action_handle
+
     render layout: false
   end
 
@@ -42,8 +45,16 @@ module BrowseModificationSection
     end
   end
 
+  def programs_previous
+    if modification_class.use_field?(:organism)
+      organism
+    else
+      service
+    end
+  end
+
   def programs
-    @programs ||= amendment.class.filtered_programs(programs_parent.programs, modification_class)
+    @programs ||= amendment.class.filtered_programs(programs_parent.programs, modification_type)
   end
 
   def program
@@ -56,14 +67,5 @@ module BrowseModificationSection
 
   def locked_organism?
     params['locked_organism'] == 'true'
-  end
-
-  def modification_type
-    params[:modification_type]
-  end
-
-  def modification_class
-    modification_class = "Modifications::#{modification_type.camelcase}".constantize if modification_type
-    modification_class if amendment.class.allowed_modifications.include?(modification_class)
   end
 end

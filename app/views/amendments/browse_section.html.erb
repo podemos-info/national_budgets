@@ -1,57 +1,60 @@
 <div>
-
+  <%= render "partials/flash_message" %>
+  <%= hidden_field :request, :original_fullpath, value: object_original_fullpath %>
   <% if modification_class.use_field?(:section) %>
     <% if section %>
-      <% unless locked_section? %>
-        <%= reset_link(browse_section_amendment_path(modification_type: modification_type, locked_section: locked_section?, locked_organism: locked_organism?)) %>
-      <% end %>
-      <%= browse_title(section) %>
+      <%= reset_link(:section, browse_section_amendment_path(modification_type: modification_type, locked_section: locked_section?, locked_organism: locked_organism?), locked_section?) %>
+      <%= browse_title(section) %><%= tag(:br) %>
     <% else %>
       <%= collection_title(budget.sections) %>
       <% sections.each do |section| %>
         <%= browse_link(section, browse_section_amendment_path(modification_type: modification_type, section_id: section, locked_section: locked_section?, locked_organism: locked_organism?)) %>
       <% end %>
+      <%= new_object_form(:section) %>
     <% end %>
   <% end %>
 
   <% if modification_class.use_field?(:service) %>
     <% if service %>
-      <%= reset_link(browse_section_amendment_path(modification_type: modification_type, section_id: section, locked_section: locked_section?, locked_organism: locked_organism?)) %>
-      <%= browse_title(service) %>
+      <%= reset_link(:service, browse_section_amendment_path(modification_type: modification_type, section_id: section, locked_section: locked_section?, locked_organism: locked_organism?)) %>
+      <%= browse_title(service) %><%= tag(:br) %>
     <% elsif section %>
         <hr>
         <%= collection_title(section.services) %>
         <% section.services.each do |service| %>
           <%= browse_link(service, browse_section_amendment_path(modification_type: modification_type, section_id: section, service_or_organism_id: service, locked_section: locked_section?, locked_organism: locked_organism?)) %>
         <% end %>
+        <%= new_object_form(:service) %>
     <% end %>
   <% end %>
 
   <% if modification_class.use_field?(:organism) %>
     <% if organism %>
-      <% unless locked_organism? %>
-        <%= reset_link(browse_section_amendment_path(modification_type: modification_type, section_id: section, locked_section: locked_section?, locked_organism: locked_organism?)) %>
-      <% end %>
-      <%= browse_title(organism) %>
+      <%= reset_link(:organism, browse_section_amendment_path(modification_type: modification_type, section_id: section, locked_section: locked_section?, locked_organism: locked_organism?), locked_organism?) %>
+      <%= browse_title(organism) %><%= tag(:br) %>
     <% elsif section %>
         <hr>
         <%= collection_title(section.organisms) %>
         <% section.organisms.each do |organism| %>
           <%= browse_link(organism, browse_section_amendment_path(modification_type: modification_type, section_id: section, service_or_organism_id: organism, locked_section: locked_section?, locked_organism: locked_organism?)) %>
         <% end %>
+        <%= new_object_form(:organism) %>
     <% end %>
   <% end %>
 
-  <% if modification_class.use_field?(:program) && ((service && service.class != Integer) || (organism && organism.class != Integer)) %>
+  <% if modification_class.use_field?(:program) && programs_previous %>
     <% if program %>
-      <%= reset_link(browse_section_amendment_path(modification_type: modification_type, section_id: section, service_or_organism_id: service || organism, locked_section: locked_section?, locked_organism: locked_organism?)) %>
-      <%= browse_title(program) %>
+      <%= reset_link(:program, browse_section_amendment_path(modification_type: modification_type, section_id: section, service_or_organism_id: programs_previous, locked_section: locked_section?, locked_organism: locked_organism?)) %>
+      <%= browse_title_editable(program) %>
+      <%= tag(:br) %>
     <% else %>
         <hr>
         <%= collection_title(section.programs) %>
         <% programs.each do |program| %>
-          <%= browse_link(program, browse_section_amendment_path(modification_type: modification_type, section_id: section, service_or_organism_id: service || organism, program_id: program, locked_section: locked_section?, locked_organism: locked_organism?)) %>
+          <%= added_badge_for program %>
+          <%= browse_link(program, browse_section_amendment_path(modification_type: modification_type, section_id: section, service_or_organism_id: programs_previous, program_id: program, locked_section: locked_section?, locked_organism: locked_organism?)) %>
         <% end %>
+        <%= new_object_form(:program) %>
     <% end %>
   <% end %>
 </div>

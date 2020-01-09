@@ -3,7 +3,7 @@
 module FlashMessages
   extend ActiveSupport::Concern
 
-  def flash_message(alert_type, icon_name)
-    fa_icon icon_name, text: t(".#{alert_type}")
+  def flash_message(alert_type, icon_name, translation_params = {})
+    fa_icon icon_name, text: t(".#{alert_type}", translation_params)
   end
 end

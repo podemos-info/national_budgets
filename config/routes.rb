@@ -11,7 +11,7 @@ Rails.application.routes.draw do
         member do
           get 'browse/section/:modification_type(/:section_id(/:service_or_organism_id(/:program_id)))',
               to: 'amendments#browse_section', as: :browse_section
-          get 'browse/chapter(/:chapter_id(/:article_id(/:concept_id(/:subconcept_id))))',
+          get 'browse/chapter/:modification_type(/:chapter_id(/:article_id(/:concept_id(/:subconcept_id))))',
               to: 'amendments#browse_chapter', as: :browse_chapter
         end
       end

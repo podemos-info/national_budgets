@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_11_28_003212) do
+ActiveRecord::Schema.define(version: 2019_12_11_185539) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -82,11 +82,12 @@ ActiveRecord::Schema.define(version: 2019_11_28_003212) do
   end
 
   create_table "concepts", force: :cascade do |t|
-    t.integer "ref"
+    t.string "ref"
     t.string "title", null: false
     t.bigint "article_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.boolean "added", default: false
     t.index ["article_id"], name: "index_concepts_on_article_id"
   end
 
@@ -127,12 +128,13 @@ ActiveRecord::Schema.define(version: 2019_11_28_003212) do
   end
 
   create_table "programs", force: :cascade do |t|
-    t.string "ref", null: false
+    t.string "ref"
     t.string "title", null: false
     t.bigint "section_id"
     t.bigint "organism_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.boolean "added", default: false
     t.index ["organism_id"], name: "index_programs_on_organism_id"
     t.index ["section_id"], name: "index_programs_on_section_id"
   end
@@ -156,11 +158,12 @@ ActiveRecord::Schema.define(version: 2019_11_28_003212) do
   end
 
   create_table "subconcepts", force: :cascade do |t|
-    t.integer "ref"
+    t.string "ref"
     t.string "title", null: false
     t.bigint "concept_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.boolean "added", default: false
     t.index ["concept_id"], name: "index_subconcepts_on_concept_id"
   end
 

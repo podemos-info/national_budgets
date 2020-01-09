@@ -21,6 +21,16 @@ es:
       success: La enmienda ha sido actualizada.
     destroy:
       success: La enmienda ha sido eliminada.
+    browse_section:
+      create_object_success: "%{model} creado."
+      update_object_success: "%{model} actualizado."
+      object_found_warning: "Se ha encontrado un %{model} existente con el título introducido."
+    browse_chapter:
+      create_object_success: "%{model} creado."
+      update_object_success: "%{model} actualizado."
+      object_found_warning: "Se ha encontrado un %{model} existente con el título introducido."
+    update_object:
+      success: "%{model} actualizado."
   modifications:
     new:
       title: "%{budget}: Enmienda n.º %{amendment}: Añadir modificación"
@@ -222,6 +232,7 @@ es:
       list_model: "Listado de %{model}"
       count_model: "%{count} %{model}"
       choose_model: "Elige %{model}"
+      new_model_title: "Título del %{model} nuevo"
       empty_collection: "No hay %{model}."
       amendment:
         number: "N.º %{amendment}"

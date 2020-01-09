@@ -74,9 +74,27 @@ module HasModifications
     end
   end
 
+  def allowed_new_field_for?(modification_type, field)
+    self.class.allowed_new_field_for?(modification_type, field)
+  end
+
+  def filter_collection_with_added(collection, modification_type)
+    self.class.filter_collection_with_added(collection, modification_type)
+  end
+
   class_methods do
     def allowed_modifications
       allowed_modifications_str.map(&:constantize)
+    end
+
+    def filter_collection_with_added(collection, modification_type)
+      return collection if allowed_new_field_for?(modification_type, collection.model_name.name.underscore.to_sym)
+
+      collection.where(added: false)
+    end
+
+    def allowed_new_field_for?(modification_type, field)
+      modifications_allowed_new_fields[modification_type].include?(field)
     end
   end
 end

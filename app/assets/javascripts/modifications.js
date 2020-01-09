@@ -9,10 +9,5 @@ $(document).ready(function () {
       $('.tab-content').find('input').prop("disabled", true);
       $($(this).attr('data-target')).find('input').prop("disabled", false);
     });
-
-  $('.pseudoiframe').each(function() {
-    pseudoiframe_load_src($(this));
-  });
-
   $('.form-group.type input:checked').click();
 });

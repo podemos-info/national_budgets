@@ -1,0 +1,48 @@
+.pseudoiframe {
+  .object_form {
+    display: inline;
+    a.edit_link {
+      &.edit { display: inline; }
+      &.cancel { display: none; }
+    }
+    input[type="text"]#object_title {
+      display: none;
+      line-height: 1rem;
+      border: none;
+      border-bottom: 1px solid black;
+      box-shadow: none !important;
+      width: 50%
+    }
+    span {
+      display: inline;
+      cursor: pointer;
+      &:hover{
+        border-bottom: 1px solid #ddd;
+      }
+    }
+    &.editing {
+      a.edit_link {
+        &.edit { display: none; }
+        &.cancel { display: inline; }
+      }
+      input[type="text"]#object_title { display: inline; }
+      span { display: none; }
+    }
+    &.new {
+      input[type="text"]#object_title {
+        display: inline;
+        width: 95%;
+        margin: 20px 0;
+        border: none;
+      }
+    }
+  }
+  .alert {
+    padding: .4rem 1rem .3rem;
+    margin-top: -.4rem !important;
+    margin-bottom: .3rem;
+    transform: scale(0.8);
+    width: 128%;
+    left: -14%;
+  }
+}

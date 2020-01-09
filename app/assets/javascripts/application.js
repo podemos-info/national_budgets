@@ -18,4 +18,5 @@
 //= require popper
 //= require bootstrap-sprockets
 //= stub 'pseudoiframe'
+//= stub 'pseudoiframe_object_form'
 //= stub 'modifications'
