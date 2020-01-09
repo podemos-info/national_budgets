@@ -7,7 +7,6 @@ describe 'Amendment creation', type: :system, js: true do
   let(:budget) { create(:budget, user: user) }
   let(:section) { create(:section, :with_children, budget: budget) }
   let(:section_without_organism) { create(:section, :with_children, budget: budget) }
-  let(:section_sample) { budget.sections.sample }
   let(:organism) { create(:organism, :with_programs, section: section) }
   let(:chapter) { create(:chapter, :with_children, budget: budget) }
   let(:program_000x) { create(:program, ref: '000X', section: section) }
@@ -41,8 +40,8 @@ describe 'Amendment creation', type: :system, js: true do
     expect(page).to have_current_path(new_amendment_modification_path(Amendment.last))
     expect(find(:css, 'i.fa.fa-square-o')['title']).to eq('Incompleta: falta «alta» y «baja»')
 
-    click_link section_sample.full_title
-    click_link section_sample.services.sample.full_title
+    click_link section.full_title
+    click_link section.services.sample.full_title
 
     fill_in :object_title, with: "Título de programa nuevo\n"
     expect(page).to have_content('Programa creado.')
@@ -74,8 +73,8 @@ describe 'Amendment creation', type: :system, js: true do
     expect(page).to have_current_path(new_amendment_modification_path(Amendment.last))
     expect(find(:css, 'i.fa.fa-square-o')['title']).to eq('Incompleta: falta «baja»')
 
-    click_link section_sample.services.sample.full_title
-    click_link section_sample.programs.where(added: false).sample.full_title
+    click_link section.services.sample.full_title
+    click_link section.programs.where(added: false).sample.full_title
     click_link subconcept.concept.article.chapter.full_title
     click_link subconcept.concept.article.full_title
     click_link subconcept.concept.full_title
@@ -91,8 +90,8 @@ describe 'Amendment creation', type: :system, js: true do
     expect(page).to have_current_path(new_amendment_modification_path(Amendment.last))
     expect(find(:css, 'i.fa.fa-plus-square-o')['title']).to eq('Incompleta: balance positivo')
 
-    click_link section_sample.services.sample.full_title
-    click_link section_sample.programs.sample.full_title
+    click_link section.services.sample.full_title
+    click_link section.programs.where(added: false).sample.full_title
     click_link subconcept.concept.article.chapter.full_title
     click_link subconcept.concept.article.full_title
     click_link subconcept.concept.full_title
@@ -108,8 +107,8 @@ describe 'Amendment creation', type: :system, js: true do
     expect(page).to have_current_path(new_amendment_modification_path(Amendment.last))
     expect(find(:css, 'i.fa.fa-minus-square-o')['title']).to eq('Incompleta: balance negativo')
 
-    click_link section_sample.services.sample.full_title
-    click_link section_sample.programs.sample.full_title
+    click_link section.services.sample.full_title
+    click_link section.programs.where(added: false).sample.full_title
     click_link subconcept.concept.article.chapter.full_title
     click_link subconcept.concept.article.full_title
     click_link subconcept.concept.full_title
@@ -147,7 +146,7 @@ describe 'Amendment creation', type: :system, js: true do
     expect(page).not_to have_content(section_without_organism.full_title)
     click_link organism.section.full_title
     click_link organism.section.services.sample.full_title
-    expect(page).not_to have_content(organism.section.programs.where.not(ref: '000X').sample.full_title)
+    expect(page).not_to have_content(organism.programs.where.not(ref: '000X').sample.full_title)
     click_link program_000x.full_title
     click_link subconcept.concept.article.chapter.full_title
     click_link subconcept.concept.article.full_title
@@ -166,9 +165,9 @@ describe 'Amendment creation', type: :system, js: true do
     expect(find(:css, 'i.fa.fa-square-o')['title'])
       .to eq('Incompleta: falta «baja», «alta presupuesto de ingreso» y «alta presupuesto de gasto»')
 
-    click_link organism.section.services.sample.full_title
+    click_link section.services.sample.full_title
     expect(page).not_to have_content(program_000x.full_title)
-    click_link organism.section.programs.sample.full_title
+    click_link section.programs.where.not(ref: '000X').sample.full_title
     click_link subconcept.concept.article.chapter.full_title
     click_link subconcept.concept.article.full_title
     click_link subconcept.concept.full_title
