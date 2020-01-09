@@ -1,0 +1,14 @@
+# server-based syntax
+# ======================
+# Defines a single server with a list of roles and multiple properties.
+# You can define all roles on a single server, or split them:
+
+server ENV['STAGING_SERVER_HOST'], port: ENV['STAGING_SERVER_PORT'], user: ENV['STAGING_USER'], roles: %w[app db web]
+
+set :rails_env, :production
+set :user, ENV['STAGING_USER']
+
+set :branch, ENV['BRANCH'] || 'master'
+
+after 'deploy:publishing', 'systemd:puma:restart'
+

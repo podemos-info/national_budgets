@@ -1,4 +1,4 @@
-function pseudoiframe_load_src(pseudoiframe, src=false) {
+function pseudoiframe_load_src(pseudoiframe, src) {
   if (src) src = pseudoiframe.attr('src', src);
   pseudoiframe.load(pseudoiframe.attr('src'), pseudoiframe.sync_src);
 }
@@ -17,6 +17,6 @@ $( document ).ready(function() {
         .load( $(this).attr('href') )
     })
     .each(function() {
-      pseudoiframe_load_src($(this));
+      pseudoiframe_load_src($(this), false);
     })
 });
