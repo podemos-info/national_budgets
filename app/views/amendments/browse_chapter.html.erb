@@ -1,7 +1,8 @@
 <div>
-  <%= hidden_field :request, :original_fullpath, value: request.original_fullpath.split('&object[').first %>
+  <%= render "partials/flash_message" %>
+  <%= hidden_field :request, :original_fullpath, value: object_original_fullpath %>
   <% if chapter %>
-    <%= reset_link(browse_chapter_amendment_path(modification_type: modification_type)) %>
+    <%= reset_link(:chapter, browse_chapter_amendment_path(modification_type: modification_type)) %>
     <%= browse_title(chapter) %><%= tag(:br) %>
   <% else %>
     <%= collection_title(budget.chapters) %>
@@ -12,7 +13,7 @@
   <% end %>
 
   <% if article %>
-    <%= reset_link(browse_chapter_amendment_path(modification_type: modification_type, chapter_id: chapter)) %>
+    <%= reset_link(:article, browse_chapter_amendment_path(modification_type: modification_type, chapter_id: chapter)) %>
     <%= browse_title(article) %><%= tag(:br) %>
   <% elsif chapter %>
     <hr>
@@ -24,7 +25,7 @@
   <% end %>
 
   <% if concept %>
-    <%= reset_link(browse_chapter_amendment_path(modification_type: modification_type, chapter_id: chapter, article_id: article)) %>
+    <%= reset_link(:concept, browse_chapter_amendment_path(modification_type: modification_type, chapter_id: chapter, article_id: article)) %>
     <%= browse_title_editable(concept) %>
     <%= tag(:br) %>
   <% elsif article %>
@@ -38,7 +39,7 @@
   <% end %>
 
   <% if subconcept %>
-    <%= reset_link(browse_chapter_amendment_path(modification_type: modification_type, chapter_id: chapter, article_id: article, concept_id: concept)) %>
+    <%= reset_link(:subconcept, browse_chapter_amendment_path(modification_type: modification_type, chapter_id: chapter, article_id: article, concept_id: concept)) %>
     <%= browse_title_editable(subconcept) %>
     <%= tag(:br) %>
   <% elsif concept %>

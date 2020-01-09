@@ -18,7 +18,6 @@ function object_form_submit(form) {
 }
 
 $( document ).ready(function() {
-  console.log(0)
   $( '.pseudoiframe' )
     .on( 'keypress', 'input[type=text]#object_title', function(e) {
       if (e.key === 'Enter') {
@@ -42,7 +41,6 @@ $( document ).ready(function() {
     .on( 'click', 'div.object_form a.edit_link', function(e) {
       e.preventDefault();
       var object_form = $(this).parents('div.object_form');
-      console.log(object_form)
       object_form.toggleClass('editing');
       if (object_form.hasClass('editing')) {
         var title_input = object_form.find('input[type=text]#object_title')

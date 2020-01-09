@@ -41,7 +41,7 @@ module AmendmentsHelper
     safe_join([link_to(object.full_title, path), tag(:br)])
   end
 
-  def reset_link(path, locked = false)
+  def reset_link(model, path, locked = false)
     color_class = 'text-danger'
     style = ''
     title = 'Desmarcar'
@@ -51,7 +51,7 @@ module AmendmentsHelper
       style = 'cursor: not-allowed'
       title = 'Bloqueado'
     end
-    link_to(fa_icon('times-circle'), path, class: color_class, style: style, title: title)
+    link_to(fa_icon('times-circle'), path, class: "reset_link #{model} #{color_class}", style: style, title: title)
   end
 
   def edit_links(object)

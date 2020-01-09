@@ -10,13 +10,13 @@ $( document ).ready(function() {
                                       $(this).attr('src', original_fullpath)
                                     }
                                   }
-  $( '.pseudoiframe' ).each(function() {
-    pseudoiframe_load_src($(this));
-  });
   $( '.pseudoiframe' )
     .on( 'click', 'a', function(e) {
       e.preventDefault();
       $(this).parents( '.pseudoiframe' )
         .load( $(this).attr('href') )
+    })
+    .each(function() {
+      pseudoiframe_load_src($(this));
     })
 });

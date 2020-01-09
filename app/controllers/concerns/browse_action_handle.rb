@@ -3,44 +3,63 @@
 module BrowseActionHandle
   extend ActiveSupport::Concern
 
+  included do
+    helper_method :object_original_fullpath
+  end
+
+  private
+
   def browse_action_handle
     return unless object_params
 
     if object
-      object.update(object_params)
-      redirect_to browse_redirect_path(object), success: flash_message(:success, :check)
+      update_object
+    elsif object_found
+      redirect_to browse_redirect_path(object_found),
+                  info: flash_message(:object_found_warning, :info, model: object_found.model_name.human.downcase)
     else
-      object = added_objects_collection.new(object_params)
-      object.save
-      redirect_to browse_redirect_path(object), success: flash_message(:success, :check)
+      create_object
     end
   end
-
-  private
 
   def action
     params[:action].to_sym
   end
 
   def current_model
-    params[:object][:model]
+    params[:object][:model].to_sym
   end
 
   def object
-    send(current_model) || added_objects_collection.find_by(object_params)
+    @object ||= send(current_model)
+  end
+
+  def object_found
+    @object_found ||= added_objects_collection.find_by(object_params)
   end
 
   def object_params
     params.require(:object).permit(:title).merge(added: true) if params[:object]
   end
 
+  def create_object
+    object = added_objects_collection.new(object_params)
+    object.save
+    redirect_to(browse_redirect_path(object), success: flash_message(:create_object_success, :check, model: object.model_name.human))
+  end
+
+  def update_object
+    object.update(object_params)
+    redirect_to(browse_redirect_path(object), success: flash_message(:update_object_success, :check, model: object.model_name.human))
+  end
+
   def added_objects_collection
     case current_model
-    when 'program'
+    when :program
       programs_parent.programs
-    when 'concept'
+    when :concept
       article.concepts
-    when 'subconcept'
+    when :subconcept
       concept.subconcepts
     end
   end
@@ -53,7 +72,7 @@ module BrowseActionHandle
     redirect_params = { browse_section: browse_section_redirect_params,
                         browse_chapter: browse_chapter_redirect_params }[action]
 
-    object ||= added_objects_collection.where(object_params).first object
+    object ||= added_objects_collection.where(object_params).first
     redirect_params.merge!("#{current_model}_id": object)
   end
 
@@ -72,5 +91,9 @@ module BrowseActionHandle
       article_id: article,
       concept_id: concept,
       subconcept_id: subconcept }
+  end
+
+  def object_original_fullpath
+    request.original_fullpath.split('&object[').first
   end
 end

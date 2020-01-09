@@ -19,10 +19,6 @@ class Modification < ApplicationRecord
   delegate :budget, to: :amendment, allow_nil: true
   delegate :locked_organism?, to: :amendment, allow_nil: true
 
-  def present_fields
-    self.class.present_fields
-  end
-
   def self.present_fields; end
 
   def self.use_field?(field)

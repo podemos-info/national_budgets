@@ -37,4 +37,12 @@
       }
     }
   }
+  .alert {
+    padding: .4rem 1rem .3rem;
+    margin-top: -.4rem !important;
+    margin-bottom: .3rem;
+    transform: scale(0.8);
+    width: 128%;
+    left: -14%;
+  }
 }

@@ -1,8 +1,9 @@
 <div>
-  <%= hidden_field :request, :original_fullpath, value: request.original_fullpath.split('&object[').first %>
+  <%= render "partials/flash_message" %>
+  <%= hidden_field :request, :original_fullpath, value: object_original_fullpath %>
   <% if modification_class.use_field?(:section) %>
     <% if section %>
-      <%= reset_link(browse_section_amendment_path(modification_type: modification_type, locked_section: locked_section?, locked_organism: locked_organism?), locked_section?) %>
+      <%= reset_link(:section, browse_section_amendment_path(modification_type: modification_type, locked_section: locked_section?, locked_organism: locked_organism?), locked_section?) %>
       <%= browse_title(section) %><%= tag(:br) %>
     <% else %>
       <%= collection_title(budget.sections) %>
@@ -15,7 +16,7 @@
 
   <% if modification_class.use_field?(:service) %>
     <% if service %>
-      <%= reset_link(browse_section_amendment_path(modification_type: modification_type, section_id: section, locked_section: locked_section?, locked_organism: locked_organism?)) %>
+      <%= reset_link(:service, browse_section_amendment_path(modification_type: modification_type, section_id: section, locked_section: locked_section?, locked_organism: locked_organism?)) %>
       <%= browse_title(service) %><%= tag(:br) %>
     <% elsif section %>
         <hr>
@@ -29,7 +30,7 @@
 
   <% if modification_class.use_field?(:organism) %>
     <% if organism %>
-      <%= reset_link(browse_section_amendment_path(modification_type: modification_type, section_id: section, locked_section: locked_section?, locked_organism: locked_organism?), locked_organism?) %>
+      <%= reset_link(:organism, browse_section_amendment_path(modification_type: modification_type, section_id: section, locked_section: locked_section?, locked_organism: locked_organism?), locked_organism?) %>
       <%= browse_title(organism) %><%= tag(:br) %>
     <% elsif section %>
         <hr>
@@ -43,7 +44,7 @@
 
   <% if modification_class.use_field?(:program) && programs_previous %>
     <% if program %>
-      <%= reset_link(browse_section_amendment_path(modification_type: modification_type, section_id: section, service_or_organism_id: programs_previous, locked_section: locked_section?, locked_organism: locked_organism?)) %>
+      <%= reset_link(:program, browse_section_amendment_path(modification_type: modification_type, section_id: section, service_or_organism_id: programs_previous, locked_section: locked_section?, locked_organism: locked_organism?)) %>
       <%= browse_title_editable(program) %>
       <%= tag(:br) %>
     <% else %>
