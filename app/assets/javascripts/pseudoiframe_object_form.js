@@ -12,8 +12,13 @@ function validate_title(input) {
 function object_form_submit(form) {
   var original_fullpath = form.parents('.pseudoiframe').find('#request_original_fullpath').val();
   original_fullpath += original_fullpath.indexOf('?') > -1 ? '&' : '?';
-  original_fullpath += 'object[title]=' + encodeURIComponent(form.find('#object_title').val());
-  original_fullpath += '&object[model]=' + form.find('#object_model').val();
+  form
+    .find('input, textarea, select')
+    .not(':input[type=button], :input[type=submit], :input[type=reset]')
+    .each(function() {
+    original_fullpath += $(this).attr('name') + '=' + encodeURIComponent($(this).val()) + '&';
+  })
+  original_fullpath = original_fullpath.slice(0, -1);
   pseudoiframe_load_src(form.parents('.pseudoiframe'), original_fullpath);
 }
 

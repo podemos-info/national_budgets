@@ -46,7 +46,11 @@ module BrowseModificationSection
   end
 
   def programs_previous
-    service || organism
+    if modification_class.use_field?(:organism)
+      organism
+    else
+      service
+    end
   end
 
   def programs
