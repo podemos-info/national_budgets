@@ -1,4 +1,5 @@
 #!/usr/bin/env puma
+# frozen_string_literal: true
 
 # Puma can serve each request in a thread from an internal thread pool.
 # The `threads` method setting takes two numbers: a minimum and maximum.
@@ -53,4 +54,3 @@ prune_bundler
 on_restart do
   ENV['BUNDLE_GEMFILE'] = ''
 end
-

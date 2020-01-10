@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # server-based syntax
 # ======================
 # Defines a single server with a list of roles and multiple properties.
@@ -11,4 +13,3 @@ set :user, ENV['PRODUCTION_USER']
 set :branch, :master
 
 after 'deploy:publishing', 'systemd:puma:restart'
-
