@@ -202,6 +202,7 @@ es:
         balance: "Balance"
         display_amount: "Balance"
         total_amount: "Importe"
+        status: "Estado"
       articulated:
         section: Sección
         title: Título

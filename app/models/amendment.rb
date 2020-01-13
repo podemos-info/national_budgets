@@ -12,7 +12,9 @@ class Amendment < ApplicationRecord
 
   def allow_modifications?; end
 
-  def any_articulated?; end
+  def any_articulated?
+    false
+  end
 
   def allow_articulated?; end
 
