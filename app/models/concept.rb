@@ -5,4 +5,5 @@ class Concept < ApplicationRecord
 
   belongs_to :article, optional: false
   has_many :subconcepts, dependent: :destroy
+  delegate :budget, to: :article, allow_nil: false
 end

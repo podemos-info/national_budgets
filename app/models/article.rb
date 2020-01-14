@@ -6,4 +6,5 @@ class Article < ApplicationRecord
   belongs_to :chapter, optional: false
   has_many :concepts, dependent: :destroy
   has_many :subconcepts, through: :concepts
+  delegate :budget, to: :chapter, allow_nil: false
 end

@@ -4,6 +4,10 @@ module HasFullTitle
   extend ActiveSupport::Concern
 
   def full_title
-    [ref ? [ref.to_s.rjust(2, '0'), '. '].join : '', title].join
+    [ref ? [visible_ref, '. '].join : '', title].join
+  end
+
+  def visible_ref
+    ref.to_s.rjust(2, '0')
   end
 end

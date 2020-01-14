@@ -2,7 +2,20 @@
 
 Rails.application.routes.draw do
   devise_for :users, ActiveAdmin::Devise.config
+
   ActiveAdmin.routes(self)
+
+  namespace :admin do
+    # multiple belongs_to for activeadmin hack
+    resources :programs
+    resources :organisms do
+      resources :programs
+    end
+    resources :sections do
+      resources :programs
+    end
+  end
+
   authenticate :user do
     resources :budgets, shallow: true, path: '/' do
       resources :amendments do
@@ -17,5 +30,4 @@ Rails.application.routes.draw do
       end
     end
   end
-  # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
 end

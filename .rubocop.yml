@@ -28,6 +28,7 @@ Metrics/LineLength:
 Metrics/BlockLength:
   Enabled: true
   Exclude:
+    - app/admin/*.rb
     - config/environments/*.rb
     - spec/**/*_spec.rb
     - spec/factories/*.rb
