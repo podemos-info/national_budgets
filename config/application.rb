@@ -22,8 +22,13 @@ module NationalBudgets
     eager_load_paths = %w[app/models/**/].freeze
     config.eager_load_paths += Dir[*eager_load_paths]
 
-    config.rack_cas.server_url = Rails.application.secrets.cas_server
-    config.rack_cas.session_store = RackCAS::ActiveRecordStore
-    config.rack_cas.renew = false # default: false
+    if Rails.env.test?
+      config.rack_cas.fake = true
+      config.rack_cas.fake_attributes = { 'john.doe@email.com' => { 'mail' => 'john.doe@email.com',
+                                                                    'cn' => 'John Doe' } }
+    else
+      config.rack_cas.server_url = Rails.application.secrets.cas_server
+      config.rack_cas.session_store = RackCAS::ActiveRecordStore
+    end
   end
 end
