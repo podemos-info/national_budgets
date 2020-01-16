@@ -17,7 +17,7 @@ module NationalBudgets
 
     # Settings in config/environments/* take precedence over those specified here.
     # Application configuration can go into files in config/initializers
-    # -- all .rb files in that directory are automatically loaded af  ter loading
+    # -- all .rb files in that directory are automatically loaded after loading
     # the framework and any gems in your application.
     eager_load_paths = %w[app/models/**/].freeze
     config.eager_load_paths += Dir[*eager_load_paths]

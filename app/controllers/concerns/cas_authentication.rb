@@ -10,6 +10,8 @@ module CasAuthentication
     before_action :set_current_user
   end
 
+  private
+
   def set_current_user
     return head(401) unless cas_user
 
@@ -24,12 +26,9 @@ module CasAuthentication
       @current_user.email = cas_info['extra_attributes']['mail']
       @current_user.full_name = cas_info['extra_attributes']['cn']
       @current_user.password = SecureRandom.base64(30)
-      @current_user.save!
-      @current_user
+      @current_user if @current_user.save!
     end
   end
-
-  private
 
   def cas_info
     @cas_info ||= session['cas']

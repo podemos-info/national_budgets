@@ -2,6 +2,7 @@
 
 class ApplicationController < ActionController::Base
   include CasAuthentication
+  include RolesAuthorization
   include FontAwesome::Rails::IconHelper
   include ActionView::Helpers::TagHelper
 
