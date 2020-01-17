@@ -1,7 +1,6 @@
 # frozen_string_literal: true
 
 require_relative 'boot'
-
 require 'rails/all'
 
 # Require the gems listed in Gemfile, including any gems
@@ -22,13 +21,7 @@ module NationalBudgets
     eager_load_paths = %w[app/models/**/].freeze
     config.eager_load_paths += Dir[*eager_load_paths]
 
-    if Rails.env.test?
-      config.rack_cas.fake = true
-      config.rack_cas.fake_attributes = { 'john.doe@email.com' => { 'mail' => 'john.doe@email.com',
-                                                                    'cn' => 'John Doe' } }
-    else
-      config.rack_cas.server_url = Rails.application.secrets.cas_server
-      config.rack_cas.session_store = RackCAS::ActiveRecordStore
-    end
+    config.rack_cas.server_url = Rails.application.secrets.cas_server
+    config.rack_cas.session_store = RackCAS::ActiveRecordStore
   end
 end

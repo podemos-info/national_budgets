@@ -46,6 +46,11 @@ Rails.application.configure do
   # Raises error for missing translations
   # config.action_view.raise_on_missing_translations = true
 
+  config.rack_cas.fake = true
+  extra_attributes = { 'john.doe@email.com' => { 'mail' => 'john.doe@email.com',
+                                                 'cn' => 'John Doe' } }
+  config.rack_cas.fake_attributes = extra_attributes
+
   # Preload descendant models
   models = Dir['app/models/*/*.rb']
   models.each { |file| require_dependency file }

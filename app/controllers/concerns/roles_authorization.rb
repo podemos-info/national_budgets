@@ -18,6 +18,6 @@ module RolesAuthorization
   end
 
   def admin?
-    self.class.module_parent.to_s == 'Admin'
+    is_a? ActiveAdmin::BaseController
   end
 end
