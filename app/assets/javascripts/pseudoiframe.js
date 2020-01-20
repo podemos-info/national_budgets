@@ -1,5 +1,5 @@
 function pseudoiframe_load_src(pseudoiframe, src) {
-  if (src) src = pseudoiframe.attr('src', src);
+  if (src) pseudoiframe.attr('src', src);
   pseudoiframe.load(pseudoiframe.attr('src'), pseudoiframe.sync_src);
 }
 

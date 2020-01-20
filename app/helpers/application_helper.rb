@@ -10,4 +10,8 @@ module ApplicationHelper
 
     safe_join([content_tag(:span, truncate(text_to_truncate, length: length), title: text_to_truncate.gsub("'", "\\'"))])
   end
+
+  def destroy_user_session_path
+    '/logout'
+  end
 end

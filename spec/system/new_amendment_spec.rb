@@ -3,6 +3,8 @@
 require 'rails_helper'
 
 describe 'Amendment creation', type: :system, js: true do
+  include_context 'with a CAS login'
+
   let(:user) { create(:user) }
   let(:budget) { create(:budget, user: user) }
   let(:section) { create(:section, :with_children, budget: budget) }
@@ -20,12 +22,10 @@ describe 'Amendment creation', type: :system, js: true do
     organism
     program_000x
     subconcept
-    login_as user
+    visit budget_amendments_path(budget)
   end
 
   it 'creates a new standard amendment' do
-    visit budget_amendments_path(budget)
-
     first(:link, 'Crear enmienda').click
 
     find(:label, text: 'Alta/baja').click
@@ -126,8 +126,6 @@ describe 'Amendment creation', type: :system, js: true do
   end
 
   it 'creates a new transfer amendment' do
-    visit budget_amendments_path(budget)
-
     first(:link, 'Crear enmienda').click
 
     find(:label, text: 'Enmienda de transferencia').click
@@ -212,8 +210,6 @@ describe 'Amendment creation', type: :system, js: true do
   end
 
   it 'creates a new articulated amendment' do
-    visit budget_amendments_path(budget)
-
     first(:link, 'Crear enmienda').click
 
     find(:label, text: 'Enmienda al articulado').click

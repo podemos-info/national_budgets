@@ -1,12 +1,13 @@
 # frozen_string_literal: true
 
 require_relative 'boot'
-
 require 'rails/all'
 
 # Require the gems listed in Gemfile, including any gems
 # you've limited to :test, :development, or :production.
 Bundler.require(*Rails.groups)
+
+require 'rack-cas/session_store/active_record'
 
 module NationalBudgets
   class Application < Rails::Application
@@ -19,5 +20,8 @@ module NationalBudgets
     # the framework and any gems in your application.
     eager_load_paths = %w[app/models/**/].freeze
     config.eager_load_paths += Dir[*eager_load_paths]
+
+    config.rack_cas.server_url = Rails.application.secrets.cas_server
+    config.rack_cas.session_store = RackCAS::ActiveRecordStore
   end
 end

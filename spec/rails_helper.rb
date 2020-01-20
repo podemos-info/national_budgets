@@ -40,6 +40,8 @@ require 'support/capybara'
 require 'support/devise'
 require 'support/factory_bot'
 
+require 'shared/login'
+
 RSpec.configure do |config|
   # Remove this line if you're not using ActiveRecord or ActiveRecord fixtures
   # config.fixture_path = "#{::Rails.root}/spec/fixtures"
