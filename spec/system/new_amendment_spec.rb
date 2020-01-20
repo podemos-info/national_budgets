@@ -2,12 +2,6 @@
 
 require 'rails_helper'
 
-def cas_login
-  fill_in 'username', with: 'john.doe@email.com'
-  fill_in 'password', with: 'any password'
-  click_button 'Login'
-end
-
 describe 'Amendment creation', type: :system, js: true do
   let(:user) { create(:user) }
   let(:budget) { create(:budget, user: user) }
@@ -27,7 +21,9 @@ describe 'Amendment creation', type: :system, js: true do
     program_000x
     subconcept
     visit budget_amendments_path(budget)
-    cas_login
+    fill_in 'username', with: 'john.doe@email.com'
+    fill_in 'password', with: 'any password'
+    click_button 'Login'
   end
 
   it 'creates a new standard amendment' do
