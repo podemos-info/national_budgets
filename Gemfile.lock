@@ -69,6 +69,10 @@ GEM
       zeitwerk (~> 2.2)
     addressable (2.7.0)
       public_suffix (>= 2.0.2, < 5.0)
+    airbrake (10.0.0)
+      airbrake-ruby (~> 4.12)
+    airbrake-ruby (4.12.0)
+      rbtree3 (~> 0.5)
     airbrussh (1.4.0)
       sshkit (>= 1.6.1, != 1.7.0)
     apparition (0.4.0)
@@ -278,6 +282,7 @@ GEM
     rb-fsevent (0.10.3)
     rb-inotify (0.10.1)
       ffi (~> 1.0)
+    rbtree3 (0.5.0)
     regexp_parser (1.6.0)
     responders (3.0.0)
       actionpack (>= 5.0)
@@ -385,6 +390,7 @@ PLATFORMS
 
 DEPENDENCIES
   activeadmin
+  airbrake
   apparition
   bootsnap (>= 1.1.0)
   bootstrap (~> 4.3.1)
