@@ -10,4 +10,5 @@ class Budget < ApplicationRecord
   has_many :concepts, through: :articles
   has_many :subconcepts, through: :concepts
   belongs_to :user, optional: false
+  has_many :amendments_documents, dependent: :destroy
 end
