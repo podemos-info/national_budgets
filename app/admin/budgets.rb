@@ -56,7 +56,8 @@ ActiveAdmin.register Budget do
 
   form do |f|
     f.inputs do
-      f.input :user, as: :string, input_html: { readonly: true }
+      f.input :user, as: :hidden
+      f.input :user, as: :select, input_html: { disabled: true }
       f.input :title
       f.input :date
     end
@@ -84,7 +85,10 @@ ActiveAdmin.register Budget do
 
   controller do
     def build_resource
-      super.tap { |ret| ret.user = current_user unless ret.persisted? }
+      super.tap do |ret|
+        ret.user = current_user unless ret.persisted?
+        ret.date = Time.current
+      end
     end
   end
 end

@@ -55,12 +55,16 @@ es:
       success: El articulado ha sido eliminado.
   activerecord:
     models:
+      admin: Panel de administración
       budget:
         one: Proyecto de presupuestos
         other: Proyectos de presupuestos
       amendment:
         one: Enmienda
         other: Enmiendas
+      amendments_document:
+        one: Documento de enmiendas
+        other: Documentos de enmiendas
       modification:
         one: Modificación
         other: Modificaciones
@@ -111,6 +115,15 @@ es:
         type: 'Enmienda de transferencia'
       amendments/standard:
         type: 'Alta/baja'
+      amendments_document:
+        budget: 'PGE'
+        user: 'Usuario'
+        section: 'Sección'
+        file_type: 'Tipo de archivo'
+        file: 'Archivo de enmiendas'
+        current_amendments: 'Enmiendas actuales'
+        created_at: 'Fecha de creación'
+        updated_at: 'Fecha de actualización'
       articulated:
         type: Tipo de modificación al articulado
         section: Sección
