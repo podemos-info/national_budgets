@@ -13,3 +13,4 @@ set :user, ENV['STAGING_USER']
 set :branch, ENV['BRANCH'] || 'master'
 
 after 'deploy:publishing', 'systemd:puma:restart'
+after 'deploy:publishing', 'systemd:sidekiq:restart'

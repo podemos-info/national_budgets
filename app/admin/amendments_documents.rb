@@ -14,8 +14,12 @@ ActiveAdmin.register AmendmentsDocument do
     end
     column :file_type
     column :file do |amendments_document|
-      link_to File.basename(url_for(amendments_document.file)),
-              rails_blob_path(amendments_document.file, disposition: 'attachment')
+      if amendments_document.file.attached?
+        link_to File.basename(url_for(amendments_document.file)),
+                rails_blob_path(amendments_document.file, disposition: 'attachment')
+      else
+        'Generando fichero'
+      end
     end
     column :current_amendments do |amendments_document|
       model_total(amendments_document.amendments_collection)
@@ -34,8 +38,12 @@ ActiveAdmin.register AmendmentsDocument do
       end
       row :file_type
       row :file do |amendments_document|
-        link_to File.basename(url_for(amendments_document.file)),
-                rails_blob_path(amendments_document.file, disposition: 'attachment')
+        if amendments_document.file.attached?
+          link_to File.basename(url_for(amendments_document.file)),
+                  rails_blob_path(amendments_document.file, disposition: 'attachment')
+        else
+          'Generando fichero'
+        end
       end
       row :current_amendments do |amendments_document|
         model_total(amendments_document.amendments_collection)
@@ -55,7 +63,7 @@ ActiveAdmin.register AmendmentsDocument do
       f.input :user, as: :hidden
       f.input :user, as: :select, input_html: { disabled: true }
       f.input :budget, prompt: t('helpers.views.choose_model', model: Budget.model_name.human.downcase)
-      f.input :section, prompt: t('active_admin.scopes.all')
+      f.input :section, include_blank: t('active_admin.scopes.all')
       f.input :file_type, as: :radio
     end
 

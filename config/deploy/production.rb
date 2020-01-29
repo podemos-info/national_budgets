@@ -13,3 +13,4 @@ set :user, ENV['PRODUCTION_USER']
 set :branch, :master
 
 after 'deploy:publishing', 'systemd:puma:restart'
+after 'deploy:publishing', 'systemd:sidekiq:restart'
