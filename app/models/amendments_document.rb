@@ -9,7 +9,7 @@ class AmendmentsDocument < ApplicationRecord
 
   validates :file_type, presence: true
 
-  before_save :attach_file
+  after_save :attach_amendments_document_job, if: :criterias_changed?
 
   def amendments_collection
     if section
@@ -19,15 +19,29 @@ class AmendmentsDocument < ApplicationRecord
     end
   end
 
+  def attach_amendments_document_job
+    file.purge if file.attached?
+    AttachAmendmentsDocumentJob.perform_later self
+  end
+
   def attach_file
-    file.purge
     File.open(tmp_file_path, 'w') { |f| f.write file_content }
     file.attach(io: File.open(tmp_file_path), filename: file_name, content_type: 'text/plain')
     File.delete(tmp_file_path)
   end
 
+  def criterias_changed?
+    (saved_changes.keys & %w[budget_id section_id file_type updated_at]).any?
+  end
+
   def file_content
-    amendments_collection.pluck(:number).join("\n")
+    ret = ''
+    2000.times.each do
+      amendments_collection.each do |amendment|
+        ret += amendment.number + "\n"
+      end
+    end
+    ret
   end
 
   def file_name
