@@ -58,7 +58,7 @@ group :test do
   gem 'rspec-rails', '~> 3.8'
   gem 'rubocop-rspec'
   gem 'selenium-webdriver'
-  gem 'simplecov', require: false
+  gem 'simplecov', '~> 0.17.1', require: false
 end
 
 gem 'tzinfo-data', platforms: %i[mingw mswin x64_mingw jruby]
