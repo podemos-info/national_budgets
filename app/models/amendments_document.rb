@@ -11,6 +11,8 @@ class AmendmentsDocument < ApplicationRecord
 
   after_save :attach_amendments_document_job, if: :criterias_changed?
 
+  FILE_REGENERATION_FIELDS = %w[budget_id section_id file_type updated_at].freeze
+
   def amendments_collection
     if section
       budget.amendments.where(id: (Modification.where(section: section) + Articulated.where(section: section)).pluck(:amendment_id).uniq)
@@ -21,7 +23,7 @@ class AmendmentsDocument < ApplicationRecord
 
   def attach_amendments_document_job
     file.purge if file.attached?
-    AttachAmendmentsDocumentJob.perform_later self
+    GenerateAmendmentsDocumentFileJob.perform_later self
   end
 
   def attach_file
@@ -31,7 +33,7 @@ class AmendmentsDocument < ApplicationRecord
   end
 
   def criterias_changed?
-    (saved_changes.keys & %w[budget_id section_id file_type updated_at]).any?
+    (saved_changes.keys & FILE_REGENERATION_FIELDS).any?
   end
 
   def file_content
