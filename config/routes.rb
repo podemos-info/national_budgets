@@ -1,11 +1,14 @@
 # frozen_string_literal: true
 
 require 'sidekiq/web'
+Sidekiq::Web.set :sessions, false
 
 Rails.application.routes.draw do
   devise_for :users, ActiveAdmin::Devise.config
 
-  mount Sidekiq::Web => '/queues'
+  authenticate :user, ->(u) { u.super_admin? } do
+    mount Sidekiq::Web, at: '/sidekiq', as: :sidekiq
+  end
 
   ActiveAdmin.routes(self)
 
