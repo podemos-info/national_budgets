@@ -30,6 +30,7 @@ Metrics/BlockLength:
   Exclude:
     - app/admin/*.rb
     - config/environments/*.rb
+    - config/routes.rb
     - spec/**/*_spec.rb
     - spec/factories/*.rb
 
