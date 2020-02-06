@@ -12,7 +12,7 @@ module RolesAuthorization
   private
 
   def admin_redirect
-    return if current_user.super_admin?
+    return if current_user.super_admin? || current_user.admin?
 
     redirect_to budgets_path
   end

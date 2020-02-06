@@ -1,5 +1,5 @@
 GIT
-  remote: git@directorio_client.github.com:podemos-info/directorio_client.git
+  remote: git@github.com:podemos-info/directorio_client.git
   revision: 104d6ae2dfe9fba4d5d5c405f80fc4551f702988
   specs:
     directorio_client (0.1.0)

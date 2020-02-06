@@ -4,8 +4,7 @@ source 'https://rubygems.org'
 
 git_source(:github) do |repo|
   repo = "#{repo}/#{repo}" unless repo.include?('/')
-  subdomain = "#{repo.partition('/').last}." if repo[0, 13] == 'podemos-info/'
-  "git@#{subdomain}github.com:#{repo}.git"
+  "git@github.com:#{repo}.git"
 end
 
 ruby '2.6.3'
