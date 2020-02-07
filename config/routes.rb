@@ -13,7 +13,7 @@ Rails.application.routes.draw do
   ActiveAdmin.routes(self)
 
   namespace :admin do
-    # multiple belongs_to for activeadmin hack
+    # HACK: multiple belongs_to for activeadmin
     resources :programs
     resources :organisms do
       resources :programs

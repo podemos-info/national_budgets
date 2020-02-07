@@ -2,7 +2,10 @@
 
 source 'https://rubygems.org'
 
-git_source(:github) { |repo| "https://github.com/#{repo}.git" }
+git_source(:github) do |repo|
+  repo = "#{repo}/#{repo}" unless repo.include?('/')
+  "git@github.com:#{repo}.git"
+end
 
 ruby '2.6.3'
 
@@ -16,6 +19,7 @@ gem 'bootstrap_form', '~> 4.0'
 gem 'coffee-rails', '~> 5.0'
 gem 'devise'
 gem 'devise-i18n'
+gem 'directorio_client', require: true, github: 'podemos-info/directorio_client'
 gem 'font-awesome-rails'
 gem 'jbuilder', '~> 2.5'
 gem 'jquery-rails'
