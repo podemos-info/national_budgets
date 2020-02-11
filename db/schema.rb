@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_01_27_140449) do
+ActiveRecord::Schema.define(version: 2020_02_10_131957) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -58,7 +58,9 @@ ActiveRecord::Schema.define(version: 2020_01_27_140449) do
     t.bigint "budget_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.bigint "territory_id"
     t.index ["budget_id"], name: "index_amendments_on_budget_id"
+    t.index ["territory_id"], name: "index_amendments_on_territory_id"
     t.index ["user_id"], name: "index_amendments_on_user_id"
   end
 
@@ -211,6 +213,15 @@ ActiveRecord::Schema.define(version: 2020_01_27_140449) do
     t.index ["concept_id"], name: "index_subconcepts_on_concept_id"
   end
 
+  create_table "territories", force: :cascade do |t|
+    t.string "type", null: false
+    t.integer "territory_id", null: false
+    t.string "iso", null: false
+    t.string "name", null: false
+    t.integer "parent_id"
+    t.index ["parent_id"], name: "index_territories_on_parent_id"
+  end
+
   create_table "users", force: :cascade do |t|
     t.string "email", default: "", null: false
     t.string "encrypted_password", default: "", null: false
@@ -229,6 +240,7 @@ ActiveRecord::Schema.define(version: 2020_01_27_140449) do
 
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "amendments", "budgets"
+  add_foreign_key "amendments", "territories"
   add_foreign_key "amendments", "users"
   add_foreign_key "articles", "chapters"
   add_foreign_key "articulateds", "amendments"
