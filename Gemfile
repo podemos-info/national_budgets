@@ -17,6 +17,7 @@ gem 'bootsnap', '>= 1.1.0', require: false
 gem 'bootstrap', '~> 4.3.1'
 gem 'bootstrap_form', '~> 4.0'
 gem 'coffee-rails', '~> 5.0'
+gem 'colorize'
 gem 'devise'
 gem 'devise-i18n'
 gem 'directorio_client', require: true, github: 'podemos-info/directorio_client'
