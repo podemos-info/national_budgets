@@ -29,6 +29,12 @@ describe Modification do
     it { is_expected.to be_invalid }
   end
 
+  shared_examples 'a modification without extra fields' do
+    it { is_expected.not_to be_use_field(:amount) }
+    it { is_expected.not_to be_use_field(:project) }
+    it { is_expected.not_to be_use_field(:project_new) }
+  end
+
   describe Modifications::Addition do
     subject { described_class }
 
@@ -48,16 +54,12 @@ describe Modification do
   describe Modifications::OrganismBudgetIncome do
     subject { described_class }
 
-    it { is_expected.not_to be_use_field(:amount) }
-    it { is_expected.not_to be_use_field(:project) }
-    it { is_expected.not_to be_use_field(:project_new) }
+    it_behaves_like 'a modification without extra fields'
   end
 
   describe Modifications::OrganismBudgetExpenditure do
     subject { described_class }
 
-    it { is_expected.not_to be_use_field(:amount) }
-    it { is_expected.not_to be_use_field(:project) }
-    it { is_expected.not_to be_use_field(:project_new) }
+    it_behaves_like 'a modification without extra fields'
   end
 end
