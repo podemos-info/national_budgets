@@ -184,6 +184,19 @@ es:
       organism:
         title: Título
         section: Sección
+      territories/country:
+        type: ''
+        type:
+          one: 'País'
+          other: 'Paises'
+      territories/comunity:
+        type:
+          one: 'Comunidad'
+          other: 'Comunidades'
+      territories/province:
+        type:
+          one: 'Provincia'
+          other: 'Provincias'
       user:
         email: Correo electrónico
     errors:

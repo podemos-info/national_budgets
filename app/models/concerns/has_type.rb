@@ -8,8 +8,8 @@ module HasType
     validate :type_locked, on: :update, if: :locked_type?
   end
 
-  def type_name
-    self.class.type_name
+  def type_name(attributes)
+    self.class.type_name(attributes)
   end
 
   def position
@@ -25,8 +25,8 @@ module HasType
   end
 
   class_methods do
-    def type_name
-      human_attribute_name(:type)
+    def type_name(attributes)
+      human_attribute_name(:type, attributes)
     end
   end
 end
