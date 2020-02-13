@@ -49,7 +49,8 @@ namespace :national_budgets do
     territory = type[:model].create_with(attributes)
                             .find_or_initialize_by(territory_id: territory[FIELDS_MAP[:territory_id]])
     territory.assign_attributes(attributes) unless territory.new_record?
-    territory.save! && @initial_territory_ids.delete(territory.id) && print(progress_char(territory))
+    print(progress_char(territory))
+    territory.save! && @initial_territory_ids.delete(territory.id)
   end
 
   def updatable_attributes(territory, type, parent_type)
