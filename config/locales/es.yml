@@ -1,6 +1,6 @@
 ---
 es:
-  site_title: Proyectos PGE
+  site_title: PGE
   budgets:
     index:
       title: Proyectos de presupuestos
@@ -98,6 +98,9 @@ es:
       user:
         one: Usuario/a
         other: Usuarios/as
+      territory:
+        one: Territorio
+        other: Territorios
     attributes:
       budget:
         date: Fecha
@@ -229,6 +232,7 @@ es:
         display_amount: "Balance"
         total_amount: "Importe"
         status: "Estado"
+        territory_id: 'Territorio'
       articulated:
         section: Sección
         title: Título
@@ -263,7 +267,7 @@ es:
       empty_collection: "No hay %{model}."
       amendment:
         number: "N.º %{amendment}"
-      by_author: "Por %{author}"
+      by: "Por"
     messages:
       are_you_sure: "¿Estás seguro?"
   number:

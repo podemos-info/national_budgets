@@ -1,5 +1,6 @@
 <div class="row">
-  <h1 class="col-8 page-title"><%= fa_icon "list-alt", text: t('.title', budget: budget.title, amendment: amendment.number) %></h1>
+  <h1 class="col-4 page-title"><%= fa_icon "list-alt", text: t('.title', budget: budget.title, amendment: amendment.number) %></h1>
+  <h1 class="col-4 page-title text-right"><%= amendment.territory&.display_name %></h1>
   <h1 class="col-4 page-title text-right">
     <%= amendment.type_name %>
     <%= fa_icon *amendment.status_icon_params %>
@@ -116,6 +117,6 @@
 
   </div>
   <div class="col-12 col-md-6 text-right">
-    <p><%= t 'helpers.views.by_author', author: amendment.user.email %></p>
+    <small class="text-muted text-sm"><%= t 'helpers.views.by' %> <b class=""><%= amendment.user.full_name %></b></small>
   </div>
 </div>

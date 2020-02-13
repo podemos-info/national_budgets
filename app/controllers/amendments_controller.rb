@@ -54,7 +54,7 @@ class AmendmentsController < ApplicationController
   end
 
   def amendment_params
-    @permited_params = %i[number explanation user_id]
+    @permited_params = %i[number territory_id explanation user_id]
     @permited_params << :type unless amendment&.locked_type?
 
     params.require(:amendment).permit(*@permited_params)
