@@ -2,10 +2,10 @@
 
 module Territories
   class Province < Territory
-    belongs_to :comunity,
-               class_name: 'Territories::Comunity',
+    belongs_to :community,
+               class_name: 'Territories::Community',
                foreign_key: :parent_id,
                inverse_of: :provinces
-    delegate :country, to: :comunity, allow_nil: true
+    delegate :country, to: :community, allow_nil: true
   end
 end
