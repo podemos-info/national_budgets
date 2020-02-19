@@ -9,7 +9,7 @@ namespace :national_budgets do
                  directory_model: 'pais',
                  filter: { query: { codigo2_eq: 'ES' } },
                  default_parent_iso: nil },
-               { model: 'Territories::Comunity',
+               { model: 'Territories::Community',
                  directory_model: 'comunidad',
                  filter: {},
                  default_parent_iso: 'ES' },
