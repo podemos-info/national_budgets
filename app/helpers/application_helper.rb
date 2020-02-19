@@ -9,7 +9,7 @@ module ApplicationHelper
     '/logout'
   end
 
-  def truncate_with_title(text_to_truncate, length = 160)
+  def truncate_with_title(text_to_truncate, length = 450)
     return if text_to_truncate.blank?
 
     safe_join([content_tag(:span, truncate(text_to_truncate, length: length), title: text_to_truncate.gsub("'", "\\'"))])

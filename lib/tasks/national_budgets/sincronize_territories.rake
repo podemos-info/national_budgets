@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-namespace :national_budgets do
+namespace :cms_directory do
   @action_count = { created: 0, updated: 0, unchanged: 0, deleted: 0 }
 
   ACTION_COLORS = { created: :green, updated: :cyan, unchanged: :yellow, deleted: :red }.freeze
@@ -9,7 +9,7 @@ namespace :national_budgets do
                  directory_model: 'pais',
                  filter: { query: { codigo2_eq: 'ES' } },
                  default_parent_iso: nil },
-               { model: 'Territories::Comunity',
+               { model: 'Territories::Community',
                  directory_model: 'comunidad',
                  filter: {},
                  default_parent_iso: 'ES' },
@@ -49,13 +49,14 @@ namespace :national_budgets do
     territory = type[:model].create_with(attributes)
                             .find_or_initialize_by(territory_id: territory[FIELDS_MAP[:territory_id]])
     territory.assign_attributes(attributes) unless territory.new_record?
-    territory.save! && @initial_territory_ids.delete(territory.id) && print(progress_char(territory))
+    print(progress_char(territory))
+    territory.save! && @initial_territory_ids.delete(territory.id)
   end
 
   def updatable_attributes(territory, type, parent_type)
     { name: territory[FIELDS_MAP[:name]],
       iso: territory[FIELDS_MAP[:iso]],
-      parent_id: parent_id(territory, parent_type, type[:default_parent_iso]) }
+      parent_id: territory_parent_id(territory, parent_type, type[:default_parent_iso]) }
   end
 
   def directory_territories(type)
@@ -66,7 +67,7 @@ namespace :national_budgets do
     territory_id ? { territory_id: territory_id } : { iso: iso }
   end
 
-  def parent_id(territory, parent_type, iso)
+  def territory_parent_id(territory, parent_type, iso)
     return unless parent_type
 
     parent_key = "#{parent_type[:directory_model]}_id"

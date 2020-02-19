@@ -5,11 +5,10 @@
   </h1>
 </div>
 
-<div class="row">
 <% amendments.each do |amendment| %>
-<a class="card-block py-2 col-12" href="<%= amendment_path(amendment) %>" style="flex-grow: 2;">
+<a class="card-block w-100 py-2" href="<%= amendment_path(amendment) %>" style="flex-grow: 2;">
   <div class="card card-alert<% if amendment.completed? %> alert-success<% end %>">
-    <div class="card-header">
+    <div class="card-header py-1">
       <div class="row">
         <div class="col-12 col-md-2">
           <b class="card-title"><%= t('helpers.views.amendment.number', amendment: amendment.number) %></b>
@@ -26,7 +25,7 @@
     <div class="card-body text-dark">
       <div class="row">
 
-        <div class="col-12 ">
+        <div class="col-12">
           <p class="card-text"><%= truncate_with_title amendment.explanation %></p>
         </div>
 
@@ -91,20 +90,25 @@
       </div>
     </div>
 
-    <% if false %>
-    <div class="card-footer text-dark">
+    <div class="card-footer text-dark py-0">
       <div class="row">
-        <div class="col-12 text-right">
-          <p class="card-text"><%= t 'helpers.views.by_author', author: amendment.user.email %></p>
+        <div class="col-4">
+          <span class="text-muted"><%= amendment.territory&.display_name %></span>
+        </div>
+        <div class="col-4 text-center">
+          <small class="text-muted"><%= t 'helpers.views.by' %> <b class=""><%= amendment.user.full_name %></b></small>
+        </div>
+        <div class="col-4 text-right pr-4">
+          <% if amendment.allow_modifications? %>
+            <span><b class="text-secondary"><%= t('helpers.label.amendment.total_amount') %>:</b> <%= number_to_currency amendment.total_amount %></span>
+          <% end %>
         </div>
       </div>
     </div>
-    <% end %>
 
   </div>
 </a>
 <% end %>
-</div>
 
 <div class="actions text-right">
   <%= link_to fa_icon('plus', text: t('helpers.submit.amendment.create')), new_budget_amendment_path(budget), class: 'btn btn-sm btn-outline-success' %>

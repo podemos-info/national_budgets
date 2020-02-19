@@ -4,6 +4,7 @@ class Amendment < ApplicationRecord
   include HasType
   belongs_to :user, optional: false
   belongs_to :budget, optional: false
+  belongs_to :territory, optional: false
 
   validates :number, :explanation, presence: true
   validate :type_locked, on: :update, if: :locked_type?

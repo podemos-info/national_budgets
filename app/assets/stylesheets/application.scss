@@ -57,17 +57,17 @@ a {
       .card-body { font-size: .95rem; }
       table { font-size: .9rem; }
     }
-    &.bg-active {
-      color: $component-active-color;
-      .card {
-        background-color: $component-active-bg;
-      }
+  }
+  &.bg-active {
+    color: $component-active-color;
+    .card {
+      background-color: $component-active-bg;
     }
-    &:hover, &:active, &:focus {
-      text-decoration: none;
-      .card {
-        filter: brightness(90%) contrast(110%);
-      }
+  }
+  &:hover, &:active, &:focus {
+    text-decoration: none;
+    .card {
+      filter: brightness(90%) contrast(110%);
     }
   }
   &:hover, &:active, &:focus {
