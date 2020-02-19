@@ -2,6 +2,7 @@
 
 FactoryBot.define do
   factory :amendment do
+    territory { create(%i[country community province].sample) }
     number { Faker::Alphanumeric.alphanumeric(number: 10, min_alpha: 3) }
     explanation { Faker::Lorem.paragraph(sentence_count: 2, supplemental: false, random_sentences_to_add: 4) }
     budget { create(:budget) }

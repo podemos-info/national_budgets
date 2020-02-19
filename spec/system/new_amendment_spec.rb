@@ -7,6 +7,7 @@ describe 'Amendment creation', type: :system, js: true do
 
   let(:user) { create(:user) }
   let(:budget) { create(:budget, user: user) }
+  let(:territory) { create(%i[country community province].sample) }
   let(:section) { create(:section, :with_children, budget: budget) }
   let(:section_without_organism) { create(:section, :with_children, budget: budget) }
   let(:organism) { create(:organism, :with_programs, section: section) }
@@ -17,6 +18,7 @@ describe 'Amendment creation', type: :system, js: true do
   let(:subconcept) { create(:subconcept, concept: concept) }
 
   before do
+    territory
     section
     section_without_organism
     organism
@@ -32,6 +34,7 @@ describe 'Amendment creation', type: :system, js: true do
 
     fill_in 'Nº de enmienda', with: '123456'
     fill_in 'Exposición de motivos', with: 'Porque sí'
+    select territory.display_name, from: 'Territorio'
 
     click_button 'Crear enmienda'
 
@@ -132,6 +135,7 @@ describe 'Amendment creation', type: :system, js: true do
 
     fill_in 'Nº de enmienda', with: '123456'
     fill_in 'Exposición de motivos', with: 'Porque sí'
+    select territory.display_name, from: 'Territorio'
 
     click_button 'Crear enmienda'
 
@@ -216,6 +220,7 @@ describe 'Amendment creation', type: :system, js: true do
 
     fill_in 'Nº de enmienda', with: '123456'
     fill_in 'Exposición de motivos', with: 'Porque sí'
+    select territory.display_name, from: 'Territorio'
 
     click_button 'Crear enmienda'
 
