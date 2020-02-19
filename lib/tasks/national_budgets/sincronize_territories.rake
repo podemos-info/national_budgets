@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-namespace :national_budgets do
+namespace :cms_directory do
   @action_count = { created: 0, updated: 0, unchanged: 0, deleted: 0 }
 
   ACTION_COLORS = { created: :green, updated: :cyan, unchanged: :yellow, deleted: :red }.freeze
@@ -56,7 +56,7 @@ namespace :national_budgets do
   def updatable_attributes(territory, type, parent_type)
     { name: territory[FIELDS_MAP[:name]],
       iso: territory[FIELDS_MAP[:iso]],
-      parent_id: parent_id(territory, parent_type, type[:default_parent_iso]) }
+      parent_id: territory_parent_id(territory, parent_type, type[:default_parent_iso]) }
   end
 
   def directory_territories(type)
@@ -67,7 +67,7 @@ namespace :national_budgets do
     territory_id ? { territory_id: territory_id } : { iso: iso }
   end
 
-  def parent_id(territory, parent_type, iso)
+  def territory_parent_id(territory, parent_type, iso)
     return unless parent_type
 
     parent_key = "#{parent_type[:directory_model]}_id"
