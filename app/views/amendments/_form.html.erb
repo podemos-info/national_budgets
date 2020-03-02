@@ -16,7 +16,6 @@
   <% end %>
 
   <%= f.collection_select :territory_id, Territory.all.order(:id).map{ |t| [t.id, t.display_name] }, :first, :last, include_blank: t('helpers.views.choose_model', model: Territory.model_name.human.downcase) %>
-  <%= f.text_field :number %>
   <%= f.text_area :explanation, rows: '7' %>
 
   <div class="actions">

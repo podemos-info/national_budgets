@@ -13,6 +13,7 @@ class Modification < ApplicationRecord
   belongs_to :concept, optional: true
   belongs_to :subconcept, optional: true
   after_initialize :initialize_section
+  after_save :set_amendment_number, if: -> { previous_changes.include?(:section_id) || previous_changes.include?(:program_id) }
   validate :section_locked, if: :amendment
   validate :program_locked, if: :amendment
   validate :organism_locked, if: :amendment
@@ -89,5 +90,10 @@ class Modification < ApplicationRecord
 
   def initialize_section
     self.section ||= amendment&.section if new_record?
+  end
+
+  def set_amendment_number
+    amendment.set_number
+    amendment.save!
   end
 end

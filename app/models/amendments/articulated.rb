@@ -36,5 +36,9 @@ module Amendments
     def self.numbered_articulateds
       ::Articulated.descendants.sort_by(&:position).map { |klass| klass if klass.articulated_number? }.compact
     end
+
+    def number_pattern
+      'A.S%02d.%1s'
+    end
   end
 end
