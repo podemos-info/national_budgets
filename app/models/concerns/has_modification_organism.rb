@@ -10,4 +10,8 @@ module HasModificationOrganism
   def first_organism_budget_income
     organism_budget_incomes.first
   end
+
+  def locked_organism?(modification)
+    organism_budget_incomes.where.not(id: modification.id).any? || organism_budget_expenditures.where.not(id: modification.id).any?
+  end
 end

@@ -4,7 +4,7 @@ module BrowseModificationSection
   extend ActiveSupport::Concern
 
   included do
-    helper_method :locked_section?, :locked_organism?,
+    helper_method :locked_section?, :locked_program?, :locked_organism?,
                   :sections, :section, :service, :organism,
                   :programs_parent, :programs_previous, :program, :programs
   end
@@ -58,11 +58,15 @@ module BrowseModificationSection
   end
 
   def program
-    @program ||= programs_parent&.programs&.find(params[:program_id]) if params[:program_id]
+    @program ||= locked_program? ? amendment.program : (programs_parent&.programs&.find(params[:program_id]) if params[:program_id])
   end
 
   def locked_section?
     params['locked_section'] == 'true'
+  end
+
+  def locked_program?
+    params['locked_program'] == 'true'
   end
 
   def locked_organism?

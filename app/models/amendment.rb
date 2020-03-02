@@ -25,7 +25,11 @@ class Amendment < ApplicationRecord
     persisted? && (any_articulated? || any_modifications?)
   end
 
-  def locked_organism?
+  def locked_organism?(_modification)
+    false
+  end
+
+  def locked_program?(_modification_class)
     false
   end
 

@@ -10,6 +10,7 @@ module Amendments
     end
 
     include HasModifications
+    include HasModificationProgram
     include HasModificationSection
 
     def self.position

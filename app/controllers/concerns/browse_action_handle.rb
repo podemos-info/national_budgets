@@ -82,6 +82,7 @@ module BrowseActionHandle
       service_or_organism_id: programs_previous,
       program_id: program,
       locked_section: locked_section?,
+      locked_program: locked_program?,
       locked_organism: locked_organism? }
   end
 
