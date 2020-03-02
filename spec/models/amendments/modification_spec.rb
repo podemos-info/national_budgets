@@ -9,11 +9,17 @@ describe Modification do
 
   it { is_expected.to be_valid }
   it { is_expected.not_to be_locked_section }
+  it { is_expected.not_to be_locked_organism }
+  it { is_expected.not_to be_locked_program(Modifications::Addition) }
+  it { is_expected.not_to be_locked_program(Modifications::Removal) }
 
   context 'when amendment already has a modification' do
     let(:amendment) { create(:standard_amendment, :with_modifications) }
 
     it { is_expected.to be_locked_section }
+    it { is_expected.not_to be_locked_organism }
+    it { is_expected.to be_locked_program(Modifications::Addition) }
+    it { is_expected.not_to be_locked_program(Modifications::Removal) }
   end
 
   context 'when amendment has only one modification and section changes' do

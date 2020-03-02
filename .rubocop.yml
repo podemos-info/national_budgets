@@ -22,6 +22,10 @@ AllCops:
 Style/Documentation:
   Enabled: false
 
+Lint/AmbiguousBlockAssociation:
+  Exclude:
+    - spec/**/*_spec.rb
+
 Metrics/LineLength:
   Max: 140
 

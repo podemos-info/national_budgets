@@ -3,7 +3,6 @@
 FactoryBot.define do
   factory :amendment do
     territory { create(%i[country community province].sample) }
-    number { Faker::Alphanumeric.alphanumeric(number: 10, min_alpha: 3) }
     explanation { Faker::Lorem.paragraph(sentence_count: 2, supplemental: false, random_sentences_to_add: 4) }
     budget { create(:budget) }
     user
@@ -14,30 +13,39 @@ FactoryBot.define do
       transient do
         modifications_count { 2 }
         section { create(:section, budget: budget) }
+        program { create(:program, section: section) }
       end
 
       after(:create) do |amendment, evaluator|
         create_list(:addition_modification,
                     evaluator.modifications_count,
                     amendment: amendment,
-                    section: evaluator.section)
+                    section: evaluator.section,
+                    program: evaluator.program,
+                    &proc { amendment.reload })
+        amendment.reload
       end
     end
 
     trait :completed do
       transient do
         section { create(:section, budget: budget) }
+        program { create(:program, section: section) }
       end
 
       after(:create) do |amendment, evaluator|
         create(:addition_modification,
                amendment: amendment,
                section: evaluator.section,
-               amount: '1000')
+               program: evaluator.program,
+               amount: '1000',
+               &proc { amendment.reload })
         create(:removal_modification,
                amendment: amendment,
                section: evaluator.section,
-               amount: '1000')
+               program: evaluator.program,
+               amount: '1000',
+               &proc { amendment.reload })
       end
     end
   end
@@ -47,30 +55,38 @@ FactoryBot.define do
       transient do
         modifications_count { 2 }
         section { create(:section, budget: budget) }
+        program { create(:program, section: section) }
       end
 
       after(:create) do |amendment, evaluator|
         create_list(:addition_modification,
                     evaluator.modifications_count,
                     amendment: amendment,
-                    section: evaluator.section)
+                    section: evaluator.section,
+                    program: evaluator.program,
+                    &proc { amendment.reload })
       end
     end
 
     trait :completed do
       transient do
         section { create(:section, budget: budget) }
+        program { create(:program, section: section) }
       end
 
       after(:create) do |amendment, evaluator|
         create(:addition_modification,
                amendment: amendment,
                section: evaluator.section,
-               amount: '1000')
+               program: evaluator.program,
+               amount: '1000',
+               &proc { amendment.reload })
         create(:removal_modification,
                amendment: amendment,
                section: evaluator.section,
-               amount: '1000')
+               program: evaluator.program,
+               amount: '1000',
+               &proc { amendment.reload })
       end
     end
   end

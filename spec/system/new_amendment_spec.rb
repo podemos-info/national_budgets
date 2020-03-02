@@ -7,7 +7,7 @@ describe 'Amendment creation', type: :system, js: true do
 
   let(:user) { create(:user) }
   let(:budget) { create(:budget, user: user) }
-  let(:territory) { create(%i[country community province].sample) }
+  let(:territory) { create(:country) }
   let(:section) { create(:section, :with_children, budget: budget) }
   let(:section_without_organism) { create(:section, :with_children, budget: budget) }
   let(:organism) { create(:organism, :with_programs, section: section) }
@@ -32,14 +32,13 @@ describe 'Amendment creation', type: :system, js: true do
 
     find(:label, text: 'Alta/baja').click
 
-    fill_in 'Nº de enmienda', with: '123456'
     fill_in 'Exposición de motivos', with: 'Porque sí'
     select territory.display_name, from: 'Territorio'
 
     click_button 'Crear enmienda'
 
     expect(page).to have_content('La enmienda ha sido creada.')
-    expect(page).to have_content("#{Amendment.last.budget.title}: Enmienda n.º #{Amendment.last.number}: Añadir modificación")
+    expect(page).to have_content("#{Amendment.last.budget.title}: N.º #{Amendment.last.number}: Añadir modificación")
     expect(page).to have_current_path(new_amendment_modification_path(Amendment.last))
     expect(find(:css, 'i.fa.fa-square-o')['title']).to eq('Incompleta: falta «alta» y «baja»')
 
@@ -72,7 +71,7 @@ describe 'Amendment creation', type: :system, js: true do
     click_button 'Añadir modificación'
 
     expect(page).to have_content('La modificación ha sido añadida.')
-    expect(page).to have_content("#{Amendment.last.budget.title}: Enmienda n.º #{Amendment.last.number}: Añadir modificación")
+    expect(page).to have_content("#{Amendment.last.budget.title}: N.º #{Amendment.last.number}: Añadir modificación")
     expect(page).to have_current_path(new_amendment_modification_path(Amendment.last))
     expect(find(:css, 'i.fa.fa-square-o')['title']).to eq('Incompleta: falta «baja»')
 
@@ -89,7 +88,7 @@ describe 'Amendment creation', type: :system, js: true do
     click_button 'Añadir modificación'
 
     expect(page).to have_content('La modificación ha sido añadida.')
-    expect(page).to have_content("#{Amendment.last.budget.title}: Enmienda n.º #{Amendment.last.number}: Añadir modificación")
+    expect(page).to have_content("#{Amendment.last.budget.title}: N.º #{Amendment.last.number}: Añadir modificación")
     expect(page).to have_current_path(new_amendment_modification_path(Amendment.last))
     expect(find(:css, 'i.fa.fa-plus-square-o')['title']).to eq('Incompleta: balance positivo')
 
@@ -106,12 +105,11 @@ describe 'Amendment creation', type: :system, js: true do
     click_button 'Añadir modificación'
 
     expect(page).to have_content('La modificación ha sido añadida.')
-    expect(page).to have_content("#{Amendment.last.budget.title}: Enmienda n.º #{Amendment.last.number}: Añadir modificación")
+    expect(page).to have_content("#{Amendment.last.budget.title}: N.º #{Amendment.last.number}: Añadir modificación")
     expect(page).to have_current_path(new_amendment_modification_path(Amendment.last))
     expect(find(:css, 'i.fa.fa-minus-square-o')['title']).to eq('Incompleta: balance negativo')
 
     click_link section.services.sample.full_title
-    click_link section.programs.where(added: false).sample.full_title
     click_link subconcept.concept.article.chapter.full_title
     click_link subconcept.concept.article.full_title
     click_link subconcept.concept.full_title
@@ -123,7 +121,7 @@ describe 'Amendment creation', type: :system, js: true do
     click_button 'Añadir modificación'
 
     expect(page).to have_content('La modificación ha sido añadida.')
-    expect(page).to have_content("#{Amendment.last.budget.title}: Enmienda n.º #{Amendment.last.number}")
+    expect(page).to have_content("#{Amendment.last.budget.title}: N.º #{Amendment.last.number}")
     expect(page).to have_current_path(amendment_path(Amendment.last))
     expect(find(:css, 'i.fa.fa-check-square-o')['title']).to eq('Completa')
   end
@@ -133,14 +131,13 @@ describe 'Amendment creation', type: :system, js: true do
 
     find(:label, text: 'Enmienda de transferencia').click
 
-    fill_in 'Nº de enmienda', with: '123456'
     fill_in 'Exposición de motivos', with: 'Porque sí'
     select territory.display_name, from: 'Territorio'
 
     click_button 'Crear enmienda'
 
     expect(page).to have_content('La enmienda ha sido creada.')
-    expect(page).to have_content("#{Amendment.last.budget.title}: Enmienda n.º #{Amendment.last.number}: Añadir modificación")
+    expect(page).to have_content("#{Amendment.last.budget.title}: N.º #{Amendment.last.number}: Añadir modificación")
     expect(page).to have_current_path(new_amendment_modification_path(Amendment.last))
     expect(find(:css, 'i.fa.fa-square-o')['title'])
       .to eq('Incompleta: falta «alta», «baja», «alta presupuesto de ingreso» y «alta presupuesto de gasto»')
@@ -162,7 +159,7 @@ describe 'Amendment creation', type: :system, js: true do
     click_button 'Añadir modificación'
 
     expect(page).to have_content('La modificación ha sido añadida.')
-    expect(page).to have_content("#{Amendment.last.budget.title}: Enmienda n.º #{Amendment.last.number}: Añadir modificación")
+    expect(page).to have_content("#{Amendment.last.budget.title}: N.º #{Amendment.last.number}: Añadir modificación")
     expect(page).to have_current_path(new_amendment_modification_path(Amendment.last))
     expect(find(:css, 'i.fa.fa-square-o')['title'])
       .to eq('Incompleta: falta «baja», «alta presupuesto de ingreso» y «alta presupuesto de gasto»')
@@ -180,7 +177,7 @@ describe 'Amendment creation', type: :system, js: true do
     click_button 'Añadir modificación'
 
     expect(page).to have_content('La modificación ha sido añadida.')
-    expect(page).to have_content("#{Amendment.last.budget.title}: Enmienda n.º #{Amendment.last.number}: Añadir modificación")
+    expect(page).to have_content("#{Amendment.last.budget.title}: N.º #{Amendment.last.number}: Añadir modificación")
     expect(page).to have_current_path(new_amendment_modification_path(Amendment.last))
     expect(find(:css, 'i.fa.fa-square-o')['title']).to eq('Incompleta: falta «alta presupuesto de ingreso» y «alta presupuesto de gasto»')
 
@@ -193,7 +190,7 @@ describe 'Amendment creation', type: :system, js: true do
     click_button 'Añadir modificación'
 
     expect(page).to have_content('La modificación ha sido añadida.')
-    expect(page).to have_content("#{Amendment.last.budget.title}: Enmienda n.º #{Amendment.last.number}: Añadir modificación")
+    expect(page).to have_content("#{Amendment.last.budget.title}: N.º #{Amendment.last.number}: Añadir modificación")
     expect(page).to have_current_path(new_amendment_modification_path(Amendment.last))
     expect(find(:css, 'i.fa.fa-square-o')['title']).to eq('Incompleta: falta «alta presupuesto de gasto»')
 
@@ -206,7 +203,7 @@ describe 'Amendment creation', type: :system, js: true do
     click_button 'Añadir modificación'
 
     expect(page).to have_content('La modificación ha sido añadida.')
-    expect(page).to have_content("#{Amendment.last.budget.title}: Enmienda n.º #{Amendment.last.number}")
+    expect(page).to have_content("#{Amendment.last.budget.title}: N.º #{Amendment.last.number}")
     expect(page).to have_current_path(amendment_path(Amendment.last))
     expect(find(:css, 'i.fa.fa-check-square-o')['title']).to eq('Completa')
 
@@ -218,14 +215,13 @@ describe 'Amendment creation', type: :system, js: true do
 
     find(:label, text: 'Enmienda al articulado').click
 
-    fill_in 'Nº de enmienda', with: '123456'
     fill_in 'Exposición de motivos', with: 'Porque sí'
     select territory.display_name, from: 'Territorio'
 
     click_button 'Crear enmienda'
 
     expect(page).to have_content('La enmienda ha sido creada.')
-    expect(page).to have_content("#{Amendment.last.budget.title}: Enmienda n.º #{Amendment.last.number}: Completar articulado")
+    expect(page).to have_content("#{Amendment.last.budget.title}: N.º #{Amendment.last.number}: Completar articulado")
     expect(page).to have_current_path(new_amendment_articulated_path(Amendment.last))
     expect(find(:css, 'i.fa.fa-square-o')['title']).to have_content('Incompleta: falta «articulado»')
 

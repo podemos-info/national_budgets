@@ -10,11 +10,11 @@ es:
         one: "%{budget}: %{count} enmienda"
         other: "%{budget}: %{count} enmiendas"
     show:
-      title: "%{budget}: Enmienda n.º %{amendment}"
+      title: "%{budget}: N.º %{amendment}"
     new:
       title: "%{budget}: Nueva enmienda"
     edit:
-      title: "%{budget}: Editar enmienda n.º %{amendment}"
+      title: "%{budget}: Editar N.º %{amendment}"
     create:
       success: La enmienda ha sido creada.
     update:
@@ -33,9 +33,9 @@ es:
       success: "%{model} actualizado."
   modifications:
     new:
-      title: "%{budget}: Enmienda n.º %{amendment}: Añadir modificación"
+      title: "%{budget}: N.º %{amendment}: Añadir modificación"
     edit:
-      title: "%{budget}: Enmienda n.º %{amendment}: Editar modificación de %{type_name}"
+      title: "%{budget}: N.º %{amendment}: Editar modificación de %{type_name}"
     create:
       success: La modificación ha sido añadida.
     update:
@@ -44,9 +44,9 @@ es:
       success: La modificación ha sido eliminada.
   articulateds:
     new:
-      title: "%{budget}: Enmienda n.º %{amendment}: Completar articulado"
+      title: "%{budget}: N.º %{amendment}: Completar articulado"
     edit:
-      title: "%{budget}: Enmienda n.º %{amendment}: Editar articulado"
+      title: "%{budget}: N.º %{amendment}: Editar articulado"
     create:
       success: El articulado ha sido añadido.
     update:
@@ -108,6 +108,7 @@ es:
         amendments: Enmiendas
       amendment:
         number: Nº de enmienda
+        territory: Territorio
         type: Tipo de enmienda
         explanation: Exposición de motivos
         user: Autor
@@ -192,7 +193,7 @@ es:
         type:
           one: 'País'
           other: 'Paises'
-      territories/comunity:
+      territories/community:
         type:
           one: 'Comunidad'
           other: 'Comunidades'
@@ -203,7 +204,8 @@ es:
       user:
         email: Correo electrónico
     errors:
-      section_locked: está bloqueada
+      field_locked_female: está bloqueada
+      field_locked_male: está bloqueado
       type_locked: está bloqueado
       chapter_budget_does_not_match: el proyecto de presupuestos no coincide con el proyecto de presupuestos de la enmienda
       prohibited_from_being_saved:

@@ -12,15 +12,12 @@ module Amendments
     end
 
     include HasModifications
-    include HasModificationSection
     include HasModificationOrganism
+    include HasModificationProgram
+    include HasModificationSection
 
     def self.position
       2
-    end
-
-    def locked_organism?
-      organism_budget_incomes.any? || organism_budget_expenditures.any?
     end
 
     def self.filtered_sections(sections)

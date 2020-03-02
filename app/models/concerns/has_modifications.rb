@@ -82,6 +82,10 @@ module HasModifications
     self.class.filter_collection_with_added(collection, modification_type)
   end
 
+  def number_pattern
+    'S%02d.%s.%s'
+  end
+
   class_methods do
     def allowed_modifications
       allowed_modifications_str.map(&:constantize)
