@@ -7,6 +7,7 @@ class Amendment < ApplicationRecord
   belongs_to :territory, optional: false
 
   validates :number, :explanation, presence: true
+  validates :number, uniqueness: { scope: :budget }
   validate :type_locked, on: :update, if: :locked_type?
 
   def any_modifications?; end
