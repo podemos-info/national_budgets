@@ -5,8 +5,8 @@
 #
 #   movies = Movie.find_or_create_by([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.find_or_create_by(name: 'Luke', movie: movies.first)
-if Rails.env.development? 
-  User.create!(email: 'admin@example.com', password: 'password', password_confirmation: 'password')
+if Rails.env.development?
+  User.create!(email: 'admin@example.com', password: 'password', password_confirmation: 'password', user_name: 'u11000', full_name: 'John Doe')
 
   Budget.find_or_create_by!(title: 'PGE2018', date: '2019/04/09', user_id: 1)
   Budget.find_or_create_by!(title: 'PGE2019', date: '2019/01/16', user_id: 1)
