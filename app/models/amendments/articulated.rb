@@ -5,6 +5,8 @@ module Amendments
     has_one :articulated, foreign_key: :amendment_id, dependent: :destroy, inverse_of: :amendment, class_name: '::Articulated'
     delegate :section, to: :articulated, allow_nil: true
 
+    NUMBER_REBUILD_FIELDS = %w[section_id territory_id].freeze
+
     def any_articulated?
       articulated.present?
     end

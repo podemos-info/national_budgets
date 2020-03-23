@@ -11,8 +11,13 @@ module HasModifications
                foreign_key: :amendment_id,
                dependent: :destroy,
                inverse_of: :amendment
+      define_method "any_#{class_name.demodulize.pluralize.underscore}?".to_sym do
+        send(class_name.demodulize.pluralize.underscore).any?
+      end
     end
   end
+
+  NUMBER_REBUILD_FIELDS = %w[territory_id].freeze
 
   def allow_modifications?
     true

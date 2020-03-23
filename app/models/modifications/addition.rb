@@ -4,6 +4,8 @@ module Modifications
   class Addition < Modification
     validates :amount, presence: true
 
+    NUMBER_REBUILD_FIELDS = %w[section_id program_id].freeze
+
     def self.position
       1
     end

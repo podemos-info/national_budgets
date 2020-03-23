@@ -36,7 +36,7 @@ module Amendments
       { addition: [],
         removal: [],
         organism_budget_income: %i[concept subconcept],
-        organism_budget_expenditure: %i[concept subconcept] }
+        organism_budget_expenditure: %i[program concept subconcept] }
     end
   end
 end
