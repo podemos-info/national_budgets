@@ -12,6 +12,5 @@ class Budget < ApplicationRecord
   has_many :subconcepts, through: :concepts
   has_many :amendments_documents, dependent: :destroy
   has_one_attached :docx_template
-  scope :with_docx_template, -> { joins(docx_template_attachment: :blob) }
   validates :user, :title, :date, presence: true
 end

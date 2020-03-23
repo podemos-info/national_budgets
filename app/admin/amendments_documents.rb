@@ -64,7 +64,7 @@ ActiveAdmin.register AmendmentsDocument do
       f.input :user, as: :select, input_html: { disabled: true }
       f.input :budget,
               prompt: t('helpers.views.choose_model', model: Budget.model_name.human.downcase),
-              collection: Budget.with_docx_template
+              collection: Budget.with_attached_docx_template
       f.input :section, include_blank: t('active_admin.scopes.all')
       f.input :file_type, as: :radio
     end
