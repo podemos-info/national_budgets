@@ -22,4 +22,8 @@ class Articulated < ApplicationRecord
   def number_criterias_changed?
     (saved_changes.keys & self.class::NUMBER_REBUILD_FIELDS).any?
   end
+
+  def set_amendment_number
+    amendment.numeber
+  end
 end

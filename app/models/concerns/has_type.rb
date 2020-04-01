@@ -1,9 +1,12 @@
 # frozen_string_literal: true
 
+require 'sti_preload'
+
 module HasType
   extend ActiveSupport::Concern
 
   included do
+    include StiPreload
     validates :type, presence: true
     validate :type_locked, on: :update, if: :locked_type?
   end
