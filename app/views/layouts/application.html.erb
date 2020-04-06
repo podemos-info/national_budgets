@@ -1,40 +1,15 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title><%= t(:site_title) %></title>
+    <title>NationalBudgets</title>
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
 
-    <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
-    <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
+    <%= stylesheet_pack_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
+    <%= javascript_pack_tag 'application', 'data-turbolinks-track': 'reload' %>
   </head>
 
   <body>
-    <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
-      <div class="container pr-0">
-
-            <%= link_to (fa_icon 'heart-o', text: t(:site_title)), budgets_path, class: 'navbar-brand' %>
-            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#main_nav" aria-controls="main_nav" aria-expanded="false" aria-label="Toggle navigation">
-              <span class="navbar-toggler-icon"></span>
-            </button>
-
-            <div class="collapse navbar-collapse container" id="main_nav">
-              <ul class="navbar-nav mr-auto"></ul>
-              <ul class="navbar-nav">
-                <li class="nav-item">
-                <% if user_signed_in? %>
-                  <%= link_to (fa_icon 'sign-out', text: t('active_admin.logout')), destroy_user_session_path, method: :delete, class: 'nav-link' %>
-                <% else %>
-                  <%= link_to t('active_admin.devise.login.title'), new_user_session_path, class: 'nav-link' %>
-                <% end %>
-              </ul>
-            </div>
-
-      </div>
-    </nav>
-    <div class="container pb-3">
-      <%= render "partials/flash_message" %>
-      <%= yield %>
-    </div>
+    <%= yield %>
   </body>
 </html>

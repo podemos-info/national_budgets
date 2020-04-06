@@ -7,6 +7,10 @@ module HasModificationOrganism
     delegate :organism, to: :first_organism_budget_income, allow_nil: true
   end
 
+  def allow_organism_budget?
+    true
+  end
+
   def first_organism_budget_income
     organism_budget_incomes.first
   end

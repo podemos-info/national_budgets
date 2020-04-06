@@ -22,7 +22,7 @@ ActiveAdmin.register AmendmentsDocument do
       end
     end
     column :current_amendments do |amendments_document|
-      model_total(amendments_document.amendments_collection)
+      model_total(amendments_document.amendments)
     end
     column :created_at
     column :updated_at
@@ -46,7 +46,7 @@ ActiveAdmin.register AmendmentsDocument do
         end
       end
       row :current_amendments do |amendments_document|
-        model_total(amendments_document.amendments_collection)
+        model_total(amendments_document.amendments)
       end
       row :created_at
       row :updated_at
@@ -62,7 +62,9 @@ ActiveAdmin.register AmendmentsDocument do
     f.inputs do
       f.input :user, as: :hidden
       f.input :user, as: :select, input_html: { disabled: true }
-      f.input :budget, prompt: t('helpers.views.choose_model', model: Budget.model_name.human.downcase)
+      f.input :budget,
+              prompt: t('helpers.views.choose_model', model: Budget.model_name.human.downcase),
+              collection: Budget.with_attached_docx_template
       f.input :section, include_blank: t('active_admin.scopes.all')
       f.input :file_type, as: :radio
     end

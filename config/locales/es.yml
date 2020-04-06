@@ -226,6 +226,8 @@ es:
       pending_modifications: 'Incompleta: falta %{modifications}'
       pending_articulated: 'Incompleta: falta «articulado»'
     label:
+      budget:
+        docx_template: 'Plantilla en docx'
       amendment:
         number: Nº de enmienda
         type: Tipo de enmienda

@@ -93,14 +93,14 @@
     <div class="card-footer text-dark py-0">
       <div class="row">
         <div class="col-4">
-          <span class="text-muted"><%= amendment.territory&.display_name %></span>
+          <small class="text-muted"><%= amendment.territory&.display_name %></small>
         </div>
         <div class="col-4 text-center">
-          <small class="text-muted"><%= t 'helpers.views.by' %> <b class=""><%= amendment.user.full_name %></b></small>
+          <small class="text-muted"><%= t 'helpers.views.by' %> <b><%= amendment.user.full_name %></b></small>
         </div>
         <div class="col-4 text-right pr-4">
           <% if amendment.allow_modifications? %>
-            <span><b class="text-secondary"><%= t('helpers.label.amendment.total_amount') %>:</b> <%= number_to_currency amendment.total_amount %></span>
+            <small><b class="text-secondary"><%= t('helpers.label.amendment.total_amount') %>:</b> <%= number_to_currency amendment.total_amount %></small>
           <% end %>
         </div>
       </div>

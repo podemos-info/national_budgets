@@ -3,7 +3,7 @@
 ActiveAdmin.register Budget do
   config.sort_order = 'date_desc'
 
-  permit_params :title, :user_id, :date
+  permit_params :title, :user_id, :date, :docx_template
 
   index do
     selectable_column
@@ -28,6 +28,12 @@ ActiveAdmin.register Budget do
     attributes_table do
       row :user
       row :title
+      row t('helpers.label.budget.docx_template') do |budget|
+        if budget.docx_template.attached?
+          link_to fa_icon('file-word-o', text: budget.docx_template.filename),
+                  rails_blob_path(budget.docx_template, disposition: 'attachment')
+        end
+      end
       row :date
       row model_name(:amendments) do
         link_to(model_total(budget.amendments), [:admin, budget, :amendments])
@@ -59,6 +65,7 @@ ActiveAdmin.register Budget do
       f.input :user, as: :hidden
       f.input :user, as: :select, input_html: { disabled: true }
       f.input :title
+      f.input :docx_template, as: :file, input_html: { accept: 'application/msword' }
       f.input :date
     end
 
