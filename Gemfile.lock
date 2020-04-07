@@ -1,5 +1,5 @@
 GIT
-  remote: https://github.com/podemos-info/directorio_client.git
+  remote: https://86811f483b8d9968063b4c32204f7bf09d89dae5:x-oauth-basic@github.com/podemos-info/directorio_client
   revision: 104d6ae2dfe9fba4d5d5c405f80fc4551f702988
   specs:
     directorio_client (0.1.0)

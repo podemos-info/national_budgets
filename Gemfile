@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 source 'https://rubygems.org'
-git_source(:github) { |repo| "https://github.com/#{repo}.git" }
+#git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
 ruby '2.6.3'
 
@@ -13,7 +13,7 @@ gem 'bootsnap', '>= 1.4.2', require: false
 gem 'colorize'
 gem 'devise'
 gem 'devise-i18n'
-gem 'directorio_client', require: true, github: 'podemos-info/directorio_client'
+gem 'directorio_client', require: true, git:'https://TU_AUTHTOKEN_DE_GITHUB:x-oauth-basic@github.com/podemos-info/directorio_client'
 gem 'font-awesome-rails'
 gem 'jbuilder', '~> 2.7'
 gem 'pg', '>= 0.18', '< 2.0'
